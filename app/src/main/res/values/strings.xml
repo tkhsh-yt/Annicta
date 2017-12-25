@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Annicta</string>
+    <string name="channel">チャンネル</string>
+    <string name="title">タイトル</string>
+    <string name="episode">エピソード</string>
+    <string name="started_at">放送開始日時</string>
+
+    <string name="fa_pencil_square_o">&#xf044;</string>
+    <string name="fa_check">&#xf00c;</string>
+    <string name="oauth_code">認証コード</string>
+    <string name="oauth">認証</string>
+</resources>
