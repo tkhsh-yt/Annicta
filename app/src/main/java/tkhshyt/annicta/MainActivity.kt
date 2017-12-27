@@ -1,9 +1,11 @@
 package tkhshyt.annicta
 
-import android.content.ContextWrapper
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import com.pixplicity.easyprefs.library.Prefs
+import com.chibatching.kotpref.Kotpref
+import tkhshyt.annicta.page.Page
+import tkhshyt.annicta.page.go
+import tkhshyt.annicta.pref.UserInfo
 
 class MainActivity : AppCompatActivity() {
 
@@ -11,13 +13,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        Prefs.Builder()
-                .setContext(this)
-                .setMode(ContextWrapper.MODE_PRIVATE)
-                .setPrefsName(packageName)
-                .setUseDefaultSharedPreference(true)
-                .build()
+        Kotpref.init(this)
 
-        
     }
 }
