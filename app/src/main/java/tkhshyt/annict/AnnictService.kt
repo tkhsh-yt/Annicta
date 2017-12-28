@@ -19,7 +19,7 @@ interface AnnictService {
      * @return アクセストークン．
      */
     @POST("oauth/token")
-    fun oauthToken(
+    fun authorize(
             @Query("client_id")     client_id    : String = BuildConfig.CLIENT_ID,
             @Query("client_secret") client_secret: String = BuildConfig.CLIENT_SECRET,
             @Query("grant_type")    grant_type   : String = "authorization_code",
