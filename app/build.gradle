@@ -66,6 +66,8 @@ dependencies {
     // For SharePreference
     compile "com.chibatching.kotpref:kotpref:2.2.0"
 
+    compile 'org.greenrobot:eventbus:3.1.1'
+
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'co.trikita:log:1.1.5'
     compile 'com.makeramen:roundedimageview:2.3.0'
