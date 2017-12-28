@@ -19,6 +19,7 @@ class AuthActivity : AppCompatActivity() {
 
         supportActionBar?.hide()
 
+        // フォントの設定
         val typeface = Typeface.createFromAsset(assets, "Offside-Regular.ttf")
         logoTextView.typeface = typeface
         appNameTextView.typeface = typeface
@@ -26,6 +27,7 @@ class AuthActivity : AppCompatActivity() {
         commitOpenAnnictFragment()
     }
 
+    // 認証URLを開くためのフラグメントを設定
     private fun commitOpenAnnictFragment() {
         val openAnnictFragment = OpenAnnictFragment()
         val bundle = Bundle()
@@ -38,6 +40,7 @@ class AuthActivity : AppCompatActivity() {
         transaction.commit()
     }
 
+    // 認証コードを入力するためのフラグメントを設定
     private fun commitAuthorizeFragment() {
         val authFragment = AuthFragment()
         val transaction = supportFragmentManager.beginTransaction()
@@ -46,11 +49,13 @@ class AuthActivity : AppCompatActivity() {
         transaction.commit()
     }
 
+    // 認証URLを開いた後の処理
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onOpenAnnictEvent(event: OpenAnnictEvent) {
         commitAuthorizeFragment()
     }
 
+    // 認証に失敗したときの処理
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onFailToAuthorizeEvent(event: FailToAuthorizeEvent) {
         Toast.makeText(this, "認証に失敗しました", Toast.LENGTH_LONG).show()

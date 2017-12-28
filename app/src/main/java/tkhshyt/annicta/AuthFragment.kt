@@ -24,6 +24,7 @@ class AuthFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         // 認証ボタンが押されたとき
+        // 成功した場合はアクティビティを終了して，失敗した場合はイベント飛ばす．
         authorizeButton.setOnClickListener {
             AnnictClient.service.authorize(
                     client_id = BuildConfig.CLIENT_ID,

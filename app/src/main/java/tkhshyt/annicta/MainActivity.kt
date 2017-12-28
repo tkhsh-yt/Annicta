@@ -23,6 +23,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    // 認証用アクティビティを起動する
     private fun launchAuthorizeActivity() {
         val intent = Intent()
         intent.putExtra("client_id", BuildConfig.CLIENT_ID)
@@ -35,7 +36,7 @@ class MainActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
 
         when(requestCode) {
-            RequestCode.Auth -> {
+            RequestCode.Auth -> { // 認証
                 if(resultCode == Activity.RESULT_OK) {
                     UserInfo.accessToken = data?.getStringExtra("access_token")
                 }

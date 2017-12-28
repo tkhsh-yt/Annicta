@@ -21,15 +21,18 @@ class OpenAnnictFragment : Fragment() {
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // ブラウザを開くボタンをクリックしたとき
         openAnnictButton.setOnClickListener {
             openAuthorizeUrlExternal()
         }
 
+        // 既に認証コードを持っている場合のボタンをクリックしたとき
         haveCodeButton.setOnClickListener {
             EventBus.getDefault().post(OpenAnnictEvent())
         }
     }
 
+    // 外部ブラウザで認証URLを開く
     private fun openAuthorizeUrlExternal() {
         if(arguments.containsKey("client_id")) {
             val uri = Uri.parse(AnnictClient.authorizeUrl(
