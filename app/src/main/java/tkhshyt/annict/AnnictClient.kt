@@ -14,4 +14,11 @@ object AnnictClient {
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .build()
             .create(AnnictService::class.java)
+
+    fun authorizeUrl(
+            client_id    : String,
+            response_type: String = "code",
+            redirect_uri : String = "urn:ietf:wg:oauth:2.0:oob",
+            scope        : String = "read write"
+    ): String = "${baseUrl}/oauth/authorize?client_id=${client_id}&response_type=${response_type}&redirect_uri=${redirect_uri}&scope=${scope}"
 }
