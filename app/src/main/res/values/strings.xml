@@ -9,4 +9,6 @@
     <string name="fa_check">&#xf00c;</string>
     <string name="oauth_code">認証コード</string>
     <string name="oauth">認証</string>
+    <string name="page_main">Main</string>
+    <string name="page_auth">Auth</string>
 </resources>
