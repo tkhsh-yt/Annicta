@@ -5,11 +5,11 @@ import android.content.Context
 import android.content.Intent
 import android.content.res.Resources
 import tkhshyt.annicta.AuthActivity
-import tkhshyt.annicta.MainActivity
+import tkhshyt.annicta.StartActivity
 import tkhshyt.annicta.R
 
 enum class Page(val nameId: Int, val page: Class<out Activity>) {
-    MAIN(R.string.page_main, MainActivity::class.java) {
+    MAIN(R.string.page_main, StartActivity::class.java) {
         override fun intent(context: Context): Intent {
             return super.intent(context).apply { addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP) }
         }
