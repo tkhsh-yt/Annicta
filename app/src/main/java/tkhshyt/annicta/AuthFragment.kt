@@ -16,11 +16,11 @@ import tkhshyt.annicta.event.FailToAuthorizeEvent
 
 class AuthFragment : Fragment() {
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater?.inflate(R.layout.fragment_auth, container, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.fragment_auth, container, false)
     }
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         // 認証ボタンが押されたとき
@@ -35,8 +35,8 @@ class AuthFragment : Fragment() {
                 .subscribe({ accessToken ->
                     val intent = Intent()
                     intent.putExtra("access_token", accessToken.access_token)
-                    activity.setResult(Activity.RESULT_OK, intent)
-                    activity.finish()
+                    activity?.setResult(Activity.RESULT_OK, intent)
+                    activity?.finish()
                 }, { throwable ->
                     EventBus.getDefault().post(FailToAuthorizeEvent(throwable))
                 })

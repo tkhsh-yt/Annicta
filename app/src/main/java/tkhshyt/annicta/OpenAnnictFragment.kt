@@ -14,11 +14,11 @@ import tkhshyt.annicta.event.OpenAnnictEvent
 
 class OpenAnnictFragment : Fragment() {
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater?.inflate(R.layout.fragment_open_annict, container, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.fragment_open_annict, container, false)
     }
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         // ブラウザを開くボタンをクリックしたとき
@@ -34,15 +34,18 @@ class OpenAnnictFragment : Fragment() {
 
     // 外部ブラウザで認証URLを開く
     private fun openAuthorizeUrlExternal() {
-        if(arguments.containsKey("client_id")) {
-            val uri = Uri.parse(AnnictClient.authorizeUrl(
-                    arguments.getString("client_id"))
-            )
-            val intent = Intent(Intent.ACTION_VIEW, uri)
+        val args = arguments
+        if(args != null) {
+            if (args.containsKey("client_id")) {
+                val uri = Uri.parse(AnnictClient.authorizeUrl(
+                        args.getString("client_id"))
+                )
+                val intent = Intent(Intent.ACTION_VIEW, uri)
 
-            startActivity(intent)
+                startActivity(intent)
 
-            EventBus.getDefault().post(OpenAnnictEvent())
+                EventBus.getDefault().post(OpenAnnictEvent())
+            }
         }
     }
 }
