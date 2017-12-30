@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="tkhshyt.annicta.StartActivity"
+    tools:context="tkhshyt.annicta.TopActivity"
     android:background="@color/colorPrimary">
 
     <EditText

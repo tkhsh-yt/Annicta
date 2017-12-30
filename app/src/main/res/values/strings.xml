@@ -11,4 +11,5 @@
     <string name="oauth">認証</string>
     <string name="page_main">Main</string>
     <string name="page_auth">Auth</string>
+    <string name="page_top">Top</string>
 </resources>
