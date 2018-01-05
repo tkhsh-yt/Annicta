@@ -5,8 +5,9 @@ import android.content.Context
 import android.content.Intent
 import android.content.res.Resources
 import tkhshyt.annicta.AuthActivity
-import tkhshyt.annicta.TopActivity
+import tkhshyt.annicta.MainActivity
 import tkhshyt.annicta.R
+import tkhshyt.annicta.TopActivity
 
 enum class Page(val nameId: Int, val page: Class<out Activity>) {
     TOP(R.string.page_top, TopActivity::class.java) {
@@ -18,7 +19,8 @@ enum class Page(val nameId: Int, val page: Class<out Activity>) {
         override fun intent(context: Context): Intent {
             return super.intent(context).apply { addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP) }
         }
-    };
+    },
+    MAIN(R.string.page_main, MainActivity::class.java);
 
     open fun intent(context: Context) = Intent(context, page)
     fun name(resources: Resources): String = resources.getString(nameId)

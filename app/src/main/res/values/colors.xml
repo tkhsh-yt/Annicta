@@ -11,4 +11,10 @@
 
     <color name="bluePrimary">#2196f3</color>
     <color name="blueDark">#1565c0</color>
+
+    <color name="redPrimary">#F44336</color>
+
+    <color name="greenPrimary">#4CAF50</color>
+
+    <color name="yellowPrimary">#FFEB3B</color>
 </resources>
