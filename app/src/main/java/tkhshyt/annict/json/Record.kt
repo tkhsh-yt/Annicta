@@ -18,14 +18,14 @@ import java.util.*
  * @property episode 記録が紐づくエピソード情報．
  */
 data class Record(
-        val id            : Long?,
-        val comment       : String?,
-        val rating_state  : String?,
-        val is_modified   : Boolean?,
-        val likes_count   : Int?,
+        val id: Long?,
+        val comment: String?,
+        val rating_state: String?,
+        val is_modified: Boolean?,
+        val likes_count: Int?,
         val comments_count: Int?,
-        val created_at    : Date?,
-        val user          : User?,
-        val work          : Work?,
-        val episode       : Episode?
+        val created_at: Date?,
+        val user: User?,
+        val work: Work?,
+        val episode: Episode?
 ) : Serializable

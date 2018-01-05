@@ -12,9 +12,9 @@ import java.io.Serializable
  * @property image_url official_site_user のページで取得できる twitter:image のURL．
  */
 data class Twitter(
-        val mini_avatar_url    : String,
-        val normal_avatar_url  : String,
-        val bigger_avatar_url  : String,
+        val mini_avatar_url: String,
+        val normal_avatar_url: String,
+        val bigger_avatar_url: String,
         val original_avatar_url: String,
-        val image_url          : String
-): Serializable
+        val image_url: String
+) : Serializable

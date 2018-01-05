@@ -2,9 +2,9 @@ package tkhshyt.annict
 
 import io.reactivex.Single
 import okhttp3.ResponseBody
-import tkhshyt.annicta.BuildConfig
-import tkhshyt.annict.json.*
 import retrofit2.http.*
+import tkhshyt.annict.json.*
+import tkhshyt.annicta.BuildConfig
 
 interface AnnictService {
 
@@ -20,11 +20,11 @@ interface AnnictService {
      */
     @POST("oauth/token")
     fun authorize(
-            @Query("client_id")     client_id    : String = BuildConfig.CLIENT_ID,
+            @Query("client_id") client_id: String = BuildConfig.CLIENT_ID,
             @Query("client_secret") client_secret: String = BuildConfig.CLIENT_SECRET,
-            @Query("grant_type")    grant_type   : String = "authorization_code",
-            @Query("redirect_uri")  redirect_uri : String = "urn:ietf:wg:oauth:2.0:oob",
-            @Query("code")          code         : String
+            @Query("grant_type") grant_type: String = "authorization_code",
+            @Query("redirect_uri") redirect_uri: String = "urn:ietf:wg:oauth:2.0:oob",
+            @Query("code") code: String
     ): Single<AccessToken>
 
     /**
@@ -50,9 +50,9 @@ interface AnnictService {
     @POST("oauth/revoke")
     fun revokeToken(
             @Header("Authorization") authorization: String,
-            @Query("client_id")      client_id    : String = BuildConfig.CLIENT_ID,
-            @Query("client_secret")  client_secret: String = BuildConfig.CLIENT_SECRET,
-            @Query("token")          token        : String
+            @Query("client_id") client_id: String = BuildConfig.CLIENT_ID,
+            @Query("client_secret") client_secret: String = BuildConfig.CLIENT_SECRET,
+            @Query("token") token: String
     ): Single<ResponseBody>
 
     /**
@@ -73,16 +73,16 @@ interface AnnictService {
      */
     @GET("{version}/works")
     fun works(
-            @Path("version")              version          : String = "v1",
-            @Query("access_token")        accessToken      : String,
-            @Query("fields")              fields           : String? = null,
-            @Query("filter_ids")          filterIds        : String? = null,
-            @Query("filter_season")       filterSeason     : String? = null,
-            @Query("filter_title")        filterTitle      : String? = null,
-            @Query("page")                page             : Int = 1,
-            @Query("per_page")            perPage          : Int = 25,
-            @Query("sort_id")             sortId           : String? = null,
-            @Query("sort_season")         sortSeason       : String? = null,
+            @Path("version") version: String = "v1",
+            @Query("access_token") accessToken: String,
+            @Query("fields") fields: String? = null,
+            @Query("filter_ids") filterIds: String? = null,
+            @Query("filter_season") filterSeason: String? = null,
+            @Query("filter_title") filterTitle: String? = null,
+            @Query("page") page: Int = 1,
+            @Query("per_page") perPage: Int = 25,
+            @Query("sort_id") sortId: String? = null,
+            @Query("sort_season") sortSeason: String? = null,
             @Query("sort_watchers_count") sortWatchersCount: String? = null
     ): Single<Works>
 
@@ -101,14 +101,14 @@ interface AnnictService {
      */
     @GET("{version}/episodes")
     fun episodes(
-            @Path("version")           version         : String = "v1",
-            @Query("access_token")     access_token    : String,
-            @Query("fields")           fields          : String? = null,
-            @Query("filter_ids")       filter_ids      : String? = null,
-            @Query("filter_work_id")   filter_work_id  : String? = null,
-            @Query("page")             page            : Int = 1,
-            @Query("per_page")         per_page        : Int = 25,
-            @Query("sort_id")          sort_id         : String,
+            @Path("version") version: String = "v1",
+            @Query("access_token") access_token: String,
+            @Query("fields") fields: String? = null,
+            @Query("filter_ids") filter_ids: String? = null,
+            @Query("filter_work_id") filter_work_id: String? = null,
+            @Query("page") page: Int = 1,
+            @Query("per_page") per_page: Int = 25,
+            @Query("sort_id") sort_id: String,
             @Query("sort_sort_number") sort_sort_number: String = "desc"
     ): Single<Episodes>
 
@@ -129,16 +129,16 @@ interface AnnictService {
      */
     @GET("{version}/records")
     fun records(
-            @Path("version")                    version                  : String = "v1",
-            @Query("access_token")              access_token             : String,
-            @Query("fields")                    fields                   : String? = null,
-            @Query("filter_ids")                filter_ids               : String? = null,
-            @Query("filter_episode_id")         filter_episode_id        : Long? = null,
+            @Path("version") version: String = "v1",
+            @Query("access_token") access_token: String,
+            @Query("fields") fields: String? = null,
+            @Query("filter_ids") filter_ids: String? = null,
+            @Query("filter_episode_id") filter_episode_id: Long? = null,
             @Query("filter_has_record_comment") filter_has_record_comment: Boolean? = null,
-            @Query("page")                      page                     : Int = 1,
-            @Query("per_page")                  per_page                 : Int = 25,
-            @Query("sort_id")                   sort_id                  : String = "desc",
-            @Query("sort_likes_count")          sort_likes_count         : String = "desc"
+            @Query("page") page: Int = 1,
+            @Query("per_page") per_page: Int = 25,
+            @Query("sort_id") sort_id: String = "desc",
+            @Query("sort_likes_count") sort_likes_count: String = "desc"
     ): Single<Records>
 
     /**
@@ -157,14 +157,14 @@ interface AnnictService {
      */
     @GET("{version}/reviews")
     fun reviews(
-            @Path("version")           version         : String = "v1",
-            @Query("access_token")     access_token    : String,
-            @Query("fields")           fields          : String? = null,
-            @Query("filter_ids")       filter_ids      : String? = null,
-            @Query("filter_work_id")   filter_work_id  : String? = null,
-            @Query("page")             page            : Int = 1,
-            @Query("per_page")         per_page        : Int = 20,
-            @Query("sort_id")          sort_id         : String = "desc",
+            @Path("version") version: String = "v1",
+            @Query("access_token") access_token: String,
+            @Query("fields") fields: String? = null,
+            @Query("filter_ids") filter_ids: String? = null,
+            @Query("filter_work_id") filter_work_id: String? = null,
+            @Query("page") page: Int = 1,
+            @Query("per_page") per_page: Int = 20,
+            @Query("sort_id") sort_id: String = "desc",
             @Query("sort_likes_count") sort_likes_count: String = "desc"
     ): Single<Reviews>
 
@@ -183,14 +183,14 @@ interface AnnictService {
      */
     @GET("{version}/users")
     fun users(
-            @Path("version")           version         : String = "v1",
-            @Query("access_token")     access_token    : String,
-            @Query("fields")           fields          : String? = null,
-            @Query("filter_ids")       filter_ids      : String? = null,
+            @Path("version") version: String = "v1",
+            @Query("access_token") access_token: String,
+            @Query("fields") fields: String? = null,
+            @Query("filter_ids") filter_ids: String? = null,
             @Query("filter_usernames") filter_usernames: String? = null,
-            @Query("page")             page            : Int = 1,
-            @Query("per_page")         per_page        : Int = 25,
-            @Query("sort_id")          sort_id         : String = "desc"
+            @Query("page") page: Int = 1,
+            @Query("per_page") per_page: Int = 25,
+            @Query("sort_id") sort_id: String = "desc"
     ): Single<Users>
 
     /**
@@ -208,14 +208,14 @@ interface AnnictService {
      */
     @GET("{version}/following")
     fun following(
-            @Path("version")          version: String = "v1",
-            @Query("access_token")    access_token: String,
-            @Query("fields")          fields: String? = null,
-            @Query("filter_user_id")  filter_user_id: Long? = null,
+            @Path("version") version: String = "v1",
+            @Query("access_token") access_token: String,
+            @Query("fields") fields: String? = null,
+            @Query("filter_user_id") filter_user_id: Long? = null,
             @Query("filter_username") filter_username: String? = null,
-            @Query("page")            page: Int = 1,
-            @Query("per_page")        per_page: Int = 25,
-            @Query("sort_id")         sort_id: String = "desc"
+            @Query("page") page: Int = 1,
+            @Query("per_page") per_page: Int = 25,
+            @Query("sort_id") sort_id: String = "desc"
     ): Single<Users>
 
     /**
@@ -233,14 +233,14 @@ interface AnnictService {
      */
     @GET("{version}/followers")
     fun followers(
-            @Path("version")          version: String = "v1",
-            @Query("access_token")    access_token: String,
-            @Query("fields")          fields: String? = null,
-            @Query("filter_user_id")  filter_user_id: Long? = null,
+            @Path("version") version: String = "v1",
+            @Query("access_token") access_token: String,
+            @Query("fields") fields: String? = null,
+            @Query("filter_user_id") filter_user_id: Long? = null,
             @Query("filter_username") filter_username: String? = null,
-            @Query("page")            page: Int = 1,
-            @Query("per_page")        per_page: Int = 25,
-            @Query("sort_id")         sort_id: String = "desc"
+            @Query("page") page: Int = 1,
+            @Query("per_page") per_page: Int = 25,
+            @Query("sort_id") sort_id: String = "desc"
     ): Single<Users>
 
     /**
@@ -258,14 +258,14 @@ interface AnnictService {
      */
     @GET("{version}/activities")
     fun activities(
-            @Path("version")          version: String = "v1",
-            @Query("access_token")    access_token: String,
-            @Query("fields")          fields: String? = null,
-            @Query("filter_user_id")  filter_user_id: Long? = null,
+            @Path("version") version: String = "v1",
+            @Query("access_token") access_token: String,
+            @Query("fields") fields: String? = null,
+            @Query("filter_user_id") filter_user_id: Long? = null,
             @Query("filter_username") filter_username: String? = null,
-            @Query("page")            page: Int = 1,
-            @Query("per_page")        per_page: Int = 25,
-            @Query("sort_id")         sort_id: String = "desc"
+            @Query("page") page: Int = 1,
+            @Query("per_page") per_page: Int = 25,
+            @Query("sort_id") sort_id: String = "desc"
     ): Single<Activities>
 
     /**
@@ -278,9 +278,9 @@ interface AnnictService {
      */
     @GET("{version}/me")
     fun profile(
-            @Path("version")       version     : String = "v1",
+            @Path("version") version: String = "v1",
             @Query("access_token") access_token: String,
-            @Query("fields")       fields      : String? = null
+            @Query("fields") fields: String? = null
     ): Single<Profile>
 
     /**
@@ -294,10 +294,10 @@ interface AnnictService {
      */
     @POST("{version}/v1/me/statuses")
     fun updateState(
-            @Path("version")       version     : String = "v1",
+            @Path("version") version: String = "v1",
             @Query("access_token") access_token: String,
-            @Query("work_id")      work_id     : Long,
-            @Query("kind")         kind        : String
+            @Query("work_id") work_id: Long,
+            @Query("kind") kind: String
     ): Single<ResponseBody>
 
     /**
@@ -314,12 +314,12 @@ interface AnnictService {
      */
     @POST("{version}/me/records")
     fun createRecord(
-            @Path("version")         version      : String = "v1",
-            @Query("access_token")   access_token : String,
-            @Query("episode_id")     episode_id    : Long,
-            @Query("comment")        comment       : String? = null,
-            @Query("rating_state")   rating_state  : String? = null,
-            @Query("share_twitter")  share_twitter : Boolean = false,
+            @Path("version") version: String = "v1",
+            @Query("access_token") access_token: String,
+            @Query("episode_id") episode_id: Long,
+            @Query("comment") comment: String? = null,
+            @Query("rating_state") rating_state: String? = null,
+            @Query("share_twitter") share_twitter: Boolean = false,
             @Query("share_facebook") share_facebook: Boolean = false
     ): Single<Record>
 
@@ -337,12 +337,12 @@ interface AnnictService {
      */
     @PATCH("{version}/me/records/{id}")
     fun updateRecord(
-            @Path("version")         version       : String = "v1",
-            @Query("access_token")   access_token  : String,
-            @Path("id")              id            : Long,
-            @Query("comment")        comment       : String,
-            @Query("rating")         rating_state  : String? = null,
-            @Query("share_twitter")  share_twitter : Boolean = false,
+            @Path("version") version: String = "v1",
+            @Query("access_token") access_token: String,
+            @Path("id") id: Long,
+            @Query("comment") comment: String,
+            @Query("rating") rating_state: String? = null,
+            @Query("share_twitter") share_twitter: Boolean = false,
             @Query("share_facebook") share_facebook: Boolean = false
     ): Single<Record>
 
@@ -356,9 +356,9 @@ interface AnnictService {
      */
     @DELETE("{version}/me/records/{id}")
     fun deleteRecord(
-            @Path("version")       version      : String = "v1",
+            @Path("version") version: String = "v1",
             @Query("access_token") access_token: String,
-            @Path("id")            id           : Long
+            @Path("id") id: Long
     ): Single<ResponseBody>
 
     /**
@@ -380,17 +380,17 @@ interface AnnictService {
      */
     @GET("{version}/me/works")
     fun followingWorks(
-            @Path("version")              version            : String = "v1",
-            @Query("access_token")        access_token       : String,
-            @Query("fields")              fields             : String? = null,
-            @Query("filter_ids")          filter_ids         : String? = null,
-            @Query("filter_season")       filter_season      : String? = null,
-            @Query("filter_title")        filter_title       : String? = null,
-            @Query("filter_status")       filter_status      : String? = null,
-            @Query("page")                page               : Int = 1,
-            @Query("per_page")            per_page           : Int = 25,
-            @Query("sort_id")             sort_id            : String = "desc",
-            @Query("sort_season")         sort_season        : String = "desc",
+            @Path("version") version: String = "v1",
+            @Query("access_token") access_token: String,
+            @Query("fields") fields: String? = null,
+            @Query("filter_ids") filter_ids: String? = null,
+            @Query("filter_season") filter_season: String? = null,
+            @Query("filter_title") filter_title: String? = null,
+            @Query("filter_status") filter_status: String? = null,
+            @Query("page") page: Int = 1,
+            @Query("per_page") per_page: Int = 25,
+            @Query("sort_id") sort_id: String = "desc",
+            @Query("sort_season") sort_season: String = "desc",
             @Query("sort_watchers_count") sort_watchers_count: String = "desc"
     ): Single<Works>
 
@@ -415,20 +415,20 @@ interface AnnictService {
      */
     @GET("{version}/me/programs")
     fun programs(
-            @Path("version")               version             : String = "v1",
-            @Query("access_token")         access_token        : String,
-            @Query("fields")               fields              : String? = null,
-            @Query("filter_ids")           filter_ids          : String? = null,
-            @Query("filter_channel_ids")   filter_channel_ids  : String? = null,
-            @Query("filter_work_ids")      filter_work_ids     : String? = null,
+            @Path("version") version: String = "v1",
+            @Query("access_token") access_token: String,
+            @Query("fields") fields: String? = null,
+            @Query("filter_ids") filter_ids: String? = null,
+            @Query("filter_channel_ids") filter_channel_ids: String? = null,
+            @Query("filter_work_ids") filter_work_ids: String? = null,
             @Query("filter_started_at_gt") filter_started_at_gt: String? = null,
             @Query("filter_started_at_lt") filter_started_at_lt: String? = null,
-            @Query("filter_unwatched")     filter_unwatched    : Boolean = true,
-            @Query("filter_rebroadcast")   filter_rebroadcast  : Boolean? = null,
-            @Query("page")                 page                : Int = 1,
-            @Query("per_page")             per_page            : Int = 25,
-            @Query("sort_id")              sort_id             : String = "desc",
-            @Query("sort_started_at")      sort_started_at     : String = "desc"
+            @Query("filter_unwatched") filter_unwatched: Boolean = true,
+            @Query("filter_rebroadcast") filter_rebroadcast: Boolean? = null,
+            @Query("page") page: Int = 1,
+            @Query("per_page") per_page: Int = 25,
+            @Query("sort_id") sort_id: String? = null,
+            @Query("sort_started_at") sort_started_at: String = "desc"
     ): Single<Programs>
 
     /**
@@ -446,13 +446,13 @@ interface AnnictService {
      */
     @GET("{version}/me/following_activities")
     fun followingActivities(
-            @Path("version")         version        : String = "v1",
-            @Query("access_token")   access_token  : String,
-            @Query("fields")         fields        : String = "",
-            @Query("filter_actions") filter_actions: String= "",
-            @Query("filter_muted")   filter_muted  : Boolean = true,
-            @Query("page")           page          : Int = 1,
-            @Query("per_page")       per_page      : Int = 25,
-            @Query("sort_id")        sort_id       : String = "desc"
+            @Path("version") version: String = "v1",
+            @Query("access_token") access_token: String,
+            @Query("fields") fields: String = "",
+            @Query("filter_actions") filter_actions: String = "",
+            @Query("filter_muted") filter_muted: Boolean = true,
+            @Query("page") page: Int = 1,
+            @Query("per_page") per_page: Int = 25,
+            @Query("sort_id") sort_id: String = "desc"
     ): Single<Activities>
 }

@@ -21,17 +21,17 @@ import java.util.*
  * @property work このレビューが紐付く作品情報．
  */
 data class Review(
-        val id                    : Long?,
-        val body                  : String?,
+        val id: Long?,
+        val body: String?,
         val rating_animation_state: String?,
-        val rating_music_state    : String?,
-        val rating_story_state    : String?,
+        val rating_music_state: String?,
+        val rating_story_state: String?,
         val rating_character_state: String?,
-        val rating_overall_state  : String?,
-        val likes_count           : Int?,
-        val impressions_count     : Int?,
-        val created_at            : Date?,
-        val modified_at           : Date?,
-        val user                  : User?,
-        val work                  : Work?
+        val rating_overall_state: String?,
+        val likes_count: Int?,
+        val impressions_count: Int?,
+        val created_at: Date?,
+        val modified_at: Date?,
+        val user: User?,
+        val work: Work?
 ) : Serializable

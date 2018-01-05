@@ -11,7 +11,7 @@ import java.io.Serializable
  * @property prev_page 前のページ数
  */
 data class Records(
-        val records  : List<Record>,
+        val records: List<Record>,
         val total_count: Int,
         val next_page: Int?,
         val prev_page: Int?

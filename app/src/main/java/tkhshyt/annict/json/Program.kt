@@ -14,10 +14,10 @@ import java.util.*
  * @property episode 放送予定が紐づくエピソード情報．
  */
 data class Program(
-        val id            : Long,
-        val started_at    : Date,
+        val id: Long,
+        val started_at: Date,
         val is_rebroadcast: Boolean,
-        val channel       : Channel,
-        val work          : Work,
-        val episode       : Episode
-): Serializable
+        val channel: Channel,
+        val work: Work,
+        val episode: Episode
+) : Serializable

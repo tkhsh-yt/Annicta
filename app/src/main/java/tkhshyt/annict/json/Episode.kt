@@ -17,14 +17,14 @@ import java.io.Serializable
  * @property next_episode 次のエピソードの情報．
  */
 data class Episode(
-        val id                   : Long?,
-        val number               : String?,
-        val number_text          : String?,
-        val sort_number          : String?,
-        val title                : String?,
-        val records_count        : Int?,
+        val id: Long?,
+        val number: String?,
+        val number_text: String?,
+        val sort_number: Int?,
+        val title: String?,
+        val records_count: Int?,
         val record_comments_count: Int?,
-        val work                 : Work?,
-        val prev_episode         : Episode?,
-        val next_episode         : Episode?
-): Serializable
+        val work: Work?,
+        val prev_episode: Episode?,
+        val next_episode: Episode?
+) : Serializable

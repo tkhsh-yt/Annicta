@@ -11,8 +11,8 @@ import java.io.Serializable
  * @property prev_page 前のページ数．
  */
 data class Reviews(
-        val reviews    : List<Review>,
+        val reviews: List<Review>,
         val total_count: Int,
-        val next_page  : Int?,
-        val prev_page  : Int?
+        val next_page: Int?,
+        val prev_page: Int?
 ) : Serializable

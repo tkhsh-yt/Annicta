@@ -10,5 +10,5 @@ import java.io.Serializable
  */
 data class MultipleRecord(
         val episode: Episode,
-        val record : Record
-): Serializable
+        val record: Record
+) : Serializable

@@ -19,11 +19,11 @@ enum class Season {
     companion object {
 
         fun season(month: Int) = {
-            if(month < 4)
+            if (month < 4)
                 WINTER
-            else if(month < 7)
+            else if (month < 7)
                 SPRING
-            else if(month < 10)
+            else if (month < 10)
                 SUMMER
             else
                 AUTUMN

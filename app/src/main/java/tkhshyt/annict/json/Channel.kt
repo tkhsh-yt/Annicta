@@ -9,6 +9,6 @@ import java.io.Serializable
  * @property name チャンネル名．
  */
 data class Channel(
-        val id  : Long,
+        val id: Long,
         val name: String
-): Serializable
+) : Serializable

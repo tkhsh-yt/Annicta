@@ -18,19 +18,19 @@ import java.util.*
  * @property status 記録情報．
  */
 data class Activity(
-        val id              : Long?,
-        val user            : User?,
-        val work            : Work?,
-        val action          : String?,
-        val created_at      : Date?,
+        val id: Long?,
+        val user: User?,
+        val work: Work?,
+        val action: String?,
+        val created_at: Date?,
         // status: create_record
-        val episode         : Episode?,
-        val record          : Record?,
+        val episode: Episode?,
+        val record: Record?,
         // status: create_review
-        val review          : Review?,
+        val review: Review?,
         // status: create_multi_records
         val multiple_records: List<MultipleRecord>?,
         // status: create_status
-        val status          : Status?
+        val status: Status?
 ) : Serializable
 

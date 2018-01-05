@@ -11,8 +11,8 @@ import java.io.Serializable
  * @property prevPage 前のページ数
  */
 data class Users(
-        val users     : List<User>,
+        val users: List<User>,
         val totalCount: Int,
-        val nextPage  : Int?,
-        val prevPage  : Int?
+        val nextPage: Int?,
+        val prevPage: Int?
 ) : Serializable

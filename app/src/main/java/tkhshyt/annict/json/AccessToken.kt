@@ -12,7 +12,7 @@ import java.io.Serializable
  */
 data class AccessToken(
         val access_token: String,
-        val token_type  : String,
-        val scope       : String,
-        val created_at  : Long
-): Serializable
+        val token_type: String,
+        val scope: String,
+        val created_at: Long
+) : Serializable

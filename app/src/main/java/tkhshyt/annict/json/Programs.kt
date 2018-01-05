@@ -11,8 +11,8 @@ import java.io.Serializable
  * @property prev_page 前のページ数．
  */
 data class Programs(
-        val programs  : List<Program>,
+        val programs: List<Program>,
         val total_count: Int,
         val next_page: Int?,
         val prev_page: Int?
-): Serializable
+) : Serializable

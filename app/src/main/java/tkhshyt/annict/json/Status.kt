@@ -9,4 +9,4 @@ import java.io.Serializable
  */
 data class Status(
         val kind: String
-): Serializable
+) : Serializable

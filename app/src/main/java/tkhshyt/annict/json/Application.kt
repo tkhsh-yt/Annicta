@@ -9,4 +9,4 @@ import java.io.Serializable
  */
 data class Application(
         val uid: String
-): Serializable
+) : Serializable

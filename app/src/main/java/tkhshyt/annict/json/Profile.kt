@@ -26,22 +26,22 @@ import java.util.*
  * @property notifications_count 通知数．
  */
 data class Profile(
-        val id                  : Long?,
-        val username            : String?,
-        val name                : String?,
-        val description         : String?,
-        val url                 : String?,
-        val avatar_url          : String?,
+        val id: Long?,
+        val username: String?,
+        val name: String?,
+        val description: String?,
+        val url: String?,
+        val avatar_url: String?,
         val background_image_url: String?,
-        val records_count       : Int?,
-        val followings_count    : Int?,
-        val followers_count     : Int?,
-        val wanna_watch_count   : Int?,
-        val watching_count      : Int?,
-        val watched_count       : Int?,
-        val on_hold_count       : Int?,
-        val stop_watching_count : Int?,
-        val created_at          : Date?,
-        val email               : String?,
-        val notifications_count : Int?
-): Serializable
+        val records_count: Int?,
+        val followings_count: Int?,
+        val followers_count: Int?,
+        val wanna_watch_count: Int?,
+        val watching_count: Int?,
+        val watched_count: Int?,
+        val on_hold_count: Int?,
+        val stop_watching_count: Int?,
+        val created_at: Date?,
+        val email: String?,
+        val notifications_count: Int?
+) : Serializable

@@ -12,9 +12,9 @@ import java.io.Serializable
  * @property created_at
  */
 data class TokenInfo(
-        val resource_owner_id : Int,
-        val scope             : List<String>,
+        val resource_owner_id: Int,
+        val scope: List<String>,
         val expires_in_seconds: Int?,
-        val application       : Application,
-        val created_at        : Long
-): Serializable
+        val application: Application,
+        val created_at: Long
+) : Serializable

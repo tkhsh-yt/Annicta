@@ -9,4 +9,4 @@ import java.io.Serializable
  */
 data class Facebook(
         val og_image_url: String
-): Serializable
+) : Serializable
