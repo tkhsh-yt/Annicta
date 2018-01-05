@@ -35,7 +35,7 @@ class OpenAnnictFragment : Fragment() {
     // 外部ブラウザで認証URLを開く
     private fun openAuthorizeUrlExternal() {
         val args = arguments
-        if(args != null) {
+        if (args != null) {
             if (args.containsKey("client_id")) {
                 val uri = Uri.parse(AnnictClient.authorizeUrl(
                         args.getString("client_id"))

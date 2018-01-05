@@ -18,7 +18,9 @@ class TopActivity : AppCompatActivity() {
 
         Kotpref.init(this)
 
-        if(UserInfo.accessToken != null) {
+        if (UserInfo.accessToken != null) {
+            go(Page.MAIN)
+            finish()
         } else {
             launchAuthorizeActivity()
         }
@@ -36,9 +38,9 @@ class TopActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        when(requestCode) {
+        when (requestCode) {
             RequestCode.Auth -> { // 認証
-                if(resultCode == Activity.RESULT_OK) {
+                if (resultCode == Activity.RESULT_OK) {
                     UserInfo.accessToken = data?.getStringExtra("access_token")
                     Toast.makeText(this, "認証に成功しました", Toast.LENGTH_LONG).show()
                 }
