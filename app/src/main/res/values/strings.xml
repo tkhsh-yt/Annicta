@@ -12,4 +12,13 @@
     <string name="page_main">Main</string>
     <string name="page_auth">Auth</string>
     <string name="page_top">Top</string>
+    <string name="start_at">放送日時</string>
+    <string name="channel">チャンネル</string>
+    <string name="rebroadcast">再放送</string>
+    <string name="title">タイトル</string>
+    <string name="episode">エピソード</string>
+    <string name="authorize">Annictでログインして連携</string>
+    <string name="have_code">既にコードを持っている場合</string>
+    <string name="how_to_authorize">アプリを使用するためには，Annict と連携をするために認証コードが必要です．下のボタンをタップするとブラウザが開きます．そこでログインして認証コードを手に入れてください．</string>
+    <string name="fail_to_authorize">認証に失敗しました</string>
 </resources>

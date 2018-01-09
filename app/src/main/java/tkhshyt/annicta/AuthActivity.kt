@@ -58,7 +58,7 @@ class AuthActivity : AppCompatActivity() {
     // 認証に失敗したときの処理
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onFailToAuthorizeEvent(event: FailToAuthorizeEvent) {
-        Toast.makeText(this, "認証に失敗しました", Toast.LENGTH_LONG).show()
+        Toast.makeText(this, getString(R.string.fail_to_authorize), Toast.LENGTH_LONG).show()
         commitOpenAnnictFragment()
     }
 
