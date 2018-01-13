@@ -88,7 +88,7 @@
                 android:layout_marginTop="8dp"
                 android:text="@string/title"
                 android:textSize="16sp"
-                android:textColor="#0366d6"
+                android:textColor="@color/title_color"
                 app:layout_constraintStart_toEndOf="@+id/title_icon"
                 app:layout_constraintTop_toBottomOf="@+id/channel" />
 
@@ -101,7 +101,7 @@
                 android:layout_marginTop="8dp"
                 android:text="@string/episode"
                 android:textSize="18sp"
-                android:textColor="#0366d6"
+                android:textColor="@color/episode_color"
                 app:layout_constraintStart_toEndOf="@+id/title_icon"
                 app:layout_constraintTop_toBottomOf="@+id/title" />
 

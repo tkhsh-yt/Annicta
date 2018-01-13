@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:fitsSystemWindows="true"
+    android:padding="8dp">
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/title_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/title_icon"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_broken_image"
+            android:tint="#BDBDBD"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="@string/title"
+            android:textColor="@color/title_color"
+            android:textSize="20sp"
+            app:layout_constraintStart_toEndOf="@+id/title_icon"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginLeft="8dp" />
+
+        <TextView
+            android:id="@+id/episode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/episode"
+            android:textColor="@color/episode_color"
+            android:textSize="24sp"
+            app:layout_constraintStart_toEndOf="@+id/title_icon"
+            app:layout_constraintTop_toBottomOf="@+id/title"
+            android:layout_marginLeft="8dp" />
+    </android.support.constraint.ConstraintLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="right">
+
+        <TextView
+            android:id="@+id/rating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="8dp"
+            android:paddingTop="4dp"
+            android:text="満足度"
+            android:textSize="20sp"
+            android:layout_marginRight="8dp" />
+
+        <android.support.v7.widget.AppCompatSpinner
+            android:id="@+id/ratingSpinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="8dp" />
+
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/comment"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        android:gravity="top|left"
+        android:hint="@string/comment_hint"
+        android:layout_weight="1"
+        android:minLines="6"
+        android:scrollbars="vertical"
+        android:background="@android:color/transparent" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="right" >
+
+        <TextView
+            android:id="@+id/count"
+            android:text="0/1000"
+            android:textSize="24sp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:layout_marginRight="8dp" />
+
+        <Space
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <ToggleButton
+            android:id="@+id/facebook"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:text=""
+            android:textOn=""
+            android:textOff=""
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/toggle_facebook_selector"
+            android:layout_marginRight="8dp" />
+
+        <ToggleButton
+            android:id="@+id/twitter"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:text=""
+            android:textOn=""
+            android:textOff=""
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/toggle_twitter_selector"
+            android:layout_marginRight="8dp" />
+
+        <Button
+            android:id="@+id/record"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/record"
+            android:textColor="@color/white"
+            android:background="@drawable/primary_button"
+            android:layout_marginRight="8dp" />
+
+    </LinearLayout>
+
+
+
+</LinearLayout>

@@ -5,8 +5,12 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentPagerAdapter
 import android.support.v7.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
+import org.greenrobot.eventbus.EventBus
+import tkhshyt.annicta.event.subscribe.RecordEventSubscriber
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), RecordEventSubscriber {
+
+    override val baseActivity: AppCompatActivity = this
 
     val pageTitle = arrayOf("放送予定")
     var fragments = arrayOfNulls<Fragment>(1)
@@ -43,4 +47,16 @@ class MainActivity : AppCompatActivity() {
 
         return fragments[n]!!
     }
+
+
+    override fun onStart() {
+        super.onStart()
+        EventBus.getDefault().register(this)
+    }
+
+    override fun onStop() {
+        EventBus.getDefault().unregister(this)
+        super.onStop()
+    }
 }
+

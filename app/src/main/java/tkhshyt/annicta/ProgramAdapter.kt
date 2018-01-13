@@ -5,10 +5,11 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.item_program.view.*
+import org.greenrobot.eventbus.EventBus
 import tkhshyt.annict.json.Program
+import tkhshyt.annicta.event.ShowRecordDialogEvent
 import tkhshyt.annicta.utils.Utils
 
 class ProgramAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -30,17 +31,14 @@ class ProgramAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         }
     }
 
-    class ProgramViewHolder(item: View?, private val context: Context?) : RecyclerView.ViewHolder(item), View.OnClickListener {
-
-        init {
-            item?.setOnClickListener(this)
-        }
-
-        override fun onClick(v: View?) {
-            Toast.makeText(context, "touched", Toast.LENGTH_LONG).show()
-        }
+    class ProgramViewHolder(item: View?, private val context: Context?) : RecyclerView.ViewHolder(item) {
 
         fun bindProgram(program: Program) {
+            itemView.setOnClickListener {
+                val episode = program.episode.copy(work = program.work)
+                EventBus.getDefault().post(ShowRecordDialogEvent(episode))
+            }
+
             var imageUrl: String? = null
             if (context != null) {
                 if (program.work.images?.twitter?.image_url != null && program.work.images.twitter.image_url.isNotBlank()) {
