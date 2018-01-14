@@ -21,8 +21,6 @@
         <activity android:name=".AuthActivity" />
         <activity android:name=".MainActivity"
             android:launchMode="singleTop"/>
-        <activity android:name=".RecordDialogFragment"
-            android:theme="@style/Theme.TranslucentBackground" />
     </application>
 
 </manifest>
