@@ -2,6 +2,7 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
@@ -21,62 +22,58 @@
             android:id="@+id/title_icon"
             android:layout_width="64dp"
             android:layout_height="64dp"
+            android:layout_marginTop="8dp"
             android:scaleType="centerCrop"
             android:src="@drawable/ic_broken_image"
             android:tint="#BDBDBD"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/title" />
 
         <TextView
             android:id="@+id/title"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
             android:text="@string/title"
             android:textColor="@color/title_color"
-            android:textSize="20sp"
-            app:layout_constraintStart_toEndOf="@+id/title_icon"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginLeft="8dp" />
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/episode"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:text="@string/episode"
             android:textColor="@color/episode_color"
-            android:textSize="24sp"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/title_icon"
-            app:layout_constraintTop_toBottomOf="@+id/title"
-            android:layout_marginLeft="8dp" />
+            app:layout_constraintTop_toBottomOf="@+id/title" />
     </android.support.constraint.ConstraintLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:layout_gravity="center_vertical"
         android:gravity="right">
 
         <TextView
             android:id="@+id/rating"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginTop="8dp"
-            android:paddingTop="4dp"
             android:text="満足度"
             android:textSize="20sp"
-            android:layout_marginRight="8dp" />
+            android:layout_marginRight="8dp"
+            android:layout_marginEnd="8dp" />
 
         <android.support.v7.widget.AppCompatSpinner
             android:id="@+id/ratingSpinner"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginRight="8dp" />
+            android:layout_height="wrap_content"/>
 
     </LinearLayout>
 
@@ -96,6 +93,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:layout_gravity="center_vertical"
         android:gravity="right" >
 
         <TextView
@@ -104,14 +102,12 @@
             android:textSize="24sp"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginEnd="8dp"
-            android:layout_marginTop="8dp"
             android:gravity="center"
             android:layout_marginRight="8dp" />
 
         <Space
             android:layout_weight="1"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content" />
 
         <ToggleButton
@@ -121,8 +117,6 @@
             android:text=""
             android:textOn=""
             android:textOff=""
-            android:layout_marginEnd="8dp"
-            android:layout_marginTop="8dp"
             android:background="@drawable/toggle_facebook_selector"
             android:layout_marginRight="8dp" />
 
@@ -133,8 +127,6 @@
             android:text=""
             android:textOn=""
             android:textOff=""
-            android:layout_marginEnd="8dp"
-            android:layout_marginTop="8dp"
             android:background="@drawable/toggle_twitter_selector"
             android:layout_marginRight="8dp" />
 
@@ -142,12 +134,9 @@
             android:id="@+id/record"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginTop="8dp"
             android:text="@string/record"
             android:textColor="@color/white"
-            android:background="@drawable/primary_button"
-            android:layout_marginRight="8dp" />
+            android:background="@drawable/primary_button" />
 
     </LinearLayout>
 
