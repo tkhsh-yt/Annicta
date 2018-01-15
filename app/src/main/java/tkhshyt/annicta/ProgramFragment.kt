@@ -7,6 +7,8 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.mikepenz.fastadapter.FastAdapter
+import com.mikepenz.fastadapter.adapters.ItemAdapter
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_list.*
@@ -16,6 +18,8 @@ import tkhshyt.annicta.utils.Utils
 
 class ProgramFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 
+    val programItemAdapter = ItemAdapter<ProgramItem>()
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_list, container, false)
     }
@@ -23,8 +27,8 @@ class ProgramFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val adapter = ProgramAdapter()
-        recyclerView.adapter = adapter
+        val fastAdapter = FastAdapter.with<ProgramItem, ItemAdapter<ProgramItem>>(programItemAdapter)
+        recyclerView.adapter = fastAdapter
 
         val llm = LinearLayoutManager(context)
         recyclerView.setHasFixedSize(true)
@@ -42,12 +46,15 @@ class ProgramFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
     }
 
     private fun updatePrograms() {
-        val adapter = recyclerView.adapter as ProgramAdapter
+        val adapter = recyclerView.adapter
 
         val accessToken = UserInfo.accessToken
         if (accessToken != null) {
-            val head = adapter.list.getOrNull(0)
-            val startedAt = head?.let { Utils.apiDateFormat.format(it.started_at) }
+            val head =
+                    if(programItemAdapter.adapterItemCount != 0) {
+                        programItemAdapter.getAdapterItem(0)
+                    } else { null }
+            val startedAt = head?.let { Utils.apiDateFormat.format(it.program.started_at) }
 
             AnnictClient.service.programs(
                     access_token = accessToken,
@@ -57,13 +64,13 @@ class ProgramFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ programs ->
                     programs?.programs?.forEach {
-                        adapter.list.add(0, it)
-                        adapter.notifyItemInserted(0)
-                    }
-                    swipeRefreshView.isRefreshing = false
-                }, {
-                    swipeRefreshView.isRefreshing = false
-                })
+                        programItemAdapter.add(0, ProgramItem(it, context))
+                                adapter.notifyItemInserted(0)
+                            }
+                            swipeRefreshView.isRefreshing = false
+                        }, {
+                            swipeRefreshView.isRefreshing = false
+                        })
         }
     }
 }
