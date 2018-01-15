@@ -5,11 +5,13 @@ import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import tkhshyt.annict.AnnictClient
 import tkhshyt.annicta.RecordDialogFragment
 import tkhshyt.annicta.event.CreateRecordEvent
+import tkhshyt.annicta.event.RecordedEvent
 import tkhshyt.annicta.event.ShowRecordDialogEvent
 import tkhshyt.annicta.pref.UserInfo
 
@@ -41,8 +43,9 @@ interface RecordEventSubscriber {
                     share_facebook = createRecord.share_facebook
             ).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ _ ->
+                .subscribe({ record ->
                     Toast.makeText(baseActivity, "記録しました", Toast.LENGTH_LONG).show()
+                    EventBus.getDefault().post(RecordedEvent(record))
                 }, { _ ->
                     Toast.makeText(baseActivity, "記録に失敗しました", Toast.LENGTH_LONG).show()
                 })

@@ -49,8 +49,6 @@ class ProgramItem(val program: Program, val context: Context?) : AbstractItem<Pr
                         Glide.with(context)
                             .load(imageUrl)
                             .into(itemView.title_icon)
-                    } else {
-
                     }
                 }
                 itemView.start_at.text = Utils.textDateFormat.format(program.started_at)

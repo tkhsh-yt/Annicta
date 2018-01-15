@@ -48,15 +48,19 @@ class MainActivity : AppCompatActivity(), RecordEventSubscriber {
         return fragments[n]!!
     }
 
-
     override fun onStart() {
         super.onStart()
         EventBus.getDefault().register(this)
     }
 
-    override fun onStop() {
+    override fun onPause() {
+        super.onPause()
         EventBus.getDefault().unregister(this)
+    }
+
+    override fun onStop() {
         super.onStop()
+        EventBus.getDefault().unregister(this)
     }
 }
 

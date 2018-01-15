@@ -7,12 +7,17 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.adapters.ItemAdapter
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_list.*
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 import tkhshyt.annict.AnnictClient
+import tkhshyt.annicta.event.RecordedEvent
 import tkhshyt.annicta.pref.UserInfo
 import tkhshyt.annicta.utils.Utils
 
@@ -58,19 +63,34 @@ class ProgramFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 
             AnnictClient.service.programs(
                     access_token = accessToken,
-                    sort_started_at = "asc",
+                    sort_started_at = "desc",
                     filter_started_at_gt = startedAt
             ).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ programs ->
-                    programs?.programs?.forEach {
-                        programItemAdapter.add(0, ProgramItem(it, context))
-                                adapter.notifyItemInserted(0)
-                            }
-                            swipeRefreshView.isRefreshing = false
-                        }, {
-                            swipeRefreshView.isRefreshing = false
-                        })
+                    programItemAdapter.add(programs.programs.map { ProgramItem(it, context) })
+                    swipeRefreshView.isRefreshing = false
+                })
+        }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        EventBus.getDefault().register(this)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        EventBus.getDefault().unregister(this)
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onRecordedEvent(event: RecordedEvent) {
+        val index = (0 until programItemAdapter.adapterItemCount).firstOrNull {
+            programItemAdapter.getAdapterItem(it).program.episode.id == event.record.episode?.id
+        }
+        if (index != null) {
+            programItemAdapter.remove(index)
         }
     }
 }

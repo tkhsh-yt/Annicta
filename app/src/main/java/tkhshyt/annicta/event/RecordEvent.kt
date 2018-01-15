@@ -1,6 +1,7 @@
 package tkhshyt.annicta.event
 
 import tkhshyt.annict.json.Episode
+import tkhshyt.annict.json.Record
 
 data class ShowRecordDialogEvent(val episode: Episode)
 
@@ -13,3 +14,5 @@ data class CreateRecord(
 )
 
 data class CreateRecordEvent(val createRecord: CreateRecord)
+
+data class RecordedEvent(val record: Record)
