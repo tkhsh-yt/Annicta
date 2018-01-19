@@ -6,9 +6,14 @@ import android.support.v4.app.FragmentPagerAdapter
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.content.res.AppCompatResources
+import android.view.Menu
 import kotlinx.android.synthetic.main.activity_main.*
 import org.greenrobot.eventbus.EventBus
 import tkhshyt.annicta.event.subscribe.RecordEventSubscriber
+import android.view.MenuInflater
+import android.view.MenuItem
+import tkhshyt.annicta.event.ReloadProgramListEvent
+
 
 class MainActivity : AppCompatActivity(), RecordEventSubscriber {
 
@@ -22,10 +27,10 @@ class MainActivity : AppCompatActivity(), RecordEventSubscriber {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        supportActionBar?.hide()
-
         toolbar.setTitleTextColor(ContextCompat.getColor(this, R.color.white))
-        toolbar.title = pageTitle[0]
+
+        setSupportActionBar(toolbar)
+        supportActionBar?.title = pageTitle[0]
 
         val adapter = object : FragmentPagerAdapter(supportFragmentManager) {
 
@@ -46,6 +51,26 @@ class MainActivity : AppCompatActivity(), RecordEventSubscriber {
         tabs.setupWithViewPager(pager)
 
         tabs.getTabAt(0)?.setCustomView(R.layout.tab_broadcast)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.refresh, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when(item?.itemId) {
+            R.id.menu_refresh -> {
+                when (tabs.selectedTabPosition) {
+                    // ハードコーディングを後でやめる
+                    // 列挙とか使って，タブの管理と統一するのがいい？
+                    0 -> {
+                        EventBus.getDefault().post(ReloadProgramListEvent())
+                    }
+                }
+            }
+        }
+        return true
     }
 
     fun getFragment(n: Int): Fragment {

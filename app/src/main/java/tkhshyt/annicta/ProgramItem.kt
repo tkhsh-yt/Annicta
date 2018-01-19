@@ -13,6 +13,7 @@ import org.greenrobot.eventbus.EventBus
 import tkhshyt.annict.json.Program
 import tkhshyt.annicta.event.ShowRecordDialogEvent
 import tkhshyt.annicta.utils.Utils
+import java.io.Serializable
 
 class ProgramItem(val program: Program, val context: Context?) : AbstractItem<ProgramItem, ProgramItem.ViewHolder>() {
 

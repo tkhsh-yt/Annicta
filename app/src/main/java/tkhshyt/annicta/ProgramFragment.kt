@@ -4,13 +4,13 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.adapters.ItemAdapter
-import com.mikepenz.fastadapter_extensions.scroll.EndlessRecyclerOnScrollListener
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_list.*
@@ -18,7 +18,9 @@ import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import tkhshyt.annict.AnnictClient
+import tkhshyt.annict.json.Program
 import tkhshyt.annicta.event.RecordedEvent
+import tkhshyt.annicta.event.ReloadProgramListEvent
 import tkhshyt.annicta.pref.UserInfo
 import tkhshyt.annicta.utils.Utils
 
@@ -27,6 +29,7 @@ class ProgramFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
     private val programItemAdapter = ItemAdapter<ProgramItem>()
     private var loading = false
     private var ended = false
+    private val visibleThreshold = 5
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_list, container, false)
@@ -42,9 +45,17 @@ class ProgramFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
         recyclerView.setHasFixedSize(true)
         recyclerView.layoutManager = llm
 
-        recyclerView.addOnScrollListener(object : EndlessRecyclerOnScrollListener() {
-            override fun onLoadMore(currentPage: Int) {
-                if(!loading && !ended) {
+        updatePrograms()
+
+        recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                val visibleItemCount = recyclerView?.childCount ?: 0
+                val totalItemCount = llm.itemCount
+                val firstVisibleItem = llm.findFirstVisibleItemPosition()
+
+                if (!loading && !ended && (totalItemCount - visibleItemCount) <= (firstVisibleItem + visibleThreshold)) {
+                    loading = true
                     val accessToken = UserInfo.accessToken
                     if(accessToken != null) {
                         if(programItemAdapter.adapterItemCount != 0) {
@@ -57,12 +68,14 @@ class ProgramFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
                                     filter_started_at_lt = startedAt
                             ).subscribeOn(Schedulers.io())
                                 .observeOn(AndroidSchedulers.mainThread())
+                                .doFinally {
+                                    loading = false
+                                }
                                 .subscribe({ programs ->
                                     if(programs.programs.size != 1) {
                                         (1 until programs.programs.size).forEach {
                                             programItemAdapter.add(programItemAdapter.adapterItemCount, ProgramItem(programs.programs[it], context))
                                         }
-                                        loading = false
                                     } else {
                                         ended = true
                                     }
@@ -77,9 +90,6 @@ class ProgramFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 
         swipeRefreshView.setOnRefreshListener(this)
         swipeRefreshView.setColorSchemeResources(R.color.greenPrimary, R.color.redPrimary, R.color.indigoPrimary, R.color.yellowPrimary)
-
-        swipeRefreshView.isRefreshing = true
-        updatePrograms()
     }
 
     override fun onRefresh() {
@@ -89,6 +99,9 @@ class ProgramFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
     private fun updatePrograms() {
         val accessToken = UserInfo.accessToken
         if (accessToken != null) {
+            swipeRefreshView.isRefreshing = true
+            loading = true
+
             val head =
                     if(programItemAdapter.adapterItemCount != 0) {
                         programItemAdapter.getAdapterItem(0)
@@ -101,9 +114,14 @@ class ProgramFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
                     filter_started_at_gt = startedAt
             ).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+                .doFinally {
+                    swipeRefreshView.isRefreshing = false
+                    loading = false
+                }
                 .subscribe({ programs ->
                     programItemAdapter.add(programs.programs.map { ProgramItem(it, context) })
-                    swipeRefreshView.isRefreshing = false
+                }, { throwable ->
+                    Toast.makeText(context, "取得に失敗しました", Toast.LENGTH_LONG).show()
                 })
         }
     }
@@ -125,6 +143,34 @@ class ProgramFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
         }
         if (index != null) {
             programItemAdapter.remove(index)
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onReloadProgramListEvent(event: ReloadProgramListEvent) {
+        loading = true
+        ended = false
+        programItemAdapter.clear()
+        updatePrograms()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+
+        outState.putInt("item_count", programItemAdapter.adapterItemCount)
+        programItemAdapter.adapterItems.forEachIndexed({ i, item ->
+            outState.putSerializable("item_$i", item.program)
+        })
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+        if(savedInstanceState != null) {
+            (0 until savedInstanceState.getInt("item_count")).forEach {
+                val item = ProgramItem(savedInstanceState.getSerializable("item_$it") as Program, context)
+                programItemAdapter.add(it, item)
+            }
         }
     }
 }
