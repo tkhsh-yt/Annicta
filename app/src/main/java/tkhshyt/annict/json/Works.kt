@@ -6,13 +6,13 @@ import java.io.Serializable
  * 作品の情報のページを表すクラス．
  *
  * @param works 作品情報のリスト．
- * @param totalCount ページを跨いだ全リソース数．
- * @param nextPage 次のページ数．
- * @param prevPage 前のページ数．
+ * @param total_count ページを跨いだ全リソース数．
+ * @param next_page 次のページ数．
+ * @param prev_page 前のページ数．
  */
 data class Works(
         val works: List<Work>,
-        val totalCount: Int,
-        val nextPage: Int?,
-        val prevPage: Int?
+        val total_count: Int,
+        val next_page: Int?,
+        val prev_page: Int?
 ) : Serializable
