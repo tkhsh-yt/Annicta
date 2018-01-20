@@ -57,9 +57,9 @@ class ProgramFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
                 if (!loading && !ended && (totalItemCount - visibleItemCount) <= (firstVisibleItem + visibleThreshold)) {
                     loading = true
                     val accessToken = UserInfo.accessToken
-                    if(accessToken != null) {
-                        if(programItemAdapter.adapterItemCount != 0) {
-                            val last = programItemAdapter.getAdapterItem(programItemAdapter.adapterItemCount-1)
+                    if (accessToken != null) {
+                        if (programItemAdapter.adapterItemCount != 0) {
+                            val last = programItemAdapter.getAdapterItem(programItemAdapter.adapterItemCount - 1)
                             val startedAt = Utils.apiDateFormat.format(last.program.started_at)
 
                             AnnictClient.service.programs(
@@ -72,7 +72,7 @@ class ProgramFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
                                     loading = false
                                 }
                                 .subscribe({ programs ->
-                                    if(programs.programs.size != 1) {
+                                    if (programs.programs.size != 1) {
                                         (1 until programs.programs.size).forEach {
                                             programItemAdapter.add(programItemAdapter.adapterItemCount, ProgramItem(programs.programs[it], context))
                                         }
@@ -103,9 +103,11 @@ class ProgramFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
             loading = true
 
             val head =
-                    if(programItemAdapter.adapterItemCount != 0) {
+                    if (programItemAdapter.adapterItemCount != 0) {
                         programItemAdapter.getAdapterItem(0)
-                    } else { null }
+                    } else {
+                        null
+                    }
             val startedAt = head?.let { Utils.apiDateFormat.format(it.program.started_at) }
 
             AnnictClient.service.programs(
@@ -166,7 +168,7 @@ class ProgramFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        if(savedInstanceState != null) {
+        if (savedInstanceState != null) {
             (0 until savedInstanceState.getInt("item_count")).forEach {
                 val item = ProgramItem(savedInstanceState.getSerializable("item_$it") as Program, context)
                 programItemAdapter.add(it, item)

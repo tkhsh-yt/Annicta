@@ -19,8 +19,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".AuthActivity" />
-        <activity android:name=".MainActivity"
-            android:launchMode="singleTop"/>
+        <activity
+            android:name=".MainActivity"
+            android:launchMode="singleTop" />
     </application>
 
 </manifest>

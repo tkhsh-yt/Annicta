@@ -1,9 +1,6 @@
 package tkhshyt.annicta
 
-import android.annotation.SuppressLint
 import android.content.Context
-import android.support.v7.widget.RecyclerView
-import android.text.InputType
 import android.view.View
 import com.bumptech.glide.Glide
 import com.mikepenz.fastadapter.FastAdapter
@@ -13,7 +10,6 @@ import org.greenrobot.eventbus.EventBus
 import tkhshyt.annict.json.Program
 import tkhshyt.annicta.event.ShowRecordDialogEvent
 import tkhshyt.annicta.utils.Utils
-import java.io.Serializable
 
 class ProgramItem(val program: Program, val context: Context?) : AbstractItem<ProgramItem, ProgramItem.ViewHolder>() {
 
@@ -32,7 +28,7 @@ class ProgramItem(val program: Program, val context: Context?) : AbstractItem<Pr
     class ViewHolder(itemView: View, private val context: Context?) : FastAdapter.ViewHolder<ProgramItem>(itemView) {
 
         override fun bindView(programItem: ProgramItem?, payloads: MutableList<Any>?) {
-            if(programItem != null) {
+            if (programItem != null) {
                 val program = programItem.program
                 itemView.setOnClickListener {
                     val episode = program.episode.copy(work = program.work)

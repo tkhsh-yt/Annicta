@@ -5,14 +5,12 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentPagerAdapter
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.content.res.AppCompatResources
 import android.view.Menu
+import android.view.MenuItem
 import kotlinx.android.synthetic.main.activity_main.*
 import org.greenrobot.eventbus.EventBus
-import tkhshyt.annicta.event.subscribe.RecordEventSubscriber
-import android.view.MenuInflater
-import android.view.MenuItem
 import tkhshyt.annicta.event.ReloadProgramListEvent
+import tkhshyt.annicta.event.subscribe.RecordEventSubscriber
 
 
 class MainActivity : AppCompatActivity(), RecordEventSubscriber {
@@ -59,11 +57,11 @@ class MainActivity : AppCompatActivity(), RecordEventSubscriber {
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        when(item?.itemId) {
+        when (item?.itemId) {
             R.id.menu_refresh -> {
                 when (tabs.selectedTabPosition) {
-                    // ハードコーディングを後でやめる
-                    // 列挙とか使って，タブの管理と統一するのがいい？
+                // ハードコーディングを後でやめる
+                // 列挙とか使って，タブの管理と統一するのがいい？
                     0 -> {
                         EventBus.getDefault().post(ReloadProgramListEvent())
                     }

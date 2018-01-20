@@ -57,7 +57,7 @@ class RecordDialogFragment : DialogFragment() {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if(s != null) {
+                if (s != null) {
                     val countText = "${s.length}/$maxCommentLength"
                     content.count.text = countText
                 }
