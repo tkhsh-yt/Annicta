@@ -33,7 +33,8 @@
                 android:src="@drawable/ic_broken_image"
                 android:tint="#BDBDBD"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/start_at" />
+                app:layout_constraintTop_toBottomOf="@+id/start_at"
+                android:layout_marginLeft="8dp" />
 
             <TextView
                 android:id="@+id/start_at"

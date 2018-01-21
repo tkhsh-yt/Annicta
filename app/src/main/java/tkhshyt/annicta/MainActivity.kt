@@ -17,9 +17,9 @@ class MainActivity : AppCompatActivity(), RecordEventSubscriber {
 
     override val baseActivity: AppCompatActivity = this
 
-    private val pageTitle = arrayOf("放送予定")
+    private val pageTitle = arrayOf("放送予定", "今期アニメ")
     private val pageIcon = arrayOf(R.drawable.ic_rss_feed)
-    private val fragments = arrayOfNulls<Fragment>(1)
+    private val fragments = arrayOfNulls<Fragment>(2)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,29 +51,17 @@ class MainActivity : AppCompatActivity(), RecordEventSubscriber {
         tabs.getTabAt(0)?.setCustomView(R.layout.tab_broadcast)
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.refresh, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        when (item?.itemId) {
-            R.id.menu_refresh -> {
-                when (tabs.selectedTabPosition) {
-                // ハードコーディングを後でやめる
-                // 列挙とか使って，タブの管理と統一するのがいい？
-                    0 -> {
-                        EventBus.getDefault().post(ReloadProgramListEvent())
-                    }
-                }
-            }
-        }
-        return true
-    }
-
     fun getFragment(n: Int): Fragment {
         if (fragments[n] == null) {
-            fragments[n] = ProgramFragment()
+            when (n) {
+                0 -> {
+                    fragments[0] = ProgramFragment()
+                }
+                1 -> {
+                    fragments[1] = WorkFragment()
+                }
+            }
+
         }
 
         return fragments[n]!!
