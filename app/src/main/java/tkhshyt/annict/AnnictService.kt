@@ -379,7 +379,7 @@ interface AnnictService {
      * @return
      */
     @GET("{version}/me/works")
-    fun followingWorks(
+    fun worksWithKind(
             @Path("version") version: String = "v1",
             @Query("access_token") access_token: String,
             @Query("fields") fields: String? = null,

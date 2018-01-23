@@ -1,10 +1,16 @@
 package tkhshyt.annict
 
-object Kind {
-    val WannaWatch = "wanna_watch"
-    val Watching = "watching"
-    val Watched = "watched"
-    val OnHold = "on_hold"
-    val StopWatching = "stop_watching"
-    val NoSelect = "no_select"
+enum class Kind(val kind: String) {
+    NoSelect("no_select"),
+    WannaWatch("wanna_watch"),
+    Watching("watching"),
+    Watched("watched"),
+    OnHold("on_hold"),
+    StopWatching("stop_watching");
+
+    companion object {
+        fun getIndex(string: String?) : Int {
+            return Kind.values().indexOfFirst { it.kind == string }
+        }
+    }
 }
