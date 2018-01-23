@@ -1,15 +1,17 @@
 package tkhshyt.annicta
 
 import android.content.Context
+import android.support.v4.content.ContextCompat
 import android.view.View
+import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import com.bumptech.glide.Glide
 import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.items.AbstractItem
-import kotlinx.android.synthetic.main.item_program.view.*
-import org.greenrobot.eventbus.EventBus
+import kotlinx.android.synthetic.main.item_work.view.*
+import tkhshyt.annict.Kind
 import tkhshyt.annict.json.Work
-import tkhshyt.annicta.event.ShowRecordDialogEvent
-import tkhshyt.annicta.utils.Utils
 
 class WorkItem(val work: Work, val context: Context?) : AbstractItem<WorkItem, WorkItem.ViewHolder>() {
 
@@ -48,6 +50,33 @@ class WorkItem(val work: Work, val context: Context?) : AbstractItem<WorkItem, W
                     }
                 }
                 itemView.title.text = work.title
+
+                var selectedItem = -1
+                val adapter = object : ArrayAdapter<String>(context, R.layout.item_status, context?.resources?.getStringArray(R.array.work_status_array)) {
+
+                    override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup?): View {
+                        val view = super.getDropDownView(position, convertView, parent)
+                        if(position == selectedItem) {
+                            view.setBackgroundColor(ContextCompat.getColor(context, R.color.spinner_selected_color))
+                        } else {
+                            view.setBackgroundColor(ContextCompat.getColor(context, R.color.status_dropdown_color))
+                        }
+                        return view
+                    }
+                }
+                adapter.setDropDownViewResource(R.layout.item_status_dropdown)
+
+                itemView.statusSpinner.adapter = adapter
+                itemView.statusSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+
+                    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                        selectedItem = position
+                    }
+
+                    override fun onNothingSelected(parent: AdapterView<*>?) {
+                    }
+                }
+                itemView.statusSpinner.setSelection(Kind.getIndex(work.status?.kind))
             }
         }
 
