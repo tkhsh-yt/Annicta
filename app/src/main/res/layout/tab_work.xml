@@ -5,7 +5,7 @@
 
     <ImageView
         android:id="@+id/icon"
-        android:src="@drawable/ic_action_calendar_day"
+        android:src="@drawable/ic_rss_feed"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 

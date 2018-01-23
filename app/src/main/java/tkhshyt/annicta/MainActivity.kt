@@ -18,8 +18,8 @@ class MainActivity : AppCompatActivity(), RecordEventSubscriber {
     override val baseActivity: AppCompatActivity = this
 
     private val pageTitle = arrayOf("放送予定", "今期アニメ")
-    private val pageIcon = arrayOf(R.drawable.ic_rss_feed)
-    private val fragments = arrayOfNulls<Fragment>(2)
+    private val tabViews = arrayOf(R.layout.tab_broadcast, R.layout.tab_work)
+    private val fragments = arrayOf(ProgramFragment(), WorkFragment())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,23 +48,13 @@ class MainActivity : AppCompatActivity(), RecordEventSubscriber {
         pager.adapter = adapter
         tabs.setupWithViewPager(pager)
 
-        tabs.getTabAt(0)?.setCustomView(R.layout.tab_broadcast)
+        (0 until tabs.tabCount).forEach {
+            tabs.getTabAt(it)?.setCustomView(tabViews[it])
+        }
     }
 
     fun getFragment(n: Int): Fragment {
-        if (fragments[n] == null) {
-            when (n) {
-                0 -> {
-                    fragments[0] = ProgramFragment()
-                }
-                1 -> {
-                    fragments[1] = WorkFragment()
-                }
-            }
-
-        }
-
-        return fragments[n]!!
+        return fragments[n] as Fragment
     }
 
     override fun onStart() {
