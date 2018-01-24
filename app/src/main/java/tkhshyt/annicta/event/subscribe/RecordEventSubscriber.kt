@@ -43,7 +43,8 @@ interface RecordEventSubscriber {
                     share_facebook = createRecord.share_facebook
             ).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ record ->
+                .subscribe({ response ->
+                    val record = response.body()
                     Toast.makeText(baseActivity, "記録しました", Toast.LENGTH_LONG).show()
                     EventBus.getDefault().post(RecordedEvent(record))
                 }, { _ ->

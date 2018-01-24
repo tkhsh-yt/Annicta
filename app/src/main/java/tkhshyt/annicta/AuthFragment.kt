@@ -32,7 +32,8 @@ class AuthFragment : Fragment() {
                     code = codeEditText.text.toString()
             ).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ accessToken ->
+                .subscribe({ response ->
+                    val accessToken = response.body()
                     val intent = Intent()
                     intent.putExtra("access_token", accessToken.access_token)
                     activity?.setResult(Activity.RESULT_OK, intent)

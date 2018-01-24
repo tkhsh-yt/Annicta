@@ -26,7 +26,7 @@ interface AnnictService {
             @Query("grant_type") grant_type: String = "authorization_code",
             @Query("redirect_uri") redirect_uri: String = "urn:ietf:wg:oauth:2.0:oob",
             @Query("code") code: String
-    ): Single<AccessToken>
+    ): Single<Response<AccessToken>>
 
     /**
      * アクセストークンの情報を取得する．
@@ -37,7 +37,7 @@ interface AnnictService {
     @GET("oauth/token/info")
     fun oauthTokenInfo(
             @Header("Authorization") authorization: String
-    ): Single<TokenInfo>
+    ): Single<Response<TokenInfo>>
 
     /**
      * アクセストークンを失効させる．
@@ -54,7 +54,7 @@ interface AnnictService {
             @Query("client_id") client_id: String = BuildConfig.CLIENT_ID,
             @Query("client_secret") client_secret: String = BuildConfig.CLIENT_SECRET,
             @Query("token") token: String
-    ): Single<ResponseBody>
+    ): Single<Response<Void>>
 
     /**
      * 作品情報を取得して返す．
@@ -85,7 +85,7 @@ interface AnnictService {
             @Query("sort_id") sort_id: String? = null,
             @Query("sort_season") sort_season: String? = null,
             @Query("sort_watchers_count") sort_watchers_count: String? = null
-    ): Single<Works>
+    ): Single<Response<Works>>
 
     /**
      * エピソード情報を取得して返す．
@@ -111,7 +111,7 @@ interface AnnictService {
             @Query("per_page") per_page: Int = 25,
             @Query("sort_id") sort_id: String,
             @Query("sort_sort_number") sort_sort_number: String = "desc"
-    ): Single<Episodes>
+    ): Single<Response<Episodes>>
 
     /**
      * エピソードへの記録を取得して返す．
@@ -140,7 +140,7 @@ interface AnnictService {
             @Query("per_page") per_page: Int = 25,
             @Query("sort_id") sort_id: String = "desc",
             @Query("sort_likes_count") sort_likes_count: String = "desc"
-    ): Single<Records>
+    ): Single<Response<Records>>
 
     /**
      * 作品へのレビューを取得して返す．
@@ -167,7 +167,7 @@ interface AnnictService {
             @Query("per_page") per_page: Int = 20,
             @Query("sort_id") sort_id: String = "desc",
             @Query("sort_likes_count") sort_likes_count: String = "desc"
-    ): Single<Reviews>
+    ): Single<Response<Reviews>>
 
     /**
      * ユーザ情報を取得して返す．
@@ -192,7 +192,7 @@ interface AnnictService {
             @Query("page") page: Int = 1,
             @Query("per_page") per_page: Int = 25,
             @Query("sort_id") sort_id: String = "desc"
-    ): Single<Users>
+    ): Single<Response<Users>>
 
     /**
      * ユーザのフォロー情報を取得して返す．
@@ -217,7 +217,7 @@ interface AnnictService {
             @Query("page") page: Int = 1,
             @Query("per_page") per_page: Int = 25,
             @Query("sort_id") sort_id: String = "desc"
-    ): Single<Users>
+    ): Single<Response<Users>>
 
     /**
      * ユーザのフォロワー情報を取得して返す．
@@ -242,7 +242,7 @@ interface AnnictService {
             @Query("page") page: Int = 1,
             @Query("per_page") per_page: Int = 25,
             @Query("sort_id") sort_id: String = "desc"
-    ): Single<Users>
+    ): Single<Response<Users>>
 
     /**
      * アクティビティを取得して返す．
@@ -267,7 +267,7 @@ interface AnnictService {
             @Query("page") page: Int = 1,
             @Query("per_page") per_page: Int = 25,
             @Query("sort_id") sort_id: String = "desc"
-    ): Single<Activities>
+    ): Single<Response<Activities>>
 
     /**
      * 自分のプロフィール情報を取得して返す．
@@ -282,7 +282,7 @@ interface AnnictService {
             @Path("version") version: String = "v1",
             @Query("access_token") access_token: String,
             @Query("fields") fields: String? = null
-    ): Single<Profile>
+    ): Single<Response<Profile>>
 
     /**
      * 作品のステータスを設定する．
@@ -322,7 +322,7 @@ interface AnnictService {
             @Query("rating_state") rating_state: String? = null,
             @Query("share_twitter") share_twitter: Boolean = false,
             @Query("share_facebook") share_facebook: Boolean = false
-    ): Single<Record>
+    ): Single<Response<Record>>
 
     /**
      * 作成した記録を編集する．
@@ -345,7 +345,7 @@ interface AnnictService {
             @Query("rating") rating_state: String? = null,
             @Query("share_twitter") share_twitter: Boolean = false,
             @Query("share_facebook") share_facebook: Boolean = false
-    ): Single<Record>
+    ): Single<Response<Record>>
 
     /**
      * 作成した記録を削除する．
@@ -360,7 +360,7 @@ interface AnnictService {
             @Path("version") version: String = "v1",
             @Query("access_token") access_token: String,
             @Path("id") id: Long
-    ): Single<ResponseBody>
+    ): Single<Response<Void>>
 
     /**
      * 自分がステータスを設定している作品の情報を取得して返す．
@@ -393,7 +393,7 @@ interface AnnictService {
             @Query("sort_id") sort_id: String? = null,
             @Query("sort_season") sort_season: String? = null,
             @Query("sort_watchers_count") sort_watchers_count: String? = "desc"
-    ): Single<Works>
+    ): Single<Response<Works>>
 
     /**
      * 放送予定を取得して返す．
@@ -430,7 +430,7 @@ interface AnnictService {
             @Query("per_page") per_page: Int = 25,
             @Query("sort_id") sort_id: String? = null,
             @Query("sort_started_at") sort_started_at: String = "desc"
-    ): Single<Programs>
+    ): Single<Response<Programs>>
 
     /**
      * 自分がファローしているユーザのアクティビティを取得して返す．
@@ -455,5 +455,5 @@ interface AnnictService {
             @Query("page") page: Int = 1,
             @Query("per_page") per_page: Int = 25,
             @Query("sort_id") sort_id: String = "desc"
-    ): Single<Activities>
+    ): Single<Response<Activities>>
 }

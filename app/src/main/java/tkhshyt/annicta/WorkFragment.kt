@@ -56,7 +56,8 @@ class WorkFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
                             loading = false
                             swipeRefreshView.isRefreshing = false
                         }
-                        .subscribe({ works ->
+                        .subscribe({ response ->
+                            val works = response.body()
                             workItemAdapter.add(works.works.map{WorkItem(it, context)})
                             nextPage = works.next_page ?: 0
                         }, { throwable: Throwable? ->

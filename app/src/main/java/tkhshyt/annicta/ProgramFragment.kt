@@ -72,7 +72,8 @@ class ProgramFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
                             loading = false
                             swipeRefreshView.isRefreshing = false
                         }
-                        .subscribe({ programs ->
+                        .subscribe({ response ->
+                            val programs = response.body()
                             programItemAdapter.add(programs.programs.map { ProgramItem(it, context) })
                             nextPage = programs.next_page ?: 0
                         }, { throwable ->
