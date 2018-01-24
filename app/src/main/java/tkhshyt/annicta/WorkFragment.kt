@@ -18,6 +18,7 @@ import tkhshyt.annict.AnnictClient
 import tkhshyt.annict.json.Work
 import tkhshyt.annicta.layout.recycler.EndlessScrollListener
 import tkhshyt.annicta.pref.UserInfo
+import trikita.log.Log
 
 class WorkFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 
@@ -45,7 +46,7 @@ class WorkFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
             override fun onLoadMore(currentPage: Int) {
                 val accessToken = UserInfo.accessToken
                 if (accessToken != null) {
-                    AnnictClient.service.followingWorks(
+                    AnnictClient.service.works(
                             access_token = accessToken,
                             sort_watchers_count = "desc",
                             filter_season = "2018-winter",
@@ -58,7 +59,33 @@ class WorkFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
                         }
                         .subscribe({ response ->
                             val works = response.body()
-                            workItemAdapter.add(works.works.map{WorkItem(it, context)})
+                            workItemAdapter.add(works.works.map { WorkItem(it, context) })
+
+                            // これ別のやり方がある気がする
+                            AnnictClient.service.followingWorks(
+                                    access_token = accessToken,
+                                    sort_watchers_count = "desc",
+                                    filter_ids = works.works.map { it.id }.joinToString(","),
+                                    page = currentPage
+                            ).subscribeOn(Schedulers.io())
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribe({ res ->
+                                    val statusWorks = res.body().works
+                                    var s = 0
+                                    for (i in (0 until statusWorks.size)) {
+                                        for (j in (s until workItemAdapter.adapterItemCount)) {
+                                            if (statusWorks[i].id == workItemAdapter.getAdapterItem(j).work.id) {
+                                                Log.d(statusWorks[i])
+                                                workItemAdapter.set(j, WorkItem(statusWorks[i], context))
+                                                s = j + 1
+                                                break
+                                            }
+                                        }
+                                    }
+                                }, { throwable ->
+                                    Toast.makeText(context, "ステータス情報の取得に失敗しました", Toast.LENGTH_LONG).show()
+                                })
+
                             nextPage = works.next_page ?: 0
                         }, { throwable: Throwable? ->
                             Toast.makeText(context, "読み込みに失敗しました", Toast.LENGTH_LONG).show()

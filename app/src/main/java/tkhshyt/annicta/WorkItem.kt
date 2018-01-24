@@ -88,15 +88,16 @@ class WorkItem(val work: Work, val context: Context?) : AbstractItem<WorkItem, W
                 }
                 adapter.setDropDownViewResource(R.layout.item_status_dropdown)
 
+                val selection = Math.max(Kind.stringToIndex(work.status?.kind), 0)
                 itemView.statusSpinner.adapter = adapter
+                itemView.statusSpinner.setSelection(selection)
+
                 itemView.statusSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
 
                     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                         if (selectedItem != -1 && selectedItem != position) {
                             val accessToken = UserInfo.accessToken
                             if (accessToken != null) {
-                                trikita.log.Log.d(Kind.values()[position].kind)
-                                trikita.log.Log.d(workItem.work.id)
                                 AnnictClient.service
                                     .updateState(
                                             access_token = accessToken,
@@ -104,10 +105,9 @@ class WorkItem(val work: Work, val context: Context?) : AbstractItem<WorkItem, W
                                             kind = Kind.values()[position].kind
                                     ).subscribeOn(Schedulers.io())
                                     .observeOn(AndroidSchedulers.mainThread())
-                                    .subscribe({ work ->
+                                    .subscribe({ response ->
                                         Toast.makeText(context, "ステータスを更新しました", Toast.LENGTH_LONG).show()
                                     }, { throwable ->
-
                                         Toast.makeText(context, "ステータスの更新に失敗しました", Toast.LENGTH_LONG).show()
                                     })
                             }
@@ -118,7 +118,6 @@ class WorkItem(val work: Work, val context: Context?) : AbstractItem<WorkItem, W
                     override fun onNothingSelected(parent: AdapterView<*>?) {
                     }
                 }
-                itemView.statusSpinner.setSelection(Kind.stringToIndex(work.status?.kind))
             }
         }
 
