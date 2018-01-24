@@ -45,7 +45,7 @@ class WorkFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
             override fun onLoadMore(currentPage: Int) {
                 val accessToken = UserInfo.accessToken
                 if (accessToken != null) {
-                    AnnictClient.service.worksWithKind(
+                    AnnictClient.service.followingWorks(
                             access_token = accessToken,
                             sort_watchers_count = "desc",
                             filter_season = "2018-winter",

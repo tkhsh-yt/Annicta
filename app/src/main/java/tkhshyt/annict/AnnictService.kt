@@ -379,7 +379,7 @@ interface AnnictService {
      * @return
      */
     @GET("{version}/me/works")
-    fun worksWithKind(
+    fun followingWorks(
             @Path("version") version: String = "v1",
             @Query("access_token") access_token: String,
             @Query("fields") fields: String? = null,
@@ -389,9 +389,9 @@ interface AnnictService {
             @Query("filter_status") filter_status: String? = null,
             @Query("page") page: Int = 1,
             @Query("per_page") per_page: Int = 25,
-            @Query("sort_id") sort_id: String = "desc",
-            @Query("sort_season") sort_season: String = "desc",
-            @Query("sort_watchers_count") sort_watchers_count: String = "desc"
+            @Query("sort_id") sort_id: String? = null,
+            @Query("sort_season") sort_season: String? = null,
+            @Query("sort_watchers_count") sort_watchers_count: String? = "desc"
     ): Single<Works>
 
     /**
