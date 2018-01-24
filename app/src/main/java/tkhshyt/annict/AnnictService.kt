@@ -2,6 +2,7 @@ package tkhshyt.annict
 
 import io.reactivex.Single
 import okhttp3.ResponseBody
+import retrofit2.Response
 import retrofit2.http.*
 import tkhshyt.annict.json.*
 import tkhshyt.annicta.BuildConfig
@@ -292,13 +293,13 @@ interface AnnictService {
      * @param kind ステータスの種類．wanna_watch (見たい)，watching (見てる)，watched (見た)，on_hold (中断)，stop_watching (中止)，または no_select (未選択) が指定できる．
      * @return
      */
-    @POST("{version}/v1/me/statuses")
+    @POST("{version}/me/statuses")
     fun updateState(
             @Path("version") version: String = "v1",
             @Query("access_token") access_token: String,
             @Query("work_id") work_id: Long,
             @Query("kind") kind: String
-    ): Single<ResponseBody>
+    ): Single<Response<Void>>
 
     /**
      * エピソードへの記録を作成する．
