@@ -8,7 +8,7 @@ import io.reactivex.schedulers.Schedulers
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
-import tkhshyt.annict.AnnictClient
+import tkhshyt.annict.AnnictService
 import tkhshyt.annicta.RecordDialogFragment
 import tkhshyt.annicta.event.CreateRecordEvent
 import tkhshyt.annicta.event.RecordedEvent
@@ -16,6 +16,8 @@ import tkhshyt.annicta.event.ShowRecordDialogEvent
 import tkhshyt.annicta.pref.UserInfo
 
 interface RecordEventSubscriber {
+
+    var annict: AnnictService
 
     val baseActivity: AppCompatActivity
 
@@ -34,7 +36,7 @@ interface RecordEventSubscriber {
         val createRecord = event.createRecord
         val accessToken = UserInfo.accessToken
         if (accessToken != null) {
-            AnnictClient.service.createRecord(
+            annict.createRecord(
                     access_token = accessToken,
                     episode_id = createRecord.episode.id!!,
                     rating_state = createRecord.rating_state,

@@ -14,13 +14,20 @@ import com.mikepenz.fastadapter.adapters.ItemAdapter
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_list.*
-import tkhshyt.annict.AnnictClient
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import tkhshyt.annict.AnnictService
+import tkhshyt.annict.Kind
 import tkhshyt.annict.json.Work
+import tkhshyt.annicta.event.UpdateStatusEvent
 import tkhshyt.annicta.layout.recycler.EndlessScrollListener
 import tkhshyt.annicta.pref.UserInfo
-import trikita.log.Log
+import javax.inject.Inject
 
 class WorkFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
+
+    @Inject
+    lateinit var annict: AnnictService
 
     private val workItemAdapter = ItemAdapter<WorkItem>()
 
@@ -46,7 +53,7 @@ class WorkFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
             override fun onLoadMore(currentPage: Int) {
                 val accessToken = UserInfo.accessToken
                 if (accessToken != null) {
-                    AnnictClient.service.works(
+                    annict.works(
                             access_token = accessToken,
                             sort_watchers_count = "desc",
                             filter_season = "2018-winter",
@@ -62,7 +69,7 @@ class WorkFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
                             workItemAdapter.add(works.works.map { WorkItem(it, context) })
 
                             // これ別のやり方がある気がする
-                            AnnictClient.service.followingWorks(
+                            annict.followingWorks(
                                     access_token = accessToken,
                                     sort_watchers_count = "desc",
                                     filter_ids = works.works.map { it.id }.joinToString(","),
@@ -75,7 +82,6 @@ class WorkFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
                                     for (i in (0 until statusWorks.size)) {
                                         for (j in (s until workItemAdapter.adapterItemCount)) {
                                             if (statusWorks[i].id == workItemAdapter.getAdapterItem(j).work.id) {
-                                                Log.d(statusWorks[i])
                                                 workItemAdapter.set(j, WorkItem(statusWorks[i], context))
                                                 s = j + 1
                                                 break
@@ -110,12 +116,33 @@ class WorkFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //EventBus.getDefault().register(this)
+
+        (activity?.application as? DaggerApplication)?.getComponent()?.inject(this)
+
+        EventBus.getDefault().register(this)
     }
 
     override fun onStop() {
         super.onStop()
-        //EventBus.getDefault().unregister(this)
+        EventBus.getDefault().unregister(this)
+    }
+
+    @Subscribe
+    fun onUpdateStatus(event: UpdateStatusEvent) {
+        val accessToken = UserInfo.accessToken
+        if (accessToken != null) {
+            annict.updateState(
+                    access_token = accessToken,
+                    work_id = event.workId,
+                    kind = event.status
+            ).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ response ->
+                    Toast.makeText(context, "ステータスを更新しました", Toast.LENGTH_LONG).show()
+                }, { throwable ->
+                    Toast.makeText(context, "ステータスの更新に失敗しました", Toast.LENGTH_LONG).show()
+                })
+        }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

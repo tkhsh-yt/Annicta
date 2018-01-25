@@ -1,27 +1,21 @@
 package tkhshyt.annicta
 
-import android.app.Activity
 import android.content.Context
-import android.content.Intent
 import android.support.v4.content.ContextCompat
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.TextView
-import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.items.AbstractItem
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.item_work.view.*
-import tkhshyt.annict.AnnictClient
+import org.greenrobot.eventbus.EventBus
 import tkhshyt.annict.Kind
 import tkhshyt.annict.json.Work
-import tkhshyt.annicta.pref.UserInfo
+import tkhshyt.annicta.event.UpdateStatusEvent
 
 class WorkItem(val work: Work, val context: Context?) : AbstractItem<WorkItem, WorkItem.ViewHolder>() {
 
@@ -96,21 +90,7 @@ class WorkItem(val work: Work, val context: Context?) : AbstractItem<WorkItem, W
 
                     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                         if (selectedItem != -1 && selectedItem != position) {
-                            val accessToken = UserInfo.accessToken
-                            if (accessToken != null) {
-                                AnnictClient.service
-                                    .updateState(
-                                            access_token = accessToken,
-                                            work_id = workItem.work.id ?: -1,
-                                            kind = Kind.values()[position].kind
-                                    ).subscribeOn(Schedulers.io())
-                                    .observeOn(AndroidSchedulers.mainThread())
-                                    .subscribe({ response ->
-                                        Toast.makeText(context, "ステータスを更新しました", Toast.LENGTH_LONG).show()
-                                    }, { throwable ->
-                                        Toast.makeText(context, "ステータスの更新に失敗しました", Toast.LENGTH_LONG).show()
-                                    })
-                            }
+                            EventBus.getDefault().post(UpdateStatusEvent(workItem.work.id ?: -1, Kind.values()[position].kind))
                         }
                         selectedItem = position
                     }

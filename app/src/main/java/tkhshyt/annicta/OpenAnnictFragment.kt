@@ -9,7 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_open_annict.*
 import org.greenrobot.eventbus.EventBus
-import tkhshyt.annict.AnnictClient
+import tkhshyt.annict.AnnictService
 import tkhshyt.annicta.event.OpenAnnictEvent
 
 class OpenAnnictFragment : Fragment() {
@@ -37,7 +37,8 @@ class OpenAnnictFragment : Fragment() {
         val args = arguments
         if (args != null) {
             if (args.containsKey("client_id")) {
-                val uri = Uri.parse(AnnictClient.authorizeUrl(
+                val uri = Uri.parse(AnnictService.authorizeUrl(
+                        "https://api.annict.com",
                         args.getString("client_id"))
                 )
                 val intent = Intent(Intent.ACTION_VIEW, uri)

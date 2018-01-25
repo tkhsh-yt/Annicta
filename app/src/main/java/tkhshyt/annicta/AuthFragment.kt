@@ -11,10 +11,14 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_auth.*
 import org.greenrobot.eventbus.EventBus
-import tkhshyt.annict.AnnictClient
+import tkhshyt.annict.AnnictService
 import tkhshyt.annicta.event.FailToAuthorizeEvent
+import javax.inject.Inject
 
 class AuthFragment : Fragment() {
+
+    @Inject
+    lateinit var annict: AnnictService
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_auth, container, false)
@@ -26,7 +30,7 @@ class AuthFragment : Fragment() {
         // 認証ボタンが押されたとき
         // 成功した場合はアクティビティを終了して，失敗した場合はイベント飛ばす．
         authorizeButton.setOnClickListener {
-            AnnictClient.service.authorize(
+            annict.authorize(
                     client_id = BuildConfig.CLIENT_ID,
                     client_secret = BuildConfig.CLIENT_SECRET,
                     code = codeEditText.text.toString()

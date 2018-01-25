@@ -48,3 +48,6 @@
 -assumenosideeffects class trikita.log.Log {
     private static void log(...);
 }
+
+# KODEIN
+-keepattributes Signature

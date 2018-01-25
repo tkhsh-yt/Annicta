@@ -16,13 +16,17 @@ import kotlinx.android.synthetic.main.fragment_list.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
-import tkhshyt.annict.AnnictClient
+import tkhshyt.annict.AnnictService
 import tkhshyt.annict.json.Program
 import tkhshyt.annicta.event.RecordedEvent
 import tkhshyt.annicta.layout.recycler.EndlessScrollListener
 import tkhshyt.annicta.pref.UserInfo
+import javax.inject.Inject
 
 class ProgramFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
+
+    @Inject
+    lateinit var annict: AnnictService
 
     private val programItemAdapter = ItemAdapter<ProgramItem>()
 
@@ -62,7 +66,7 @@ class ProgramFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
             override fun onLoadMore(currentPage: Int) {
                 val accessToken = UserInfo.accessToken
                 if (accessToken != null) {
-                    AnnictClient.service.programs(
+                    annict.programs(
                             access_token = accessToken,
                             sort_started_at = "desc",
                             page = currentPage
@@ -86,6 +90,9 @@ class ProgramFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        (activity?.application as? DaggerApplication)?.getComponent()?.inject(this)
+
         EventBus.getDefault().register(this)
     }
 

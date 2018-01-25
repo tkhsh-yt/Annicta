@@ -1,13 +1,23 @@
 package tkhshyt.annict
 
 import io.reactivex.Single
-import okhttp3.ResponseBody
 import retrofit2.Response
 import retrofit2.http.*
 import tkhshyt.annict.json.*
 import tkhshyt.annicta.BuildConfig
 
 interface AnnictService {
+
+    companion object {
+
+        fun authorizeUrl(
+                baseUrl: String,
+                client_id: String,
+                response_type: String = "code",
+                redirect_uri: String = "urn:ietf:wg:oauth:2.0:oob",
+                scope: String = "read write"
+        ): String = "${baseUrl}/oauth/authorize?client_id=${client_id}&response_type=${response_type}&redirect_uri=${redirect_uri}&scope=${scope}"
+    }
 
     /**
      * アクセストークンを発行する．

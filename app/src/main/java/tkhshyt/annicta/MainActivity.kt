@@ -5,15 +5,17 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentPagerAdapter
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
-import android.view.Menu
-import android.view.MenuItem
 import kotlinx.android.synthetic.main.activity_main.*
 import org.greenrobot.eventbus.EventBus
-import tkhshyt.annicta.event.ReloadProgramListEvent
+import tkhshyt.annict.AnnictService
 import tkhshyt.annicta.event.subscribe.RecordEventSubscriber
+import javax.inject.Inject
 
 
 class MainActivity : AppCompatActivity(), RecordEventSubscriber {
+
+    @Inject
+    override lateinit var annict: AnnictService
 
     override val baseActivity: AppCompatActivity = this
 
@@ -24,6 +26,8 @@ class MainActivity : AppCompatActivity(), RecordEventSubscriber {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        (application as? DaggerApplication)?.getComponent()?.inject(this)
 
         toolbar.setTitleTextColor(ContextCompat.getColor(this, R.color.white))
 
