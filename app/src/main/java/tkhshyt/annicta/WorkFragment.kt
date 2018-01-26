@@ -17,11 +17,13 @@ import kotlinx.android.synthetic.main.fragment_list.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import tkhshyt.annict.AnnictService
+import tkhshyt.annict.json.Status
 import tkhshyt.annict.json.Work
 import tkhshyt.annicta.event.UpdateStatusEvent
 import tkhshyt.annicta.layout.message.MessageCreator
 import tkhshyt.annicta.layout.recycler.EndlessScrollListener
 import tkhshyt.annicta.pref.UserInfo
+import trikita.log.Log
 import javax.inject.Inject
 
 class WorkFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
@@ -69,24 +71,23 @@ class WorkFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
                         }
                         .subscribe({ response ->
                             val works = response.body()
+                            val count = workItemAdapter.adapterItemCount
                             workItemAdapter.add(works.works.map { WorkItem(it, context) })
 
                             // これ別のやり方がある気がする
                             annict.followingWorks(
                                     access_token = accessToken,
                                     sort_watchers_count = "desc",
-                                    filter_ids = works.works.map { it.id }.joinToString(","),
-                                    page = currentPage
+                                    filter_ids = works.works.map { it.id }.joinToString(",")
                             ).subscribeOn(Schedulers.io())
                                 .observeOn(AndroidSchedulers.mainThread())
                                 .subscribe({ res ->
                                     val statusWorks = res.body().works
-                                    var s = 0
+
                                     for (i in (0 until statusWorks.size)) {
-                                        for (j in (s until workItemAdapter.adapterItemCount)) {
+                                        for (j in (count until workItemAdapter.adapterItemCount)) {
                                             if (statusWorks[i].id == workItemAdapter.getAdapterItem(j).work.id) {
                                                 workItemAdapter.set(j, WorkItem(statusWorks[i], context))
-                                                s = j + 1
                                                 break
                                             }
                                         }
@@ -147,6 +148,11 @@ class WorkFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
             ).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ response ->
+                    val index = workItemAdapter.adapterItems.indexOfFirst { it.work.id == event.workId }
+                    val item = workItemAdapter.getAdapterItem(index)
+                    if (item != null) {
+                        workItemAdapter.set(index, WorkItem(item.work.copy(status = Status(event.status)), context))
+                    }
                     message.create()
                         .context(context)
                         .message("ステータスを更新しました")
