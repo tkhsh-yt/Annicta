@@ -7,11 +7,13 @@ import javax.inject.Singleton
 @Component(modules = [(ReleaseModule::class)])
 interface AppComponent {
 
-    fun inject(fragment: ProgramFragment)
-
-    fun inject(fragment: WorkFragment)
-
+    fun inject(fragment: AuthActivity)
     fun inject(fragment: AuthFragment)
 
+    fun inject(activity: TopActivity)
+
     fun inject(activity: MainActivity)
+    fun inject(fragment: WorkFragment)
+    fun inject(fragment: ProgramFragment)
+    fun inject(fragment: RecordDialogFragment)
 }

@@ -7,7 +7,6 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.adapters.ItemAdapter
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -19,6 +18,7 @@ import org.greenrobot.eventbus.ThreadMode
 import tkhshyt.annict.AnnictService
 import tkhshyt.annict.json.Program
 import tkhshyt.annicta.event.RecordedEvent
+import tkhshyt.annicta.layout.message.MessageCreator
 import tkhshyt.annicta.layout.recycler.EndlessScrollListener
 import tkhshyt.annicta.pref.UserInfo
 import javax.inject.Inject
@@ -27,6 +27,9 @@ class ProgramFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 
     @Inject
     lateinit var annict: AnnictService
+
+    @Inject
+    lateinit var message: MessageCreator
 
     private val programItemAdapter = ItemAdapter<ProgramItem>()
 
@@ -81,7 +84,10 @@ class ProgramFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
                             programItemAdapter.add(programs.programs.map { ProgramItem(it, context) })
                             nextPage = programs.next_page ?: 0
                         }, { throwable ->
-                            Toast.makeText(context, "取得に失敗しました", Toast.LENGTH_LONG).show()
+                            message.create()
+                                .context(context)
+                                .message("取得に失敗しました")
+                                .build().show()
                         })
                 }
             }

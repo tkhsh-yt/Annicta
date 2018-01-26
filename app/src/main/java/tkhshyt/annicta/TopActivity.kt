@@ -6,11 +6,16 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
 import com.chibatching.kotpref.Kotpref
+import tkhshyt.annicta.layout.message.MessageCreator
 import tkhshyt.annicta.page.Page
 import tkhshyt.annicta.page.go
 import tkhshyt.annicta.pref.UserInfo
+import javax.inject.Inject
 
 class TopActivity : AppCompatActivity() {
+
+    @Inject
+    lateinit var message: MessageCreator
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,7 +47,10 @@ class TopActivity : AppCompatActivity() {
             RequestCode.Auth -> { // 認証
                 if (resultCode == Activity.RESULT_OK) {
                     UserInfo.accessToken = data?.getStringExtra("access_token")
-                    Toast.makeText(this, "認証に成功しました", Toast.LENGTH_LONG).show()
+                    message.create()
+                        .context(this)
+                        .message("認証に成功しました")
+                        .build().show()
                 }
             }
         }

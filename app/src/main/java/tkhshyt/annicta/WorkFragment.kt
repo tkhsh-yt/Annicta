@@ -17,9 +17,9 @@ import kotlinx.android.synthetic.main.fragment_list.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import tkhshyt.annict.AnnictService
-import tkhshyt.annict.Kind
 import tkhshyt.annict.json.Work
 import tkhshyt.annicta.event.UpdateStatusEvent
+import tkhshyt.annicta.layout.message.MessageCreator
 import tkhshyt.annicta.layout.recycler.EndlessScrollListener
 import tkhshyt.annicta.pref.UserInfo
 import javax.inject.Inject
@@ -28,6 +28,9 @@ class WorkFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 
     @Inject
     lateinit var annict: AnnictService
+
+    @Inject
+    lateinit var message: MessageCreator
 
     private val workItemAdapter = ItemAdapter<WorkItem>()
 
@@ -89,12 +92,18 @@ class WorkFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
                                         }
                                     }
                                 }, { throwable ->
-                                    Toast.makeText(context, "ステータス情報の取得に失敗しました", Toast.LENGTH_LONG).show()
+                                    message.create()
+                                        .context(context)
+                                        .message("ステータス情報の取得に失敗しました")
+                                        .build().show()
                                 })
 
                             nextPage = works.next_page ?: 0
                         }, { throwable: Throwable? ->
-                            Toast.makeText(context, "読み込みに失敗しました", Toast.LENGTH_LONG).show()
+                            message.create()
+                                .context(context)
+                                .message("読み込みに失敗しました")
+                                .build().show()
                         })
                 }
             }
@@ -138,9 +147,15 @@ class WorkFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
             ).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ response ->
-                    Toast.makeText(context, "ステータスを更新しました", Toast.LENGTH_LONG).show()
+                    message.create()
+                        .context(context)
+                        .message("ステータスを更新しました")
+                        .build().show()
                 }, { throwable ->
-                    Toast.makeText(context, "ステータスの更新に失敗しました", Toast.LENGTH_LONG).show()
+                    message.create()
+                        .context(context)
+                        .message("ステータスの更新に失敗しました")
+                        .build().show()
                 })
         }
     }

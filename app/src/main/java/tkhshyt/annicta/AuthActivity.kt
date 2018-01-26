@@ -3,15 +3,19 @@ package tkhshyt.annicta
 import android.graphics.Typeface
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_auth.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import tkhshyt.annicta.event.FailToAuthorizeEvent
 import tkhshyt.annicta.event.OpenAnnictEvent
+import tkhshyt.annicta.layout.message.MessageCreator
+import javax.inject.Inject
 
 class AuthActivity : AppCompatActivity() {
+
+    @Inject
+    lateinit var message: MessageCreator
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,7 +62,10 @@ class AuthActivity : AppCompatActivity() {
     // 認証に失敗したときの処理
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onFailToAuthorizeEvent(event: FailToAuthorizeEvent) {
-        Toast.makeText(this, getString(R.string.fail_to_authorize), Toast.LENGTH_LONG).show()
+        message.create()
+            .context(this)
+            .message(getString(R.string.fail_to_authorize))
+            .build().show()
         commitOpenAnnictFragment()
     }
 
