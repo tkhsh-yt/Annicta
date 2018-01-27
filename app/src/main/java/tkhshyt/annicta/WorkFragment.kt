@@ -8,7 +8,6 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.adapters.ItemAdapter
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -50,11 +49,17 @@ class WorkFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
         swipeRefreshView.setOnRefreshListener(this)
         swipeRefreshView.setColorSchemeResources(R.color.greenPrimary, R.color.redPrimary, R.color.indigoPrimary, R.color.yellowPrimary)
 
+        swipeRefreshView.isRefreshing = true
         onRefresh()
     }
 
     private fun loadMoreListener(llm: LinearLayoutManager): EndlessScrollListener {
         return object : EndlessScrollListener(llm) {
+
+            private fun finishLoading() {
+                swipeRefreshView.isRefreshing = false
+            }
+
             override fun onLoadMore(currentPage: Int) {
                 val accessToken = UserInfo.accessToken
                 if (accessToken != null) {
@@ -65,14 +70,8 @@ class WorkFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
                             page = currentPage
                     ).subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
-                        .doFinally {
-                            loading = false
-                            swipeRefreshView.isRefreshing = false
-                        }
                         .subscribe({ response ->
                             val works = response.body()
-                            val count = workItemAdapter.adapterItemCount
-                            workItemAdapter.add(works.works.map { WorkItem(it, context) })
 
                             // これ別のやり方がある気がする
                             annict.followingWorks(
@@ -81,17 +80,16 @@ class WorkFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
                                     filter_ids = works.works.map { it.id }.joinToString(",")
                             ).subscribeOn(Schedulers.io())
                                 .observeOn(AndroidSchedulers.mainThread())
-                                .subscribe({ res ->
-                                    val statusWorks = res.body().works
-
-                                    for (i in (0 until statusWorks.size)) {
-                                        for (j in (count until workItemAdapter.adapterItemCount)) {
-                                            if (statusWorks[i].id == workItemAdapter.getAdapterItem(j).work.id) {
-                                                workItemAdapter.set(j, WorkItem(statusWorks[i], context))
-                                                break
-                                            }
-                                        }
+                                .doFinally {
+                                    finishLoading()
+                                }
+                                .subscribe({ response ->
+                                    val statusWorks = response.body().works
+                                    val merge = works.works.map { work ->
+                                        statusWorks.find { it.id == work.id } ?: work
                                     }
+
+                                    workItemAdapter.add(merge.map { WorkItem(it, context) })
                                 }, { throwable ->
                                     message.create()
                                         .context(context)
@@ -99,12 +97,13 @@ class WorkFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
                                         .build().show()
                                 })
 
-                            nextPage = works.next_page ?: 0
+                            nextPage = works.next_page ?: -1
                         }, { throwable: Throwable? ->
                             message.create()
                                 .context(context)
                                 .message("読み込みに失敗しました")
                                 .build().show()
+                            finishLoading()
                         })
                 }
             }
