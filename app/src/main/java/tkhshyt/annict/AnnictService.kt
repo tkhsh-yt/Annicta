@@ -148,8 +148,8 @@ interface AnnictService {
             @Query("filter_has_record_comment") filter_has_record_comment: Boolean? = null,
             @Query("page") page: Int = 1,
             @Query("per_page") per_page: Int = 25,
-            @Query("sort_id") sort_id: String = "desc",
-            @Query("sort_likes_count") sort_likes_count: String = "desc"
+            @Query("sort_id") sort_id: String? = null,
+            @Query("sort_likes_count") sort_likes_count: String? = null
     ): Single<Response<Records>>
 
     /**

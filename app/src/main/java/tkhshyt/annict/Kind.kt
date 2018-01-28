@@ -9,7 +9,7 @@ enum class Kind(val kind: String) {
     StopWatching("stop_watching");
 
     companion object {
-        fun stringToIndex(string: String?) : Int {
+        fun stringToIndex(string: String?): Int {
             return Kind.values().indexOfFirst { it.kind == string }
         }
     }
