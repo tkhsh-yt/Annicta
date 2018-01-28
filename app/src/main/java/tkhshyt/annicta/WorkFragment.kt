@@ -22,7 +22,6 @@ import tkhshyt.annicta.event.UpdateStatusEvent
 import tkhshyt.annicta.layout.message.MessageCreator
 import tkhshyt.annicta.layout.recycler.EndlessScrollListener
 import tkhshyt.annicta.pref.UserInfo
-import trikita.log.Log
 import javax.inject.Inject
 
 class WorkFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {

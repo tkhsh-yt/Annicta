@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.widget.Toast
 import com.chibatching.kotpref.Kotpref
 import tkhshyt.annicta.layout.message.MessageCreator
 import tkhshyt.annicta.page.Page

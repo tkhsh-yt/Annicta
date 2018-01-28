@@ -2,7 +2,7 @@ package tkhshyt.annicta
 
 import android.app.Application
 
-class DaggerApplication: Application() {
+class DaggerApplication : Application() {
 
     private lateinit var component: AppComponent
 

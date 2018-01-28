@@ -33,9 +33,9 @@ abstract class EndlessScrollListener(val llm: LinearLayoutManager) : RecyclerVie
         }
     }
 
-    abstract fun onLoadMore(currentPage : Int)
+    abstract fun onLoadMore(currentPage: Int)
 
-    fun canLoadMore() : Boolean {
+    fun canLoadMore(): Boolean {
         return nextPage > 0
     }
 }
