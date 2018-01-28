@@ -1,6 +1,8 @@
 package tkhshyt.annicta
 
-import android.content.Context
+import android.app.Activity
+import android.os.Build
+import android.support.v4.app.ActivityOptionsCompat
 import android.view.View
 import com.bumptech.glide.Glide
 import com.mikepenz.fastadapter.FastAdapter
@@ -9,12 +11,14 @@ import kotlinx.android.synthetic.main.item_program.view.*
 import org.greenrobot.eventbus.EventBus
 import tkhshyt.annict.json.Program
 import tkhshyt.annicta.event.ShowRecordDialogEvent
+import tkhshyt.annicta.page.Page
+import tkhshyt.annicta.page.go
 import tkhshyt.annicta.utils.Utils
 
-class ProgramItem(val program: Program, val context: Context?) : AbstractItem<ProgramItem, ProgramItem.ViewHolder>() {
+class ProgramItem(val program: Program, val activity: Activity?) : AbstractItem<ProgramItem, ProgramItem.ViewHolder>() {
 
     override fun getViewHolder(v: View): ViewHolder {
-        return ViewHolder(v, context)
+        return ViewHolder(v, activity)
     }
 
     override fun getType(): Int {
@@ -25,7 +29,7 @@ class ProgramItem(val program: Program, val context: Context?) : AbstractItem<Pr
         return R.layout.item_program
     }
 
-    class ViewHolder(itemView: View, private val context: Context?) : FastAdapter.ViewHolder<ProgramItem>(itemView) {
+    class ViewHolder(itemView: View, private val activity: Activity?) : FastAdapter.ViewHolder<ProgramItem>(itemView) {
 
         override fun bindView(programItem: ProgramItem?, payloads: MutableList<Any>?) {
             if (programItem != null) {
@@ -33,20 +37,32 @@ class ProgramItem(val program: Program, val context: Context?) : AbstractItem<Pr
                 itemView.setOnClickListener {
                     val episode = program.episode.copy(work = program.work)
                     EventBus.getDefault().post(ShowRecordDialogEvent(episode))
+                    if (activity != null) {
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                            activity.go(
+                                    Page.RECORD,
+                                    ActivityOptionsCompat.makeSceneTransitionAnimation(activity, itemView.workIcon, itemView.workIcon.transitionName).toBundle(),
+                                    { it.putExtra("episode", episode) }
+                            )
+                        }
+                    }
                 }
 
                 var imageUrl: String? = null
-                if (context != null) {
+                if (activity != null) {
                     if (program.work.images?.twitter?.image_url != null && program.work.images.twitter.image_url.isNotBlank()) {
                         imageUrl = program.work.images.twitter.image_url
                     } else if (program.work.images?.recommended_url != null && program.work.images.recommended_url.isNotBlank()) {
                         imageUrl = program.work.images.recommended_url
                     }
                     if (imageUrl != null) {
-                        Glide.with(context)
+                        Glide.with(activity)
                             .load(imageUrl)
-                            .into(itemView.title_icon)
+                            .into(itemView.workIcon)
                     }
+                }
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    itemView.workIcon.transitionName = "work_icon"
                 }
                 itemView.start_at.text = Utils.textDateFormat.format(program.started_at)
                 itemView.channel.text = program.channel.name
@@ -62,7 +78,7 @@ class ProgramItem(val program: Program, val context: Context?) : AbstractItem<Pr
         }
 
         override fun unbindView(item: ProgramItem?) {
-            itemView.title_icon.setImageResource(R.drawable.ic_broken_image)
+            itemView.workIcon.setImageResource(R.drawable.ic_image_black_24dp)
         }
     }
 }

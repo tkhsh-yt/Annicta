@@ -1,6 +1,5 @@
 package tkhshyt.annicta.event.subscribe
 
-import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -9,7 +8,6 @@ import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import tkhshyt.annict.AnnictService
-import tkhshyt.annicta.RecordDialogFragment
 import tkhshyt.annicta.event.CreateRecordEvent
 import tkhshyt.annicta.event.RecordedEvent
 import tkhshyt.annicta.event.ShowRecordDialogEvent
@@ -23,12 +21,13 @@ interface RecordEventSubscriber {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onRecordEvent(dialogEventShow: ShowRecordDialogEvent) {
-        val args = Bundle()
-        args.putSerializable("episode", dialogEventShow.episode)
+//        val args = Bundle()
+//        args.putSerializable("episode", dialogEventShow.episode)
 
-        val dialog = RecordDialogFragment()
-        dialog.arguments = args
-        dialog.show(baseActivity.supportFragmentManager, "record")
+//        val dialog = RecordDialogFragment()
+//        dialog.arguments = args
+//        dialog.show(baseActivity.supportFragmentManager, "record")
+//        baseActivity.go(Page.RECORD)
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

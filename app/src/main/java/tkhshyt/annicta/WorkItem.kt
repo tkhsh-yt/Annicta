@@ -50,7 +50,7 @@ class WorkItem(val work: Work, val context: Context?) : AbstractItem<WorkItem, W
                     if (imageUrl != null) {
                         Glide.with(context)
                             .load(imageUrl)
-                            .into(itemView.title_icon)
+                            .into(itemView.workIcon)
                     }
                 }
                 itemView.title.text = work.title
@@ -59,7 +59,7 @@ class WorkItem(val work: Work, val context: Context?) : AbstractItem<WorkItem, W
                 val adapter = object : ArrayAdapter<String>(context, R.layout.item_status, context?.resources?.getStringArray(R.array.work_status_array)) {
 
                     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
-                        var view = convertView
+                        val view: View?
                         if (convertView == null) {
                             view = (context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater).inflate(R.layout.item_status, null)
                             view.findViewById<TextView>(R.id.status)?.text = getItem(position)
@@ -72,7 +72,7 @@ class WorkItem(val work: Work, val context: Context?) : AbstractItem<WorkItem, W
 
                     override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup?): View {
                         val view = super.getDropDownView(position, convertView, parent)
-                        if(position == selectedItem) {
+                        if (position == selectedItem) {
                             view.setBackgroundColor(ContextCompat.getColor(context, R.color.spinner_selected_color))
                         } else {
                             view.setBackgroundColor(ContextCompat.getColor(context, R.color.status_dropdown_color))
@@ -90,7 +90,8 @@ class WorkItem(val work: Work, val context: Context?) : AbstractItem<WorkItem, W
 
                     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                         if (selectedItem != -1 && selectedItem != position) {
-                            EventBus.getDefault().post(UpdateStatusEvent(workItem.work.id ?: -1, Kind.values()[position].kind))
+                            EventBus.getDefault().post(UpdateStatusEvent(workItem.work.id
+                                    ?: -1, Kind.values()[position].kind))
                         }
                         selectedItem = position
                     }

@@ -1,10 +1,13 @@
 package tkhshyt.annicta
 
+import android.os.Build
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentPagerAdapter
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
+import android.view.Window
+import com.chibatching.kotpref.Kotpref
 import kotlinx.android.synthetic.main.activity_main.*
 import org.greenrobot.eventbus.EventBus
 import tkhshyt.annict.AnnictService
@@ -24,8 +27,14 @@ class MainActivity : AppCompatActivity(), RecordEventSubscriber {
     private val fragments = arrayOf(ProgramFragment(), WorkFragment())
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            window.requestFeature(Window.FEATURE_CONTENT_TRANSITIONS)
+        }
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        Kotpref.init(this)
 
         (application as? DaggerApplication)?.getComponent()?.inject(this)
 

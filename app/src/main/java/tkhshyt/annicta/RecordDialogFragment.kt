@@ -41,7 +41,7 @@ class RecordDialogFragment : DialogFragment() {
 
         Glide.with(this)
             .load(ep.work?.images?.recommended_url)
-            .into(content.title_icon)
+            .into(content.workIcon)
 
         content.title.text = ep.work?.title
         val episodeName = "${ep.number_text} ${ep.title.orEmpty()}"

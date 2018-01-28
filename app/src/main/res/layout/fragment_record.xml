@@ -17,7 +17,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/title_icon"
+            android:id="@+id/workIcon"
             android:layout_width="64dp"
             android:layout_height="64dp"
             android:layout_marginTop="8dp"
@@ -48,7 +48,7 @@
             android:textColor="@color/episode_color"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/title_icon"
+            app:layout_constraintStart_toEndOf="@+id/workIcon"
             app:layout_constraintTop_toBottomOf="@+id/title"
             android:layout_marginLeft="8dp" />
     </android.support.constraint.ConstraintLayout>

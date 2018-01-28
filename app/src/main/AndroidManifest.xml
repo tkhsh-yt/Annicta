@@ -23,6 +23,8 @@
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop" />
+        <activity android:name=".RecordActivity"
+            android:launchMode="singleTop"/>
     </application>
 
 </manifest>

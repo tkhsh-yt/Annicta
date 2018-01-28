@@ -24,7 +24,7 @@
             android:layout_height="wrap_content">
 
             <ImageView
-                android:id="@+id/title_icon"
+                android:id="@+id/workIcon"
                 android:layout_width="128dp"
                 android:layout_height="128dp"
                 android:scaleType="centerCrop"
@@ -44,7 +44,7 @@
                 android:text="@string/title"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/title_icon" />
+                app:layout_constraintTop_toBottomOf="@+id/workIcon" />
 
             <android.support.v7.widget.AppCompatSpinner
                 android:id="@+id/statusSpinner"
