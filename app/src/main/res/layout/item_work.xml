@@ -31,7 +31,7 @@
                 android:tint="#BDBDBD"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:srcCompat="@drawable/ic_broken_image"
+                app:srcCompat="@drawable/ic_image_black_24dp"
                 tools:layout_editor_absoluteY="0dp" />
 
             <TextView

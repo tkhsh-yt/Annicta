@@ -102,7 +102,7 @@ class WorkItem(val work: Work, val context: Context?) : AbstractItem<WorkItem, W
         }
 
         override fun unbindView(item: WorkItem?) {
-            itemView.title_icon.setImageResource(R.drawable.ic_broken_image)
+            itemView.workIcon.setImageResource(R.drawable.ic_image_black_24dp)
         }
     }
 }
