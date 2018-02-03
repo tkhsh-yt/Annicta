@@ -119,7 +119,7 @@ interface AnnictService {
             @Query("filter_work_id") filter_work_id: String? = null,
             @Query("page") page: Int = 1,
             @Query("per_page") per_page: Int = 25,
-            @Query("sort_id") sort_id: String,
+            @Query("sort_id") sort_id: String? = null,
             @Query("sort_sort_number") sort_sort_number: String = "desc"
     ): Single<Response<Episodes>>
 
