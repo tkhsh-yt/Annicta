@@ -1,5 +1,6 @@
 package tkhshyt.annicta
 
+import android.content.Context
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
@@ -8,14 +9,39 @@ import com.chibatching.kotpref.Kotpref
 import kotlinx.android.synthetic.main.activity_record.*
 import tkhshyt.annict.json.Episode
 import android.support.design.widget.AppBarLayout
+import android.view.View
+import android.widget.TextView
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
+import tkhshyt.annict.AnnictService
+import tkhshyt.annicta.layout.message.MessageCreator
+import tkhshyt.annicta.pref.UserConfig
+import tkhshyt.annicta.pref.UserInfo
+import javax.inject.Inject
+import android.content.Context.INPUT_METHOD_SERVICE
+import android.view.inputmethod.InputMethodManager
+import android.widget.ArrayAdapter
+import org.greenrobot.eventbus.EventBus
+import tkhshyt.annicta.event.RecordedEvent
+
 
 class RecordActivity : AppCompatActivity() {
+
+    @Inject
+    lateinit var annict: AnnictService
+
+    @Inject
+    lateinit var message: MessageCreator
+
+    val rating = arrayOf(null, "bad", "average", "good", "great")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_record)
 
         Kotpref.init(this)
+
+        (this.application as? DaggerApplication)?.getComponent()?.inject(this)
 
         setSupportActionBar(toolbar)
         title = ""
@@ -24,45 +50,145 @@ class RecordActivity : AppCompatActivity() {
 
         if (intent.hasExtra("episode")) {
             val episode = intent.getSerializableExtra("episode") as Episode
-
-            appBar.addOnOffsetChangedListener(object : AppBarLayout.OnOffsetChangedListener {
-                internal var isShow = false
-                internal val verticalOffsetRate = 0.3
-
-                override fun onOffsetChanged(appBarLayout: AppBarLayout, verticalOffset: Int) {
-                    if (appBar.totalScrollRange + verticalOffset < appBar.totalScrollRange * verticalOffsetRate) {
-                        title = episode.work?.title
-                        isShow = true
-                    } else if (isShow) {
-                        title = ""
-                        isShow = false
-                    }
-                }
-            })
-
-            var imageUrl: String? = null
-            if (episode.work?.images?.twitter?.image_url != null && episode.work.images.twitter.image_url.isNotBlank()) {
-                imageUrl = episode.work.images.twitter.image_url
-            } else if (episode.work?.images?.recommended_url != null && episode.work.images.recommended_url.isNotBlank()) {
-                imageUrl = episode.work.images.recommended_url
-            }
-            if (imageUrl != null) {
-                Glide.with(this)
-                    .load(imageUrl)
-                    .into(workIcon)
-            } else {
-                title = episode.work?.title
-                workIcon.setImageResource(R.drawable.ic_image_black_24dp)
-            }
-
-            val bundle = Bundle()
-            episode.id?.let { bundle.putLong("episode_id", it) }
-            val fragment = RecordFragment()
-            fragment.arguments = bundle
-
-            val transaction = supportFragmentManager.beginTransaction()
-            transaction.replace(R.id.container, fragment)
-            transaction.commit()
+            setupView(episode)
         }
+    }
+
+    fun setupView(episode: Episode) {
+        var imageUrl: String? = null
+        if (episode.work?.images?.twitter?.image_url != null && episode.work.images.twitter.image_url.isNotBlank()) {
+            imageUrl = episode.work.images.twitter.image_url
+        } else if (episode.work?.images?.recommended_url != null && episode.work.images.recommended_url.isNotBlank()) {
+            imageUrl = episode.work.images.recommended_url
+        }
+        if (imageUrl != null) {
+            Glide.with(this)
+                .load(imageUrl)
+                .into(workIcon)
+        } else {
+            workIcon.setImageResource(R.drawable.ic_image_black_24dp)
+        }
+
+        setupViewDependOnEpisode(episode)
+    }
+
+    fun setupViewDependOnEpisode(episode: Episode) {
+        val episodeText = "${episode.number_text} ${episode.title.orEmpty()}"
+        episodeTitle?.text = episodeText
+        appBar.addOnOffsetChangedListener(object : AppBarLayout.OnOffsetChangedListener {
+            internal var isShow = false
+            val verticalOffsetRate = 0.2
+
+            override fun onOffsetChanged(appBarLayout: AppBarLayout, verticalOffset: Int) {
+                if (appBar.totalScrollRange + verticalOffset < appBar.totalScrollRange * verticalOffsetRate) {
+                    title = episodeText
+
+                    isShow = true
+                } else if (isShow) {
+                    title = ""
+
+                    isShow = false
+                }
+            }
+        })
+
+        fun setPrevNextEpisodeButton(episode: Episode?, view: TextView?, listener: (View) -> Unit) {
+            if (episode != null) {
+                view?.text = episode.number_text
+                view?.setOnClickListener(listener)
+                view?.visibility = View.VISIBLE
+            } else {
+                view?.visibility = View.GONE
+            }
+        }
+        prevEpisodeButton?.setOnClickListener { }
+        nextEpisodeButton?.setOnClickListener { }
+
+        val accessToken = UserInfo.accessToken
+        if (accessToken != null) {
+            annict.episodes(
+                    access_token = accessToken,
+                    filter_ids = episode.id.toString()
+            ).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    val newEpisode = it.body().episodes.last()
+                    val prevNextEpisode = arrayOf(
+                            Pair(newEpisode.prev_episode, prevEpisodeButton),
+                            Pair(newEpisode.next_episode, nextEpisodeButton)
+                    )
+                    prevNextEpisode.forEach {
+                        setPrevNextEpisodeButton(it.first, it.second, { _ ->
+                            val episode = it.first
+                            if (episode != null) {
+                                setupViewDependOnEpisode(episode)
+                            }
+                        })
+                    }
+                }, { _ ->
+                    message.create()
+                        .context(this)
+                        .message("前/次のエピソードの取得に失敗しました")
+                        .build().show()
+                })
+
+            recordButton?.setOnClickListener {
+                if (episode.id != null) {
+                    annict.createRecord(
+                            access_token = accessToken,
+                            episode_id = episode.id,
+                            comment = commentEditText?.text.toString(),
+                            rating_state = rating[ratingSpinner.selectedItemPosition],
+                            share_twitter = twitterToggleButton.isChecked,
+                            share_facebook = facebookToggleButton.isChecked
+                    ).subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe({
+                            message.create()
+                                .context(this)
+                                .message("記録しました")
+                                .build().show()
+                            EventBus.getDefault().post(RecordedEvent(it.body()))
+                            finish()
+                        }, {
+                            message.create()
+                                .context(this)
+                                .message("記録に失敗しました")
+                                .build().show()
+                        })
+                }
+                val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(commentEditText?.windowToken, 0)
+            }
+        }
+
+        val bundle = Bundle()
+        episode.id?.let { bundle.putLong("episode_id", it) }
+        val fragment = RecordFragment()
+        fragment.arguments = bundle
+
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.container, fragment)
+        transaction.commit()
+
+        commentEditText?.setOnFocusChangeListener { _, _ ->
+            recordCommentArea?.visibility = View.VISIBLE
+        }
+
+        twitterToggleButton?.isChecked = UserConfig.shareTwitter
+        twitterToggleButton?.setOnClickListener {
+            UserConfig.shareTwitter = twitterToggleButton.isChecked
+        }
+
+        facebookToggleButton?.isChecked = UserConfig.shareFacebook
+        facebookToggleButton?.setOnClickListener {
+            UserConfig.shareFacebook = facebookToggleButton.isChecked
+        }
+
+        val adapter = ArrayAdapter<String>(this, R.layout.item_rating)
+        resources.getStringArray(R.array.rating_array).forEach {
+            adapter.add(it)
+        }
+        ratingSpinner.adapter = adapter
     }
 }

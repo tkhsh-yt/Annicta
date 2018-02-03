@@ -23,4 +23,5 @@
     <color name="status_color">#00b8a9</color>
     <color name="status_dropdown_color">#444</color>
     <color name="spinner_selected_color">#0078d7</color>
+    <color name="material_grey_100">#F5F5F5</color>
 </resources>

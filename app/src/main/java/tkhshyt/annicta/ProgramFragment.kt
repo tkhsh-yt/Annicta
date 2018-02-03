@@ -21,6 +21,7 @@ import tkhshyt.annicta.event.RecordedEvent
 import tkhshyt.annicta.layout.message.MessageCreator
 import tkhshyt.annicta.layout.recycler.EndlessScrollListener
 import tkhshyt.annicta.pref.UserInfo
+import trikita.log.Log
 import javax.inject.Inject
 
 class ProgramFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
@@ -102,8 +103,8 @@ class ProgramFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
         EventBus.getDefault().register(this)
     }
 
-    override fun onStop() {
-        super.onStop()
+    override fun onDestroy() {
+        super.onDestroy()
         EventBus.getDefault().unregister(this)
     }
 

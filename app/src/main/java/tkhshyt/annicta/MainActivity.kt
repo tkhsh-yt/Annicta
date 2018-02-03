@@ -10,17 +10,8 @@ import android.view.Window
 import com.chibatching.kotpref.Kotpref
 import kotlinx.android.synthetic.main.activity_main.*
 import org.greenrobot.eventbus.EventBus
-import tkhshyt.annict.AnnictService
-import tkhshyt.annicta.event.subscribe.RecordEventSubscriber
-import javax.inject.Inject
 
-
-class MainActivity : AppCompatActivity(), RecordEventSubscriber {
-
-    @Inject
-    override lateinit var annict: AnnictService
-
-    override val baseActivity: AppCompatActivity = this
+class MainActivity : AppCompatActivity() {
 
     private val pageTitle = arrayOf("放送予定", "今期アニメ")
     private val tabViews = arrayOf(R.layout.tab_broadcast, R.layout.tab_work)
@@ -35,8 +26,6 @@ class MainActivity : AppCompatActivity(), RecordEventSubscriber {
         setContentView(R.layout.activity_main)
 
         Kotpref.init(this)
-
-        (application as? DaggerApplication)?.getComponent()?.inject(this)
 
         toolbar.setTitleTextColor(ContextCompat.getColor(this, R.color.white))
 
@@ -68,21 +57,6 @@ class MainActivity : AppCompatActivity(), RecordEventSubscriber {
 
     fun getFragment(n: Int): Fragment {
         return fragments[n] as Fragment
-    }
-
-    override fun onStart() {
-        super.onStart()
-        EventBus.getDefault().register(this)
-    }
-
-    override fun onPause() {
-        super.onPause()
-        EventBus.getDefault().unregister(this)
-    }
-
-    override fun onStop() {
-        super.onStop()
-        EventBus.getDefault().unregister(this)
     }
 }
 

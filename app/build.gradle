@@ -44,6 +44,9 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    dataBinding {
+        enabled = true
+    }
 }
 
 kapt {
@@ -78,6 +81,10 @@ dependencies {
 
     // For ImageView
     compile 'com.github.bumptech.glide:glide:3.7.0'
+
+    // For Material UI
+    compile 'com.github.rey5137:material:1.2.4'
+    compile 'net.steamcrafted:materialiconlib:1.1.4'
 
     compile 'co.trikita:log:1.1.5'
     compile 'com.makeramen:roundedimageview:2.3.0'

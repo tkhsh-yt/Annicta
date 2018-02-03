@@ -15,7 +15,7 @@ interface AppComponent {
     fun inject(activity: MainActivity)
     fun inject(fragment: WorkFragment)
     fun inject(fragment: ProgramFragment)
-    fun inject(fragment: RecordDialogFragment)
 
     fun inject(fragment: RecordFragment)
+    fun inject(activity: RecordActivity)
 }

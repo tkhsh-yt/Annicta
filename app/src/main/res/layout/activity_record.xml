@@ -92,6 +92,7 @@
                         android:textStyle="bold" />
 
                 </LinearLayout>
+
                 <TextView
                     android:layout_gravity="center_vertical"
                     android:layout_width="wrap_content"

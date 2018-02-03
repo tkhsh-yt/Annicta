@@ -40,7 +40,6 @@ class RecordFragment : Fragment() {
         val fastAdapter = FastAdapter.with<RecordItem, ItemAdapter<RecordItem>>(recordItemAdapter)
         recyclerView.adapter = fastAdapter
         recyclerView.setHasFixedSize(true)
-        recyclerView.isNestedScrollingEnabled = false
 
         swipeRefreshView.isEnabled = false
 
@@ -77,12 +76,13 @@ class RecordFragment : Fragment() {
                             access_token = accessToken,
                             filter_episode_id = episodeId,
                             filter_has_record_comment = true,
+                            sort_id = "desc",
                             page = currentPage
                     ).subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .doFinally {
                             loading = false
-                            swipeRefreshView.isRefreshing = false
+                            swipeRefreshView?.isRefreshing = false
                         }
                         .subscribe({ response ->
                             val records = response.body()

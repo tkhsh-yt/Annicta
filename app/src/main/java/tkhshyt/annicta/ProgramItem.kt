@@ -44,6 +44,11 @@ class ProgramItem(val program: Program, val activity: Activity?) : AbstractItem<
                                     ActivityOptionsCompat.makeSceneTransitionAnimation(activity, itemView.workIcon, itemView.workIcon.transitionName).toBundle(),
                                     { it.putExtra("episode", episode) }
                             )
+                        } else {
+                            activity.go(
+                                    Page.RECORD,
+                                    { it.putExtra("episode", episode) }
+                            )
                         }
                     }
                 }
