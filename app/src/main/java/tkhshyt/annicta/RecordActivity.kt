@@ -19,6 +19,7 @@ import tkhshyt.annicta.pref.UserConfig
 import tkhshyt.annicta.pref.UserInfo
 import javax.inject.Inject
 import android.content.Context.INPUT_METHOD_SERVICE
+import android.support.v4.content.res.ResourcesCompat
 import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
 import org.greenrobot.eventbus.EventBus
@@ -45,6 +46,14 @@ class RecordActivity : AppCompatActivity() {
 
         setSupportActionBar(toolbar)
         title = ""
+
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
+
+        toolbar.navigationIcon = ResourcesCompat.getDrawable(resources, R.drawable.ic_action_arrow_left, null)
+        toolbar.setNavigationOnClickListener({
+            finish()
+        })
 
         toolbar.setTitleTextColor(ContextCompat.getColor(this, R.color.white))
 
