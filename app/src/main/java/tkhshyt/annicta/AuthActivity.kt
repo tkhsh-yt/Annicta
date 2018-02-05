@@ -72,8 +72,8 @@ class AuthActivity : AppCompatActivity() {
         EventBus.getDefault().register(this)
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onStop() {
+        super.onStop()
         EventBus.getDefault().unregister(this)
     }
 }

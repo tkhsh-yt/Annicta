@@ -21,6 +21,12 @@ class AuthFragment : Fragment() {
     @Inject
     lateinit var annict: AnnictService
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        (activity?.application as? DaggerApplication)?.getComponent()?.inject(this)
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_auth, container, false)
     }

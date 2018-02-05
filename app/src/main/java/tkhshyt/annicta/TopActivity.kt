@@ -22,9 +22,10 @@ class TopActivity : AppCompatActivity() {
 
         Kotpref.init(this)
 
+        (this.application as? DaggerApplication)?.getComponent()?.inject(this)
+
         if (UserInfo.accessToken != null) {
             go(Page.MAIN)
-            finish()
         } else {
             launchAuthorizeActivity()
         }
@@ -37,7 +38,6 @@ class TopActivity : AppCompatActivity() {
         intent.putExtra("client_secret", BuildConfig.CLIENT_SECRET)
 
         go(Page.AUTH, { it.putExtras(intent) }, RequestCode.Auth)
-        finish()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -51,6 +51,8 @@ class TopActivity : AppCompatActivity() {
                         .context(this)
                         .message("認証に成功しました")
                         .build().show()
+                    go(Page.MAIN)
+                    finish()
                 } else {
                     message.create()
                         .context(this)
