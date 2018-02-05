@@ -28,11 +28,11 @@ class AuthActivity : AppCompatActivity() {
         logoTextView.typeface = typeface
         appNameTextView.typeface = typeface
 
-        commitOpenAnnictFragment()
+        setupOpenAnnictFragment()
     }
 
     // 認証URLを開くためのフラグメントを設定
-    private fun commitOpenAnnictFragment() {
+    private fun setupOpenAnnictFragment() {
         val openAnnictFragment = OpenAnnictFragment()
         val bundle = Bundle()
         bundle.putString("client_id", intent.getStringExtra("client_id"))
@@ -40,23 +40,21 @@ class AuthActivity : AppCompatActivity() {
 
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.container, openAnnictFragment)
-
         transaction.commit()
     }
 
     // 認証コードを入力するためのフラグメントを設定
-    private fun commitAuthorizeFragment() {
+    private fun setupAuthorizeFragment() {
         val authFragment = AuthFragment()
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.container, authFragment)
-
         transaction.commit()
     }
 
     // 認証URLを開いた後の処理
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onOpenAnnictEvent(event: OpenAnnictEvent) {
-        commitAuthorizeFragment()
+        setupAuthorizeFragment()
     }
 
     // 認証に失敗したときの処理
@@ -66,7 +64,7 @@ class AuthActivity : AppCompatActivity() {
             .context(this)
             .message(getString(R.string.fail_to_authorize))
             .build().show()
-        commitOpenAnnictFragment()
+        setupOpenAnnictFragment()
     }
 
     override fun onStart() {
@@ -74,8 +72,8 @@ class AuthActivity : AppCompatActivity() {
         EventBus.getDefault().register(this)
     }
 
-    override fun onStop() {
+    override fun onDestroy() {
+        super.onDestroy()
         EventBus.getDefault().unregister(this)
-        super.onStop()
     }
 }

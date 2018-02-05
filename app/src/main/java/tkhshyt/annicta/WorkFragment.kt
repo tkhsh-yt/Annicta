@@ -21,6 +21,7 @@ import tkhshyt.annict.json.Work
 import tkhshyt.annicta.event.UpdateStatusEvent
 import tkhshyt.annicta.layout.message.MessageCreator
 import tkhshyt.annicta.layout.recycler.EndlessScrollListener
+import tkhshyt.annicta.layout.recycler.Util
 import tkhshyt.annicta.pref.UserInfo
 import javax.inject.Inject
 
@@ -55,10 +56,6 @@ class WorkFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
     private fun loadMoreListener(llm: LinearLayoutManager): EndlessScrollListener {
         return object : EndlessScrollListener(llm) {
 
-            private fun finishLoading() {
-                swipeRefreshView.isRefreshing = false
-            }
-
             override fun onLoadMore(currentPage: Int) {
                 val accessToken = UserInfo.accessToken
                 if (accessToken != null) {
@@ -80,7 +77,8 @@ class WorkFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
                             ).subscribeOn(Schedulers.io())
                                 .observeOn(AndroidSchedulers.mainThread())
                                 .doFinally {
-                                    finishLoading()
+                                    swipeRefreshView.isRefreshing = false
+                                    loading = false
                                 }
                                 .subscribe({ response ->
                                     val statusWorks = response.body().works
@@ -102,7 +100,6 @@ class WorkFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
                                 .context(context)
                                 .message("読み込みに失敗しました")
                                 .build().show()
-                            finishLoading()
                         })
                 }
             }
@@ -112,6 +109,7 @@ class WorkFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
     override fun onRefresh() {
         workItemAdapter.clear()
 
+        val mNoOfColumns = Util.calculateNoOfColumns(context)
         val glm = GridLayoutManager(context, 2)
         recyclerView.layoutManager = glm
 

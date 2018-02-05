@@ -23,6 +23,11 @@ import tkhshyt.annicta.layout.recycler.EndlessScrollListener
 import tkhshyt.annicta.pref.UserInfo
 import trikita.log.Log
 import javax.inject.Inject
+import android.support.v7.widget.RecyclerView
+import tkhshyt.annicta.pref.UserConfig
+import tkhshyt.annicta.utils.AnnictUtil
+import java.util.*
+
 
 class ProgramFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 
@@ -47,6 +52,7 @@ class ProgramFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 
         swipeRefreshView.setOnRefreshListener(this)
         swipeRefreshView.setColorSchemeResources(R.color.greenPrimary, R.color.redPrimary, R.color.indigoPrimary, R.color.yellowPrimary)
+        swipeRefreshView.isRefreshing = true
 
         onRefresh()
     }
@@ -70,9 +76,12 @@ class ProgramFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
             override fun onLoadMore(currentPage: Int) {
                 val accessToken = UserInfo.accessToken
                 if (accessToken != null) {
+                    val startedAtLt = Calendar.getInstance()
+                    startedAtLt.add(Calendar.DATE, UserConfig.startedAtLt)
                     annict.programs(
                             access_token = accessToken,
                             sort_started_at = "desc",
+                            filter_started_at_lt = AnnictUtil.apiDateFormat.format(startedAtLt.time),
                             page = currentPage
                     ).subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())

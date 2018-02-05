@@ -4,7 +4,7 @@ import tkhshyt.annicta.R
 import java.text.SimpleDateFormat
 import java.util.*
 
-object Utils {
+object AnnictUtil {
 
     val textDateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.JAPAN)
 

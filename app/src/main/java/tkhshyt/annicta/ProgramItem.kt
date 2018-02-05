@@ -13,7 +13,7 @@ import tkhshyt.annict.json.Program
 import tkhshyt.annicta.event.ShowRecordDialogEvent
 import tkhshyt.annicta.page.Page
 import tkhshyt.annicta.page.go
-import tkhshyt.annicta.utils.Utils
+import tkhshyt.annicta.utils.AnnictUtil
 
 class ProgramItem(val program: Program, val activity: Activity?) : AbstractItem<ProgramItem, ProgramItem.ViewHolder>() {
 
@@ -69,7 +69,7 @@ class ProgramItem(val program: Program, val activity: Activity?) : AbstractItem<
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     itemView.workIcon.transitionName = "work_icon"
                 }
-                itemView.start_at.text = Utils.textDateFormat.format(program.started_at)
+                itemView.start_at.text = AnnictUtil.textDateFormat.format(program.started_at)
                 itemView.channel.text = program.channel.name
                 itemView.title.text = program.work.title
                 val title = "${program.episode.number_text} ${program.episode.title.orEmpty()}"

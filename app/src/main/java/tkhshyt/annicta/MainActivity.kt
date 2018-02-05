@@ -9,7 +9,6 @@ import android.support.v7.app.AppCompatActivity
 import android.view.Window
 import com.chibatching.kotpref.Kotpref
 import kotlinx.android.synthetic.main.activity_main.*
-import org.greenrobot.eventbus.EventBus
 
 class MainActivity : AppCompatActivity() {
 

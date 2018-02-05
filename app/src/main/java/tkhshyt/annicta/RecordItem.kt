@@ -7,7 +7,7 @@ import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.items.AbstractItem
 import kotlinx.android.synthetic.main.item_record.view.*
 import tkhshyt.annict.json.Record
-import tkhshyt.annicta.utils.Utils
+import tkhshyt.annicta.utils.AnnictUtil
 
 class RecordItem(val record: Record, val activity: Activity?) : AbstractItem<RecordItem, RecordItem.ViewHolder>() {
 
@@ -33,12 +33,12 @@ class RecordItem(val record: Record, val activity: Activity?) : AbstractItem<Rec
                 .load(recordItem?.record?.user?.avatar_url)
                 .into(itemView.userIcon)
 
-            itemView.createdAt.text = Utils.prettyDate(recordItem?.record?.created_at)
+            itemView.createdAt.text = AnnictUtil.prettyDate(recordItem?.record?.created_at)
 
             val rating = recordItem?.record?.rating_state
             if (rating != null) {
-                itemView.rating.text = Utils.ratingText(rating)
-                itemView.rating.setBackgroundResource(Utils.ratingBadge(rating))
+                itemView.rating.text = AnnictUtil.ratingText(rating)
+                itemView.rating.setBackgroundResource(AnnictUtil.ratingBadge(rating))
                 itemView.rating.visibility = View.VISIBLE
             } else {
                 itemView.rating.visibility = View.GONE

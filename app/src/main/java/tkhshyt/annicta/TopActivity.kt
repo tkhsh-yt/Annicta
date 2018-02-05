@@ -37,6 +37,7 @@ class TopActivity : AppCompatActivity() {
         intent.putExtra("client_secret", BuildConfig.CLIENT_SECRET)
 
         go(Page.AUTH, { it.putExtras(intent) }, RequestCode.Auth)
+        finish()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -50,6 +51,12 @@ class TopActivity : AppCompatActivity() {
                         .context(this)
                         .message("認証に成功しました")
                         .build().show()
+                } else {
+                    message.create()
+                        .context(this)
+                        .message("認証に失敗しました")
+                        .build().show()
+                    launchAuthorizeActivity()
                 }
             }
         }

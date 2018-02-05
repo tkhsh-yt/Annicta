@@ -43,6 +43,7 @@ class RecordFragment : Fragment() {
 
         swipeRefreshView.isEnabled = false
 
+        swipeRefreshView.isRefreshing = true
         onRefresh()
     }
 

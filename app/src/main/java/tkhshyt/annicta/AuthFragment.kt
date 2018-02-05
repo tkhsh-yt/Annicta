@@ -2,6 +2,7 @@ package tkhshyt.annicta
 
 import android.app.Activity
 import android.content.Intent
+import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
