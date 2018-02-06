@@ -43,6 +43,8 @@ class RecordItem(val record: Record, val activity: Activity?) : AbstractItem<Rec
             } else {
                 itemView.rating.visibility = View.GONE
             }
+
+            itemView.likesCount.text = recordItem?.record?.likes_count?.toString().orEmpty()
         }
 
         override fun unbindView(item: RecordItem?) {
