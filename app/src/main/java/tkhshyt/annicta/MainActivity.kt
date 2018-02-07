@@ -24,13 +24,15 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        // SharePreferences を扱うためのライブラリの初期化
         Kotpref.init(this)
 
-        toolbar.setTitleTextColor(ContextCompat.getColor(this, R.color.white))
-
+        // ツールバーに関する設定
+        toolbar.setTitleTextColor(ContextCompat.getColor(this, android.R.color.white))
         setSupportActionBar(toolbar)
         supportActionBar?.title = pageTitle[0]
 
+        // ViewPager
         val adapter = object : FragmentPagerAdapter(supportFragmentManager) {
 
             override fun getItem(position: Int): Fragment {

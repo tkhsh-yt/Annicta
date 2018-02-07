@@ -21,6 +21,7 @@ class AuthActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_auth)
 
+        // アクションバーを非表示
         supportActionBar?.hide()
 
         // フォントの設定
@@ -28,6 +29,7 @@ class AuthActivity : AppCompatActivity() {
         logoTextView.typeface = typeface
         appNameTextView.typeface = typeface
 
+        // 認証画面を開くためのフラグメントをセット
         setupOpenAnnictFragment()
     }
 
@@ -52,12 +54,14 @@ class AuthActivity : AppCompatActivity() {
     }
 
     // 認証URLを開いた後の処理
+    // tkhshyt.annicta.OpeanAnnictFragment からイベントが投げられてくる．
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onOpenAnnictEvent(event: OpenAnnictEvent) {
         setupAuthorizeFragment()
     }
 
     // 認証に失敗したときの処理
+    // tkhshyt.annicta.AuthFragment からイベントが投げられてくる．
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onFailToAuthorizeEvent(event: FailToAuthorizeEvent) {
         message.create()
@@ -69,11 +73,15 @@ class AuthActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
+
+        // Pub/Sub
         EventBus.getDefault().register(this)
     }
 
     override fun onStop() {
         super.onStop()
+
+        // Pub/Sub
         EventBus.getDefault().unregister(this)
     }
 }

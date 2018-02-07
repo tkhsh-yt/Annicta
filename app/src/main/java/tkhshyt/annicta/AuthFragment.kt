@@ -24,6 +24,7 @@ class AuthFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        // DI
         (activity?.application as? DaggerApplication)?.getComponent()?.inject(this)
     }
 
