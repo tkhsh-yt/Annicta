@@ -2,9 +2,11 @@ package tkhshyt.annicta
 
 import android.os.Build
 import android.os.Bundle
+import android.support.design.widget.TabLayout
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentPagerAdapter
 import android.support.v4.content.ContextCompat
+import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
 import android.view.Window
 import com.chibatching.kotpref.Kotpref
@@ -47,9 +49,22 @@ class MainActivity : AppCompatActivity() {
                 return pageTitle.size
             }
         }
-
         pager.adapter = adapter
+
         tabs.setupWithViewPager(pager)
+        tabs.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+
+            override fun onTabReselected(tab: TabLayout.Tab?) {
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab?) {
+            }
+
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                supportActionBar?.title = pageTitle[tabs.selectedTabPosition]
+            }
+
+        })
 
         (0 until tabs.tabCount).forEach {
             tabs.getTabAt(it)?.setCustomView(tabViews[it])
