@@ -82,12 +82,12 @@
 
         <ImageView
             android:id="@+id/likeImageView"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
             android:tint="#FF4081"
             app:layout_constraintEnd_toStartOf="@+id/likesCount"
             app:layout_constraintTop_toBottomOf="@+id/comment"
-            app:srcCompat="@drawable/ic_action_heart" />
+            android:src="@drawable/ic_favorite" />
 
         <TextView
             android:id="@+id/likesCount"
