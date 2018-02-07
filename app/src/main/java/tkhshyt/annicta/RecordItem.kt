@@ -1,7 +1,9 @@
 package tkhshyt.annicta
 
 import android.app.Activity
+import android.graphics.BlurMaskFilter
 import android.view.View
+import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.items.AbstractItem
@@ -10,6 +12,8 @@ import tkhshyt.annict.json.Record
 import tkhshyt.annicta.utils.AnnictUtil
 
 class RecordItem(val record: Record, val activity: Activity?) : AbstractItem<RecordItem, RecordItem.ViewHolder>() {
+
+    var blur = true
 
     override fun getViewHolder(v: View): ViewHolder {
         return ViewHolder(v, activity)
@@ -29,6 +33,18 @@ class RecordItem(val record: Record, val activity: Activity?) : AbstractItem<Rec
             itemView.userName.text = recordItem?.record?.user?.name.orEmpty()
             itemView.comment.text = recordItem?.record?.comment.orEmpty()
 
+            if (recordItem?.blur == true) {
+                applyBlurMaskFilter(itemView.comment, BlurMaskFilter.Blur.NORMAL)
+            } else {
+                itemView.comment?.paint?.maskFilter = null
+            }
+
+            itemView.comment?.setOnClickListener {
+                recordItem?.blur = false
+                itemView.comment?.paint?.maskFilter = null
+                itemView.comment?.setLayerType(View.LAYER_TYPE_SOFTWARE, null)
+            }
+
             Glide.with(activity)
                 .load(recordItem?.record?.user?.avatar_url)
                 .into(itemView.userIcon)
@@ -44,10 +60,18 @@ class RecordItem(val record: Record, val activity: Activity?) : AbstractItem<Rec
                 itemView.rating.visibility = View.GONE
             }
 
-            itemView.likesCount.text = recordItem?.record?.likes_count?.toString().orEmpty()
+            itemView.likesCount.text = recordItem?.record?.likes_count?.toString()
         }
 
         override fun unbindView(item: RecordItem?) {
+        }
+
+        fun applyBlurMaskFilter(tv: TextView, style: BlurMaskFilter.Blur){
+            val radius = 20.0f
+            val filter = BlurMaskFilter(radius,style)
+
+            tv.setLayerType(View.LAYER_TYPE_SOFTWARE, null)
+            tv.paint.maskFilter = filter
         }
     }
 }
