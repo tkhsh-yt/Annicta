@@ -16,7 +16,7 @@
             android:layout_width="64dp"
             android:layout_height="64dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/ic_image_black_24dp"
+            android:src="@drawable/ic_account_circle"
             android:tint="#BDBDBD"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
