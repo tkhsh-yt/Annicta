@@ -2,28 +2,27 @@ package tkhshyt.annicta
 
 import android.content.Context
 import android.os.Bundle
+import android.support.design.widget.AppBarLayout
 import android.support.v4.content.ContextCompat
+import android.support.v4.content.res.ResourcesCompat
 import android.support.v7.app.AppCompatActivity
+import android.view.View
+import android.view.inputmethod.InputMethodManager
+import android.widget.ArrayAdapter
+import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.chibatching.kotpref.Kotpref
-import kotlinx.android.synthetic.main.activity_record.*
-import tkhshyt.annict.json.Episode
-import android.support.design.widget.AppBarLayout
-import android.view.View
-import android.widget.TextView
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import kotlinx.android.synthetic.main.activity_record.*
+import org.greenrobot.eventbus.EventBus
 import tkhshyt.annict.AnnictService
+import tkhshyt.annict.json.Episode
+import tkhshyt.annicta.event.RecordedEvent
 import tkhshyt.annicta.layout.message.MessageCreator
 import tkhshyt.annicta.pref.UserConfig
 import tkhshyt.annicta.pref.UserInfo
 import javax.inject.Inject
-import android.content.Context.INPUT_METHOD_SERVICE
-import android.support.v4.content.res.ResourcesCompat
-import android.view.inputmethod.InputMethodManager
-import android.widget.ArrayAdapter
-import org.greenrobot.eventbus.EventBus
-import tkhshyt.annicta.event.RecordedEvent
 
 
 class RecordActivity : AppCompatActivity() {

@@ -33,7 +33,7 @@ object AnnictUtil {
     }
 
     fun ratingBadge(rating: String?): Int {
-        return when(rating) {
+        return when (rating) {
             "bad" -> R.drawable.badge_bad
             "average" -> R.drawable.badge_average
             "good" -> R.drawable.badge_good
@@ -43,7 +43,7 @@ object AnnictUtil {
     }
 
     fun ratingText(rating: String?): String? {
-        return when(rating) {
+        return when (rating) {
             "bad" -> "良くない"
             "average" -> "普通"
             "good" -> "良い"

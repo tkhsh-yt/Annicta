@@ -16,17 +16,14 @@ import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import tkhshyt.annict.AnnictService
-import tkhshyt.annict.json.Program
 import tkhshyt.annicta.event.RecordedEvent
 import tkhshyt.annicta.layout.message.MessageCreator
 import tkhshyt.annicta.layout.recycler.EndlessScrollListener
-import tkhshyt.annicta.pref.UserInfo
-import trikita.log.Log
-import javax.inject.Inject
-import android.support.v7.widget.RecyclerView
 import tkhshyt.annicta.pref.UserConfig
+import tkhshyt.annicta.pref.UserInfo
 import tkhshyt.annicta.utils.AnnictUtil
 import java.util.*
+import javax.inject.Inject
 
 
 class ProgramFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {

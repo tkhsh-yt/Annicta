@@ -1,6 +1,5 @@
 package tkhshyt.annicta
 
-import android.content.res.Configuration
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.widget.SwipeRefreshLayout
@@ -18,13 +17,11 @@ import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import tkhshyt.annict.AnnictService
 import tkhshyt.annict.json.Status
-import tkhshyt.annict.json.Work
 import tkhshyt.annicta.event.UpdateStatusEvent
 import tkhshyt.annicta.layout.message.MessageCreator
 import tkhshyt.annicta.layout.recycler.EndlessScrollListener
 import tkhshyt.annicta.layout.recycler.Util
 import tkhshyt.annicta.pref.UserInfo
-import trikita.log.Log
 import javax.inject.Inject
 
 class WorkFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {

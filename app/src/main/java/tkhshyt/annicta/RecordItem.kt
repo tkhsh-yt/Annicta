@@ -66,9 +66,9 @@ class RecordItem(val record: Record, val activity: Activity?) : AbstractItem<Rec
         override fun unbindView(item: RecordItem?) {
         }
 
-        fun applyBlurMaskFilter(tv: TextView, style: BlurMaskFilter.Blur){
+        fun applyBlurMaskFilter(tv: TextView, style: BlurMaskFilter.Blur) {
             val radius = 20.0f
-            val filter = BlurMaskFilter(radius,style)
+            val filter = BlurMaskFilter(radius, style)
 
             tv.setLayerType(View.LAYER_TYPE_SOFTWARE, null)
             tv.paint.maskFilter = filter
