@@ -17,13 +17,12 @@ class ReleaseModule {
     @Provides
     fun provideAnnictService(): AnnictService {
         val baseUrl = "https://api.annict.com"
-        val service = Retrofit.Builder()
+        return Retrofit.Builder()
             .baseUrl(baseUrl)
             .addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .build()
             .create(AnnictService::class.java)
-        return service
     }
 
     @Singleton

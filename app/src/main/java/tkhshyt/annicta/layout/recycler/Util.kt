@@ -9,8 +9,8 @@ object Util {
         if (context != null) {
             val displayMetrics = context.resources.displayMetrics
             val dpWidth = displayMetrics.widthPixels / displayMetrics.density
-            return (dpWidth / 180).toInt()
+            return (dpWidth / 160).toInt()
         }
-        return 2
+        return 1
     }
 }
