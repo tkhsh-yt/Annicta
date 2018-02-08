@@ -2,6 +2,7 @@ package tkhshyt.annicta
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
@@ -11,13 +12,21 @@ import com.mikepenz.fastadapter.adapters.ItemAdapter
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_list.*
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 import tkhshyt.annict.AnnictService
+import tkhshyt.annicta.event.RecordedEvent
 import tkhshyt.annicta.layout.message.MessageCreator
 import tkhshyt.annicta.layout.recycler.EndlessScrollListener
+import tkhshyt.annicta.pref.UserConfig
 import tkhshyt.annicta.pref.UserInfo
+import tkhshyt.annicta.utils.AnnictUtil
+import java.util.*
 import javax.inject.Inject
 
-class RecordFragment : Fragment() {
+
+class ProgramListFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 
     @Inject
     lateinit var annict: AnnictService
@@ -25,7 +34,7 @@ class RecordFragment : Fragment() {
     @Inject
     lateinit var message: MessageCreator
 
-    private val recordItemAdapter = ItemAdapter<RecordItem>()
+    private val programItemAdapter = ItemAdapter<ProgramItem>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_list, container, false)
@@ -34,21 +43,21 @@ class RecordFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val fastAdapter = FastAdapter.with<RecordItem, ItemAdapter<RecordItem>>(recordItemAdapter)
+        val fastAdapter = FastAdapter.with<ProgramItem, ItemAdapter<ProgramItem>>(programItemAdapter)
         recyclerView.adapter = fastAdapter
         recyclerView.setHasFixedSize(true)
 
-        swipeRefreshView.isEnabled = false
-
+        swipeRefreshView.setOnRefreshListener(this)
+        swipeRefreshView.setColorSchemeResources(R.color.greenPrimary, R.color.redPrimary, R.color.indigoPrimary, R.color.yellowPrimary)
         swipeRefreshView.isRefreshing = true
+
         onRefresh()
     }
 
-    private fun onRefresh() {
-        recordItemAdapter.clear()
+    override fun onRefresh() {
+        programItemAdapter.clear()
 
         val llm = LinearLayoutManager(context)
-        llm.isAutoMeasureEnabled = true
         recyclerView.layoutManager = llm
 
         val listener = loadMoreListener(llm)
@@ -64,28 +73,23 @@ class RecordFragment : Fragment() {
             override fun onLoadMore(currentPage: Int) {
                 val accessToken = UserInfo.accessToken
                 if (accessToken != null) {
-                    val episodeId =
-                            if (arguments?.containsKey("episode_id") == true) {
-                                arguments?.getLong("episode_id")
-                            } else {
-                                null
-                            }
-                    annict.records(
+                    val startedAtLt = Calendar.getInstance()
+                    startedAtLt.add(Calendar.DATE, UserConfig.startedAtLt)
+                    annict.programs(
                             access_token = accessToken,
-                            filter_episode_id = episodeId,
-                            filter_has_record_comment = true,
-                            sort_id = "desc",
+                            sort_started_at = "desc",
+                            filter_started_at_lt = AnnictUtil.apiDateFormat.format(startedAtLt.time),
                             page = currentPage
                     ).subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .doFinally {
                             loading = false
-                            swipeRefreshView?.isRefreshing = false
+                            swipeRefreshView.isRefreshing = false
                         }
                         .subscribe({ response ->
-                            val records = response.body()
-                            recordItemAdapter.add(records.records.map { RecordItem(it, activity) })
-                            nextPage = records.next_page ?: 0
+                            val programs = response.body()
+                            programItemAdapter.add(programs.programs.map { ProgramItem(it, activity) })
+                            nextPage = programs.next_page ?: 0
                         }, { throwable ->
                             message.create()
                                 .context(context)
@@ -102,6 +106,23 @@ class RecordFragment : Fragment() {
 
         (activity?.application as? DaggerApplication)?.getComponent()?.inject(this)
 
+        EventBus.getDefault().register(this)
+
         retainInstance = true
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        EventBus.getDefault().unregister(this)
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onRecordedEvent(event: RecordedEvent) {
+        val index = (0 until programItemAdapter.adapterItemCount).firstOrNull {
+            programItemAdapter.getAdapterItem(it).program.episode.id == event.record.episode?.id
+        }
+        if (index != null) {
+            programItemAdapter.remove(index)
+        }
     }
 }

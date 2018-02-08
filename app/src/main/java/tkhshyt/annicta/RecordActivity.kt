@@ -172,7 +172,7 @@ class RecordActivity : AppCompatActivity() {
 
         val bundle = Bundle()
         episode.id?.let { bundle.putLong("episode_id", it) }
-        val fragment = RecordFragment()
+        val fragment = RecordListFragment()
         fragment.arguments = bundle
 
         val transaction = supportFragmentManager.beginTransaction()

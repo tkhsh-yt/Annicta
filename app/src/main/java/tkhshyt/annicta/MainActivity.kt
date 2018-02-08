@@ -15,7 +15,7 @@ class MainActivity : AppCompatActivity() {
 
     private val pageTitle = arrayOf("放送予定", "今期アニメ")
     private val tabViews = arrayOf(R.layout.tab_broadcast, R.layout.tab_work)
-    private val fragments = arrayOf(ProgramFragment(), WorkFragment())
+    private val fragments = arrayOf(ProgramListFragment(), WorkListFragment())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {

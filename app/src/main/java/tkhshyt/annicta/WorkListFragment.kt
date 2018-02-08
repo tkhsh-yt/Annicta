@@ -24,7 +24,7 @@ import tkhshyt.annicta.layout.recycler.Util
 import tkhshyt.annicta.pref.UserInfo
 import javax.inject.Inject
 
-class WorkFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
+class WorkListFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 
     @Inject
     lateinit var annict: AnnictService
