@@ -105,31 +105,6 @@ class RecordFragment : Fragment() {
 
         (activity?.application as? DaggerApplication)?.getComponent()?.inject(this)
 
-//        EventBus.getDefault().register(this)
-    }
-
-//    override fun onStop() {
-//        super.onStop()
-//        EventBus.getDefault().unregister(this)
-//    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-
-        outState.putInt("item_count", recordItemAdapter.adapterItemCount)
-        recordItemAdapter.adapterItems.forEachIndexed({ i, item ->
-            outState.putSerializable("item_$i", item.record)
-        })
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-
-        if (savedInstanceState != null) {
-            (0 until savedInstanceState.getInt("item_count")).forEach {
-                val item = RecordItem(savedInstanceState.getSerializable("item_$it") as Record, activity)
-                recordItemAdapter.add(it, item)
-            }
-        }
+        retainInstance = true
     }
 }

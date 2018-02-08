@@ -110,6 +110,8 @@ class ProgramFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
         (activity?.application as? DaggerApplication)?.getComponent()?.inject(this)
 
         EventBus.getDefault().register(this)
+
+        retainInstance = true
     }
 
     override fun onDestroy() {
@@ -124,26 +126,6 @@ class ProgramFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
         }
         if (index != null) {
             programItemAdapter.remove(index)
-        }
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-
-        outState.putInt("item_count", programItemAdapter.adapterItemCount)
-        programItemAdapter.adapterItems.forEachIndexed({ i, item ->
-            outState.putSerializable("item_$i", item.program)
-        })
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-
-        if (savedInstanceState != null) {
-            (0 until savedInstanceState.getInt("item_count")).forEach {
-                val item = ProgramItem(savedInstanceState.getSerializable("item_$it") as Program, activity)
-                programItemAdapter.add(it, item)
-            }
         }
     }
 }

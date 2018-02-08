@@ -1,5 +1,6 @@
 package tkhshyt.annicta
 
+import android.content.res.Configuration
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.widget.SwipeRefreshLayout
@@ -23,6 +24,7 @@ import tkhshyt.annicta.layout.message.MessageCreator
 import tkhshyt.annicta.layout.recycler.EndlessScrollListener
 import tkhshyt.annicta.layout.recycler.Util
 import tkhshyt.annicta.pref.UserInfo
+import trikita.log.Log
 import javax.inject.Inject
 
 class WorkFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
@@ -50,6 +52,7 @@ class WorkFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
         swipeRefreshView.setColorSchemeResources(R.color.greenPrimary, R.color.redPrimary, R.color.indigoPrimary, R.color.yellowPrimary)
 
         swipeRefreshView.isRefreshing = true
+
         onRefresh()
     }
 
@@ -109,8 +112,8 @@ class WorkFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
     override fun onRefresh() {
         workItemAdapter.clear()
 
-        val mNoOfColumns = Util.calculateNoOfColumns(context)
-        val glm = GridLayoutManager(context, 2)
+        val columns = Util.calculateNoOfColumns(context)
+        val glm = GridLayoutManager(context, columns)
         recyclerView.layoutManager = glm
 
         val listener = loadMoreListener(glm)
@@ -126,6 +129,8 @@ class WorkFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
         (activity?.application as? DaggerApplication)?.getComponent()?.inject(this)
 
         EventBus.getDefault().register(this)
+
+        retainInstance = true
     }
 
     override fun onStop() {
@@ -159,26 +164,6 @@ class WorkFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
                         .message("ステータスの更新に失敗しました")
                         .build().show()
                 })
-        }
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-
-        outState.putInt("item_count", workItemAdapter.adapterItemCount)
-        workItemAdapter.adapterItems.forEachIndexed({ i, item ->
-            outState.putSerializable("item_$i", item.work)
-        })
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-
-        if (savedInstanceState != null) {
-            (0 until savedInstanceState.getInt("item_count")).forEach {
-                val item = WorkItem(savedInstanceState.getSerializable("item_$it") as Work, context)
-                workItemAdapter.add(it, item)
-            }
         }
     }
 }
