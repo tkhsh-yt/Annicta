@@ -33,17 +33,18 @@ class RecordItem(val record: Record, val activity: Activity?) : AbstractItem<Rec
             itemView.userName.text = recordItem?.record?.user?.name.orEmpty()
             itemView.comment.text = recordItem?.record?.comment.orEmpty()
 
-            if (recordItem?.blur == true) {
-                applyBlurMaskFilter(itemView.comment, BlurMaskFilter.Blur.NORMAL)
-            } else {
-                itemView.comment?.paint?.maskFilter = null
-            }
-
-            itemView.comment?.setOnClickListener {
-                recordItem?.blur = false
-                itemView.comment?.paint?.maskFilter = null
-                itemView.comment?.setLayerType(View.LAYER_TYPE_SOFTWARE, null)
-            }
+            // ぼかし（エピソードが視聴済みかどうか API で取得できないため保留）
+//            if (recordItem?.blur == true) {
+//                applyBlurMaskFilter(itemView.comment, BlurMaskFilter.Blur.NORMAL)
+//            } else {
+//                itemView.comment?.paint?.maskFilter = null
+//            }
+//
+//            itemView.comment?.setOnClickListener {
+//                recordItem?.blur = false
+//                itemView.comment?.paint?.maskFilter = null
+//                itemView.comment?.setLayerType(View.LAYER_TYPE_SOFTWARE, null)
+//            }
 
             Glide.with(activity)
                 .load(recordItem?.record?.user?.avatar_url)

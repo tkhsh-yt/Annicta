@@ -1,6 +1,9 @@
 package tkhshyt.annicta
 
+import android.app.Activity
 import android.content.Context
+import android.os.Build
+import android.support.v4.app.ActivityOptionsCompat
 import android.support.v4.content.ContextCompat
 import android.view.LayoutInflater
 import android.view.View
@@ -16,11 +19,13 @@ import org.greenrobot.eventbus.EventBus
 import tkhshyt.annict.Kind
 import tkhshyt.annict.json.Work
 import tkhshyt.annicta.event.UpdateStatusEvent
+import tkhshyt.annicta.page.Page
+import tkhshyt.annicta.page.go
 
-class WorkItem(val work: Work, val context: Context?) : AbstractItem<WorkItem, WorkItem.ViewHolder>() {
+class WorkItem(val work: Work, val activity: Activity?) : AbstractItem<WorkItem, WorkItem.ViewHolder>() {
 
     override fun getViewHolder(v: View): ViewHolder {
-        return ViewHolder(v, context)
+        return ViewHolder(v, activity)
     }
 
     override fun getType(): Int {
@@ -31,32 +36,42 @@ class WorkItem(val work: Work, val context: Context?) : AbstractItem<WorkItem, W
         return R.layout.item_work
     }
 
-    class ViewHolder(itemView: View, private val context: Context?) : FastAdapter.ViewHolder<WorkItem>(itemView) {
+    class ViewHolder(itemView: View, private val activity: Activity?) : FastAdapter.ViewHolder<WorkItem>(itemView) {
 
         override fun bindView(workItem: WorkItem?, payloads: MutableList<Any>?) {
             if (workItem != null) {
                 val work = workItem.work
                 itemView.setOnClickListener {
-                    // TODO タイトルの詳細画面を開く
+                    if (activity != null) {
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                            activity.go(
+                                    Page.WORK,
+                                    ActivityOptionsCompat.makeSceneTransitionAnimation(activity, itemView.workIcon, itemView.workIcon.transitionName).toBundle(),
+                                    { it.putExtra("work", workItem.work) }
+                            )
+                        } else {
+                            activity.go(Page.WORK, { it.putExtra("work", workItem.work) })
+                        }
+                    }
                 }
 
                 var imageUrl: String? = null
-                if (context != null) {
+                if (activity != null) {
                     if (work.images?.twitter?.image_url != null && work.images.twitter.image_url.isNotBlank()) {
                         imageUrl = work.images.twitter.image_url
                     } else if (work.images?.recommended_url != null && work.images.recommended_url.isNotBlank()) {
                         imageUrl = work.images.recommended_url
                     }
                     if (imageUrl != null) {
-                        Glide.with(context)
+                        Glide.with(activity)
                             .load(imageUrl)
                             .into(itemView.workIcon)
                     }
                 }
-                itemView.title.text = work.title
+                itemView.workTitle.text = work.title
 
                 var selectedItem = -1
-                val adapter = object : ArrayAdapter<String>(context, R.layout.item_status, context?.resources?.getStringArray(R.array.work_status_array)) {
+                val adapter = object : ArrayAdapter<String>(activity, R.layout.item_status, activity?.resources?.getStringArray(R.array.work_status_array)) {
 
                     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
                         val view: View?

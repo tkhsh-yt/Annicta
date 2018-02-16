@@ -77,7 +77,7 @@ class WorkListFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
                             ).subscribeOn(Schedulers.io())
                                 .observeOn(AndroidSchedulers.mainThread())
                                 .doFinally {
-                                    swipeRefreshView.isRefreshing = false
+                                    swipeRefreshView?.isRefreshing = false
                                     loading = false
                                 }
                                 .subscribe({ response ->
@@ -86,7 +86,7 @@ class WorkListFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
                                         statusWorks.find { it.id == work.id } ?: work
                                     }
 
-                                    workItemAdapter.add(merge.map { WorkItem(it, context) })
+                                    workItemAdapter.add(merge.map { WorkItem(it, activity) })
                                 }, { throwable ->
                                     message.create()
                                         .context(context)
@@ -149,7 +149,7 @@ class WorkListFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
                     val index = workItemAdapter.adapterItems.indexOfFirst { it.work.id == event.workId }
                     val item = workItemAdapter.getAdapterItem(index)
                     if (item != null) {
-                        workItemAdapter.set(index, WorkItem(item.work.copy(status = Status(event.status)), context))
+                        workItemAdapter.set(index, WorkItem(item.work.copy(status = Status(event.status)), activity))
                     }
                     message.create()
                         .context(context)

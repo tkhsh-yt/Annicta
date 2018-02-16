@@ -1,8 +1,10 @@
 package tkhshyt.annicta
 
 import android.content.Context
+import android.os.Build
 import android.os.Bundle
 import android.support.design.widget.AppBarLayout
+import android.support.v4.app.ActivityOptionsCompat
 import android.support.v4.content.ContextCompat
 import android.support.v4.content.res.ResourcesCompat
 import android.support.v7.app.AppCompatActivity
@@ -15,11 +17,14 @@ import com.chibatching.kotpref.Kotpref
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_record.*
+import kotlinx.android.synthetic.main.item_work.view.*
 import org.greenrobot.eventbus.EventBus
 import tkhshyt.annict.AnnictService
 import tkhshyt.annict.json.Episode
 import tkhshyt.annicta.event.RecordedEvent
 import tkhshyt.annicta.layout.message.MessageCreator
+import tkhshyt.annicta.page.Page
+import tkhshyt.annicta.page.go
 import tkhshyt.annicta.pref.UserConfig
 import tkhshyt.annicta.pref.UserInfo
 import javax.inject.Inject
@@ -54,8 +59,6 @@ class RecordActivity : AppCompatActivity() {
             finish()
         })
 
-        toolbar.setTitleTextColor(ContextCompat.getColor(this, R.color.white))
-
         if (intent.hasExtra("episode")) {
             val episode = intent.getSerializableExtra("episode") as Episode
             setupView(episode)
@@ -75,6 +78,17 @@ class RecordActivity : AppCompatActivity() {
                 .into(workIcon)
         } else {
             workIcon.setImageResource(R.drawable.ic_image_black_24dp)
+        }
+        workIcon.setOnClickListener {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                go(
+                        Page.WORK,
+                        ActivityOptionsCompat.makeSceneTransitionAnimation(this, workIcon, workIcon.transitionName).toBundle(),
+                        { it.putExtra("work", episode.work) }
+                )
+            } else {
+                go(Page.WORK, { it.putExtra("work", episode.work) })
+            }
         }
 
         setupViewDependOnEpisode(episode)

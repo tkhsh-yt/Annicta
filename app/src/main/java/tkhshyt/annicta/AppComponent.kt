@@ -20,4 +20,5 @@ interface AppComponent {
     fun inject(activity: RecordActivity)
 
     fun inject(activity: WorkActivity)
+    fun inject(fragment: EpisodeListFragment)
 }

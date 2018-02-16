@@ -39,6 +39,7 @@ data class Work(
         val wikipedia_url: String?,
         val twitter_username: String?,
         val twitter_hashtag: String?,
+        val mal_anime_id: String?,
         val images: Images?,
         val episodes_count: Int?,
         val watchers_count: Int?,

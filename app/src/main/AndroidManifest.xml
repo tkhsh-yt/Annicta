@@ -24,6 +24,7 @@
             android:name=".MainActivity"
             android:launchMode="singleTop" />
         <activity android:name=".RecordActivity" />
+        <activity android:name=".WorkActivity" />
     </application>
 
 </manifest>

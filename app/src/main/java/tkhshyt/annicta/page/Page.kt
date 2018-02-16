@@ -18,7 +18,8 @@ enum class Page(val nameId: Int, val page: Class<out Activity>) {
         }
     },
     MAIN(R.string.page_main, MainActivity::class.java),
-    RECORD(R.string.page_record, RecordActivity::class.java);
+    RECORD(R.string.page_record, RecordActivity::class.java),
+    WORK(R.string.page_work, WorkActivity::class.java);
 
     open fun intent(context: Context) = Intent(context, page)
     fun name(resources: Resources): String = resources.getString(nameId)

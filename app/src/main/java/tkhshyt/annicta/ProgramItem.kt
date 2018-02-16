@@ -10,7 +10,7 @@ import com.mikepenz.fastadapter.items.AbstractItem
 import kotlinx.android.synthetic.main.item_program.view.*
 import org.greenrobot.eventbus.EventBus
 import tkhshyt.annict.json.Program
-import tkhshyt.annicta.event.ShowRecordDialogEvent
+import tkhshyt.annicta.event.StartRecordActivityEvent
 import tkhshyt.annicta.page.Page
 import tkhshyt.annicta.page.go
 import tkhshyt.annicta.utils.AnnictUtil
@@ -36,7 +36,7 @@ class ProgramItem(val program: Program, val activity: Activity?) : AbstractItem<
                 val program = programItem.program
                 itemView.setOnClickListener {
                     val episode = program.episode.copy(work = program.work)
-                    EventBus.getDefault().post(ShowRecordDialogEvent(episode))
+                    EventBus.getDefault().post(StartRecordActivityEvent(episode))
                     if (activity != null) {
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                             activity.go(
@@ -71,7 +71,7 @@ class ProgramItem(val program: Program, val activity: Activity?) : AbstractItem<
                 }
                 itemView.start_at.text = AnnictUtil.textDateFormat.format(program.started_at)
                 itemView.channel.text = program.channel.name
-                itemView.title.text = program.work.title
+                itemView.workTitle.text = program.work.title
                 val title = "${program.episode.number_text} ${program.episode.title.orEmpty()}"
                 itemView.episode.text = title
                 if (program.is_rebroadcast) {

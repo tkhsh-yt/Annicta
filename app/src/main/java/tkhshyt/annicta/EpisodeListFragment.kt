@@ -3,29 +3,35 @@ package tkhshyt.annicta
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.mikepenz.fastadapter.FastAdapter
+import com.mikepenz.fastadapter.IAdapter
 import com.mikepenz.fastadapter.adapters.ItemAdapter
+import com.mikepenz.fastadapter.items.AbstractItem
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_list.*
 import tkhshyt.annict.AnnictService
-import tkhshyt.annicta.layout.message.MessageCreator
+import tkhshyt.annict.json.Work
 import tkhshyt.annicta.layout.recycler.EndlessScrollListener
 import tkhshyt.annicta.pref.UserInfo
+import trikita.log.Log
 import javax.inject.Inject
+import com.mikepenz.fastadapter.IItem
 
-class RecordListFragment : Fragment() {
+
+
+class EpisodeListFragment : Fragment() {
 
     @Inject
     lateinit var annict: AnnictService
 
-    @Inject
-    lateinit var message: MessageCreator
+    private val episodeItemAdapter = ItemAdapter<EpisodeItem>()
 
-    private val recordItemAdapter = ItemAdapter<RecordItem>()
+    private val workInfoItemAdapter = ItemAdapter<WorkInfoItem>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_list, container, false)
@@ -34,28 +40,26 @@ class RecordListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val fastAdapter = FastAdapter.with<RecordItem, ItemAdapter<RecordItem>>(recordItemAdapter)
+        val adapters = listOf(workInfoItemAdapter, episodeItemAdapter)
+        val fastAdapter = FastAdapter.with<AbstractItem<*, *>, ItemAdapter<*>>(adapters)
         recyclerView.adapter = fastAdapter
         recyclerView.setHasFixedSize(true)
 
-        swipeRefreshView.isEnabled = false
+        swipeRefreshView.setColorSchemeResources(R.color.greenPrimary, R.color.redPrimary, R.color.indigoPrimary, R.color.yellowPrimary)
         swipeRefreshView.isRefreshing = true
-
-        onRefresh()
-    }
-
-    private fun onRefresh() {
-        recordItemAdapter.clear()
+        swipeRefreshView.isEnabled = false
 
         val llm = LinearLayoutManager(context)
-        llm.isAutoMeasureEnabled = true
         recyclerView.layoutManager = llm
 
-        val listener = loadMoreListener(llm)
-        listener.onLoadMore(1)
+        if(arguments?.containsKey("work") == true) {
+            val work = arguments?.getSerializable("work") as Work
+            workInfoItemAdapter.add(WorkInfoItem(work, activity))
+        }
 
-        recyclerView.clearOnScrollListeners()
+        val listener = loadMoreListener(llm)
         recyclerView.addOnScrollListener(listener)
+        // listener.onLoadMore(1)
     }
 
     private fun loadMoreListener(llm: LinearLayoutManager): EndlessScrollListener {
@@ -64,33 +68,27 @@ class RecordListFragment : Fragment() {
             override fun onLoadMore(currentPage: Int) {
                 val accessToken = UserInfo.accessToken
                 if (accessToken != null) {
-                    val episodeId =
-                            if (arguments?.containsKey("episode_id") == true) {
-                                arguments?.getLong("episode_id")
+                    val workId =
+                            if(arguments?.containsKey("work_id") == true) {
+                                arguments?.getLong("work_id")
                             } else {
                                 null
                             }
-                    annict.records(
+                    annict.episodes(
                             access_token = accessToken,
-                            filter_episode_id = episodeId,
-                            filter_has_record_comment = true,
-                            sort_id = "desc",
+                            filter_work_id = workId.toString(),
+                            sort_sort_number = "asc",
                             page = currentPage
                     ).subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .doFinally {
-                            loading = false
                             swipeRefreshView?.isRefreshing = false
                         }
                         .subscribe({
-                            val records = it.body()
-                            recordItemAdapter.add(records.records.map { RecordItem(it, activity) })
-                            nextPage = records.next_page ?: 0
+                            val episodes = it.body()
+                            episodeItemAdapter.add(episodes.episodes.map { EpisodeItem(it, activity) })
+                            nextPage = episodes.next_page ?: 0
                         }, {
-                            message.create()
-                                .context(context)
-                                .message("取得に失敗しました")
-                                .build().show()
                         })
                 }
             }

@@ -10,8 +10,8 @@
         android:id="@+id/appBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fitsSystemWindows="true"
         android:background="#fafafa"
+        android:fitsSystemWindows="true"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
         <android.support.design.widget.CollapsingToolbarLayout
@@ -124,8 +124,8 @@
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/material_grey_100"
-        android:layout_gravity="bottom">
+        android:layout_gravity="bottom"
+        android:background="@color/material_grey_100">
 
         <View
             android:id="@+id/separator"
@@ -152,10 +152,10 @@
             android:id="@+id/recordCommentArea"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
             android:layout_marginStart="8dp"
             android:visibility="visible"
-            app:layout_constraintTop_toBottomOf="@id/commentEditText"
-            android:layout_marginLeft="8dp">
+            app:layout_constraintTop_toBottomOf="@id/commentEditText">
 
             <Spinner
                 android:id="@+id/ratingSpinner"
@@ -163,28 +163,28 @@
                 android:layout_height="0dp"
                 android:layout_marginBottom="4dp"
                 android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
                 android:gravity="center_vertical"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/facebookToggleButton"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:layout_marginRight="8dp" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <Button
                 android:id="@+id/recordButton"
+                style="?android:attr/borderlessButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="4dp"
                 android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
                 android:background="@drawable/primary_button"
                 android:text="記録"
                 android:textColor="@android:color/white"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                style="?android:attr/borderlessButtonStyle"
-                android:layout_marginRight="8dp" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <ToggleButton
                 android:id="@+id/twitterToggleButton"
@@ -192,13 +192,13 @@
                 android:layout_height="32dp"
                 android:layout_marginBottom="4dp"
                 android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:background="@drawable/toggle_twitter_selector"
+                android:textOff=""
+                android:textOn=""
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/recordButton"
-                app:layout_constraintTop_toTopOf="parent"
-                android:textOn=""
-                android:textOff=""
-                android:background="@drawable/toggle_twitter_selector"
-                android:layout_marginRight="8dp" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <ToggleButton
                 android:id="@+id/facebookToggleButton"
@@ -206,13 +206,13 @@
                 android:layout_height="32dp"
                 android:layout_marginBottom="4dp"
                 android:layout_marginEnd="8dp"
-                android:textOn=""
-                android:textOff=""
+                android:layout_marginRight="8dp"
                 android:background="@drawable/toggle_facebook_selector"
+                android:textOff=""
+                android:textOn=""
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/twitterToggleButton"
-                app:layout_constraintTop_toTopOf="parent"
-                android:layout_marginRight="8dp" />
+                app:layout_constraintTop_toTopOf="parent" />
 
         </android.support.constraint.ConstraintLayout>
     </android.support.constraint.ConstraintLayout>
