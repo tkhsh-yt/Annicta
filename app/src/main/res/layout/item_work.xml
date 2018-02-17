@@ -28,13 +28,14 @@
                 android:layout_width="128dp"
                 android:layout_height="128dp"
                 android:scaleType="centerCrop"
-                android:tint="#BDBDBD"
+                android:tint="@color/grey_400"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 android:src="@drawable/ic_image_black_24dp"
                 android:transitionName="work_icon"
                 tools:layout_editor_absoluteY="0dp"
-                tools:targetApi="lollipop" />
+                tools:targetApi="lollipop"
+                tools:ignore="ContentDescription" />
 
             <TextView
                 android:id="@+id/workTitle"

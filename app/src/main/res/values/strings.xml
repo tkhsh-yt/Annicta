@@ -23,11 +23,35 @@
     <string name="average">普通</string>
     <string name="good">良い</string>
     <string name="great">とても良い</string>
-    <string name="record">記録する</string>
+    <string name="record">記録</string>
     <string name="page_record">記録</string>
     <string name="comment_hint">見た感想を残しませんか？（自由入力）</string>
     <string name="menu_refresh">更新</string>
     <string name="page_work">作品</string>
+    <string name="work_icon_description">作品のアイコン</string>
+    <string name="prev_episode">前のエピソード</string>
+    <string name="next_episode">次のエピソード</string>
+    <string name="suggest_recording">見た感想を残しませんか？</string>
+    <string name="episode_count">話数</string>
+    <string name="dummy_count">0</string>
+    <string name="record_count">記録数</string>
+    <string name="user_name">ユーザー名</string>
+    <string name="date">日付</string>
+    <string name="rating">評価</string>
+    <string name="comment">コメント</string>
+    <string name="dummy_work_title">SHIROBAKO</string>
+    <string name="watchers">watchers</string>
+    <string name="media">メディア</string>
+    <string name="dummy_media">TV</string>
+    <string name="release_season">リリース時期</string>
+    <string name="dummy_release_season">2014年秋</string>
+    <string name="released_on">公開日</string>
+    <string name="dummy_release_on">2014年10月08日</string>
+    <string name="official_twitter">公式Twitter</string>
+    <string name="dummy_twitter_hashtag">#musani</string>
+    <string name="wikipedia">wikipedia</string>
+    <string name="my_anime_list">MyAnimeList</string>
+    <string name="dummy_episode_count">26</string>
 
     <string-array name="rating_array">
         <item>未選択</item>

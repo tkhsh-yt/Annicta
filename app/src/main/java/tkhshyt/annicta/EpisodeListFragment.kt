@@ -3,12 +3,10 @@ package tkhshyt.annicta
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.mikepenz.fastadapter.FastAdapter
-import com.mikepenz.fastadapter.IAdapter
 import com.mikepenz.fastadapter.adapters.ItemAdapter
 import com.mikepenz.fastadapter.items.AbstractItem
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -18,10 +16,7 @@ import tkhshyt.annict.AnnictService
 import tkhshyt.annict.json.Work
 import tkhshyt.annicta.layout.recycler.EndlessScrollListener
 import tkhshyt.annicta.pref.UserInfo
-import trikita.log.Log
 import javax.inject.Inject
-import com.mikepenz.fastadapter.IItem
-
 
 
 class EpisodeListFragment : Fragment() {
@@ -45,7 +40,7 @@ class EpisodeListFragment : Fragment() {
         recyclerView.adapter = fastAdapter
         recyclerView.setHasFixedSize(true)
 
-        swipeRefreshView.setColorSchemeResources(R.color.greenPrimary, R.color.redPrimary, R.color.indigoPrimary, R.color.yellowPrimary)
+        swipeRefreshView.setColorSchemeResources(R.color.green_500, R.color.red_500, R.color.indigo_500, R.color.yellow_500)
         swipeRefreshView.isRefreshing = true
         swipeRefreshView.isEnabled = false
 

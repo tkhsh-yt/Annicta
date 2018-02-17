@@ -26,8 +26,8 @@ class AuthActivity : AppCompatActivity() {
 
         // フォントの設定
         val typeface = Typeface.createFromAsset(assets, "Offside-Regular.ttf")
-        logoTextView.typeface = typeface
-        appNameTextView.typeface = typeface
+        logoText.typeface = typeface
+        appNameText.typeface = typeface
 
         // 認証画面を開くためのフラグメントをセット
         setupOpenAnnictFragment()

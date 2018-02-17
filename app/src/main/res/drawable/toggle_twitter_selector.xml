@@ -4,6 +4,6 @@
         <bitmap android:src="@drawable/ic_action_twitter" android:tint="#9e9e9e" />
     </item>
     <item android:state_checked="true">
-        <bitmap android:src="@drawable/ic_action_twitter" android:tint="@color/bluePrimary" />
+        <bitmap android:src="@drawable/ic_action_twitter" android:tint="@color/blue_500" />
     </item>
 </selector>

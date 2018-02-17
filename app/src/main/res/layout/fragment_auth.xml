@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
+    android:background="@color/pink_normal"
     tools:context="tkhshyt.annicta.TopActivity">
 
     <EditText
@@ -16,8 +16,8 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="32dp"
         android:hint="@string/oauth_code"
-        android:textColor="@color/white"
-        android:textColorHint="@color/gray_white"
+        android:textColor="@android:color/white"
+        android:textColorHint="@color/gray_300"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -34,7 +34,7 @@
         android:onClick="@{onAuthorizeClick}"
         android:text="@string/oauth"
         android:textAppearance="@style/TextAppearance.AppCompat.Button"
-        android:textColor="@color/white"
+        android:textColor="@android:color/white"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/codeEditText" />

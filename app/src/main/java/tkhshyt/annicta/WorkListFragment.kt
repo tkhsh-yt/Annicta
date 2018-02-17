@@ -46,7 +46,7 @@ class WorkListFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
         recyclerView.setHasFixedSize(true)
 
         swipeRefreshView.setOnRefreshListener(this)
-        swipeRefreshView.setColorSchemeResources(R.color.greenPrimary, R.color.redPrimary, R.color.indigoPrimary, R.color.yellowPrimary)
+        swipeRefreshView.setColorSchemeResources(R.color.green_500, R.color.red_500, R.color.indigo_500, R.color.yellow_500)
 
         swipeRefreshView.isRefreshing = true
 
@@ -125,9 +125,12 @@ class WorkListFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 
         (activity?.application as? DaggerApplication)?.getComponent()?.inject(this)
 
-        EventBus.getDefault().register(this)
-
         retainInstance = true
+    }
+
+    override fun onStart() {
+        super.onStart()
+        EventBus.getDefault().register(this)
     }
 
     override fun onStop() {
