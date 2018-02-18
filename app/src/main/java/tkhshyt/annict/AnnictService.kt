@@ -16,7 +16,7 @@ interface AnnictService {
                 response_type: String = "code",
                 redirect_uri: String = "urn:ietf:wg:oauth:2.0:oob",
                 scope: String = "read write"
-        ): String = "${baseUrl}/oauth/authorize?client_id=${client_id}&response_type=${response_type}&redirect_uri=${redirect_uri}&scope=${scope}"
+        ): String = "$baseUrl/oauth/authorize?client_id=$client_id&response_type=$response_type&redirect_uri=$redirect_uri&scope=$scope"
     }
 
     /**
@@ -70,16 +70,16 @@ interface AnnictService {
      * 作品情報を取得して返す．
      *
      * @param version 初期値 v1．
-     * @param accessToken アクセストークン．
+     * @param access_token アクセストークン．
      * @param fields レスポンスボディに含まれるデータのフィールドを絞り込む．
-     * @param filterIds 作品を作品IDで絞り込む (e.g. fields=id,title)．
-     * @param filterSeason 作品を時期で絞り込む．2016-all としたときは，2016年にリリースされる作品全てを取得することができる (e.g. filter_season=2016-spring)．
-     * @param filterTitle 作品をタイトルで絞り込む (e.g. filter_title=shirobako)．
+     * @param filter_ids 作品を作品IDで絞り込む (e.g. fields=id,title)．
+     * @param filter_season 作品を時期で絞り込む．2016-all としたときは，2016年にリリースされる作品全てを取得することができる (e.g. filter_season=2016-spring)．
+     * @param filter_title 作品をタイトルで絞り込む (e.g. filter_title=shirobako)．
      * @param page ページ数を指定する (e.g. page=2)．
-     * @param perPage 1ページに何件取得するか指定する．デフォルトは 25 件で，最大 50 件 (e.g. per_page=30)．
-     * @param sortId 作品を作品IDで並び替える．asc または desc を指定できる (e.g. sort_id = desc)．
-     * @param sortSeason 作品をリリース時期で並び替える．
-     * @param sortWatchersCount 作品をWatchersの数で並び替える．asc または desc を指定できる (e.g. sort_watchers_count=desc)．
+     * @param per_page 1ページに何件取得するか指定する．デフォルトは 25 件で，最大 50 件 (e.g. per_page=30)．
+     * @param sort_id 作品を作品IDで並び替える．asc または desc を指定できる (e.g. sort_id = desc)．
+     * @param sort_season 作品をリリース時期で並び替える．
+     * @param sort_watchers_count 作品をWatchersの数で並び替える．asc または desc を指定できる (e.g. sort_watchers_count=desc)．
      * @return
      */
     @GET("{version}/works")

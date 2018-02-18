@@ -93,10 +93,10 @@
             android:layout_marginLeft="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:background="#2985be"
             android:padding="3dp"
             android:text="@string/dummy_media"
             android:textColor="@android:color/white"
+            android:background="@drawable/badge_media"
             app:layout_constraintStart_toEndOf="@+id/releaseSeasonText"
             app:layout_constraintTop_toTopOf="parent" />
 

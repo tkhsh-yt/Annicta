@@ -81,7 +81,6 @@ class WorkActivity : AppCompatActivity() {
                 workIcon.setImageResource(R.drawable.ic_image_black_24dp)
             }
 
-
             val episodeListFragment = EpisodeListFragment()
             val args = Bundle()
             args.putSerializable("work", work)

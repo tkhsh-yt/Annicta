@@ -52,6 +52,9 @@
     <string name="wikipedia">wikipedia</string>
     <string name="my_anime_list">MyAnimeList</string>
     <string name="dummy_episode_count">26</string>
+    <string name="fail_to_update_status">ステータスの更新に失敗しました</string>
+    <string name="update_status">ステータスを更新しました</string>
+    <string name="page_license">ライセンス</string>
 
     <string-array name="rating_array">
         <item>未選択</item>
@@ -68,5 +71,14 @@
         <item>見た</item>
         <item>一時中断</item>
         <item>視聴中止</item>
+    </string-array>
+
+    <string-array name="season_array">
+        <item>来期アニメ</item>
+        <item>今期アニメ</item>
+        <item>前期アニメ</item>
+        <item>人気アニメ</item>
+        <item>新規登録アニメ</item>
+        <item>シーズン選択</item>
     </string-array>
 </resources>

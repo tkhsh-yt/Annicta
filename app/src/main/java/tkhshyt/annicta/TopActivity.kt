@@ -26,6 +26,7 @@ class TopActivity : AppCompatActivity() {
 
         if (UserInfo.accessToken != null) {
             go(Page.MAIN)
+            finish()
         } else {
             launchAuthorizeActivity()
         }

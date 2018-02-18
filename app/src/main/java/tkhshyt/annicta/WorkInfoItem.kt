@@ -45,7 +45,7 @@ class WorkInfoItem(val work: Work, val activity: Activity?) : AbstractItem<WorkI
                 itemView.seasonName.text = work.season_name.orEmpty()
                 itemView.releasedOn.text = work.released_on.orEmpty()
 
-                if (work.twitter_username != null) {
+                if (work.twitter_username != null && work.twitter_username.isNotBlank()) {
                     itemView.twitterButton.setOnClickListener {
                         val url = "https://twitter.com/${work.twitter_username}"
                         val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
@@ -56,7 +56,7 @@ class WorkInfoItem(val work: Work, val activity: Activity?) : AbstractItem<WorkI
                     itemView.twitterButton.visibility = View.GONE
                 }
 
-                if (work.twitter_hashtag != null) {
+                if (work.twitter_hashtag != null && work.twitter_hashtag.isNotBlank()) {
                     val buttonText = "#${work.twitter_hashtag}"
                     itemView.twitterHashtagButton.text = buttonText
                     itemView.twitterHashtagButton.setOnClickListener {

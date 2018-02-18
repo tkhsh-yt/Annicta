@@ -32,6 +32,7 @@ object AnnictUtil {
         }
     }
 
+    // rating → drawable_id
     fun ratingBadge(rating: String?): Int {
         return when (rating) {
             "bad" -> R.drawable.badge_bad
@@ -42,6 +43,7 @@ object AnnictUtil {
         }
     }
 
+    // rating → Japanese
     fun ratingText(rating: String?): String? {
         return when (rating) {
             "bad" -> "良くない"

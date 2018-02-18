@@ -25,6 +25,7 @@
             android:launchMode="singleTop" />
         <activity android:name=".RecordActivity" />
         <activity android:name=".WorkActivity" />
+        <activity android:name=".LicenseActivity" />
     </application>
 
 </manifest>

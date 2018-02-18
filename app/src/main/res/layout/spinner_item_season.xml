@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="wrap_content"
+    android:layout_width="wrap_content"
+    android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/season"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="21sp"
+        android:gravity="left"
+        android:textColor="#ffffff"
+        android:layout_weight="1"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:padding="5dip"
+        tools:ignore="RtlHardcoded" />
+
+    <ImageView
+        android:src="@drawable/ic_keyboard_arrow_down"
+        android:layout_width="wrap_content"
+        android:layout_gravity="center"
+        android:layout_height="wrap_content"
+        android:paddingLeft="12dp"
+        tools:ignore="ContentDescription,RtlSymmetry"
+        android:paddingStart="12dp" />
+
+</LinearLayout>

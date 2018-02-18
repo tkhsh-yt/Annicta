@@ -16,6 +16,7 @@ buildscript {
         // in the individual module build.gradle files
         classpath 'com.google.gms:google-services:3.0.0'
         classpath 'com.deploygate:gradle:1.1.4'
+        classpath 'com.cookpad.android.licensetools:license-tools-plugin:1.2.0'
     }
 }
 
