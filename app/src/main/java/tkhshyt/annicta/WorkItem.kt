@@ -88,7 +88,7 @@ class WorkItem(val work: Work, val activity: Activity?) : AbstractItem<WorkItem,
                     override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup?): View {
                         val view = super.getDropDownView(position, convertView, parent)
                         if (position == selectedItem) {
-                            view.setBackgroundColor(ContextCompat.getColor(context, R.color.spinner_selected_color))
+                            view.setBackgroundColor(ContextCompat.getColor(context, R.color.blue_700))
                         } else {
                             view.setBackgroundColor(ContextCompat.getColor(context, R.color.status_dropdown_color))
                         }
