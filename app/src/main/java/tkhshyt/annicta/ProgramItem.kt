@@ -37,11 +37,16 @@ class ProgramItem(val program: Program, val activity: Activity?) : AbstractItem<
                 itemView.setOnClickListener {
                     val episode = program.episode.copy(work = program.work)
                     EventBus.getDefault().post(StartRecordActivityEvent(episode))
+
                     if (activity != null) {
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                             activity.go(
                                     Page.RECORD,
-                                    ActivityOptionsCompat.makeSceneTransitionAnimation(activity, itemView.workIcon, itemView.workIcon.transitionName).toBundle(),
+                                    ActivityOptionsCompat.makeSceneTransitionAnimation(
+                                            activity,
+                                            itemView.workIcon,
+                                            itemView.workIcon.transitionName
+                                    ).toBundle(),
                                     { it.putExtra("episode", episode) }
                             )
                         } else {
@@ -69,6 +74,7 @@ class ProgramItem(val program: Program, val activity: Activity?) : AbstractItem<
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     itemView.workIcon.transitionName = "work_icon"
                 }
+
                 itemView.start_at.text = AnnictUtil.textDateFormat.format(program.started_at)
                 itemView.channel.text = program.channel.name
                 itemView.workTitle.text = program.work.title

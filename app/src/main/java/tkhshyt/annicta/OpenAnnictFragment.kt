@@ -42,7 +42,6 @@ class OpenAnnictFragment : Fragment() {
                         args.getString("client_id"))
                 )
                 val intent = Intent(Intent.ACTION_VIEW, uri)
-
                 startActivity(intent)
 
                 EventBus.getDefault().post(OpenAnnictEvent())

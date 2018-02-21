@@ -1,8 +1,14 @@
 package tkhshyt.annicta.utils
 
+import io.reactivex.Single
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import tkhshyt.annicta.R
 import java.text.SimpleDateFormat
 import java.util.*
+
+fun <T> Single<T>.defaultOn() = this.subscribeOn(Schedulers.io())
+    .observeOn(AndroidSchedulers.mainThread())
 
 object AnnictUtil {
 
@@ -54,3 +60,4 @@ object AnnictUtil {
         }
     }
 }
+

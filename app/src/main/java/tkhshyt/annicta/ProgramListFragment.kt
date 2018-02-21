@@ -22,6 +22,7 @@ import tkhshyt.annicta.layout.recycler.EndlessScrollListener
 import tkhshyt.annicta.pref.UserConfig
 import tkhshyt.annicta.pref.UserInfo
 import tkhshyt.annicta.utils.AnnictUtil
+import tkhshyt.annicta.utils.defaultOn
 import java.util.*
 import javax.inject.Inject
 
@@ -60,15 +61,15 @@ class ProgramListFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
         val llm = LinearLayoutManager(context)
         recyclerView.layoutManager = llm
 
-        val listener = loadMoreListener(llm)
+        val listener = loadMoreListener()
         listener.onLoadMore(1)
 
         recyclerView.clearOnScrollListeners()
         recyclerView.addOnScrollListener(listener)
     }
 
-    private fun loadMoreListener(llm: LinearLayoutManager): EndlessScrollListener {
-        return object : EndlessScrollListener(llm) {
+    private fun loadMoreListener(): EndlessScrollListener {
+        return object : EndlessScrollListener() {
 
             override fun onLoadMore(currentPage: Int) {
                 val accessToken = UserInfo.accessToken
@@ -80,8 +81,7 @@ class ProgramListFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
                             sort_started_at = "desc",
                             filter_started_at_lt = AnnictUtil.apiDateFormat.format(startedAtLt.time),
                             page = currentPage
-                    ).subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
+                    ).defaultOn()
                         .doFinally {
                             loading = false
                             swipeRefreshView.isRefreshing = false

@@ -31,8 +31,7 @@ class WorkInfoItem(val work: Work, val activity: Activity?) : AbstractItem<WorkI
                 val work = workInfoItem.work
                 itemView.media.text = work.media_text
 
-
-                if (work.images?.twitter?.original_avatar_url != null) {
+                if (work.images?.twitter?.original_avatar_url != null && work.images.twitter.original_avatar_url.isNotBlank()) {
                     Glide.with(activity)
                         .load(work.images.twitter.original_avatar_url)
                         .into(itemView.twitterIcon)

@@ -9,13 +9,13 @@ import android.view.ViewGroup
 import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.adapters.ItemAdapter
 import com.mikepenz.fastadapter.items.AbstractItem
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_list.*
 import tkhshyt.annict.AnnictService
 import tkhshyt.annict.json.Work
 import tkhshyt.annicta.layout.recycler.EndlessScrollListener
 import tkhshyt.annicta.pref.UserInfo
+import tkhshyt.annicta.utils.defaultOn
+import tkhshyt.annicta.utils.notNullIf
 import javax.inject.Inject
 
 
@@ -24,9 +24,8 @@ class EpisodeListFragment : Fragment() {
     @Inject
     lateinit var annict: AnnictService
 
-    private val episodeItemAdapter = ItemAdapter<EpisodeItem>()
-
     private val workInfoItemAdapter = ItemAdapter<WorkInfoItem>()
+    private val episodeItemAdapter = ItemAdapter<EpisodeItem>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_list, container, false)
@@ -47,41 +46,41 @@ class EpisodeListFragment : Fragment() {
         val llm = LinearLayoutManager(context)
         recyclerView.layoutManager = llm
 
-        if(arguments?.containsKey("work") == true) {
-            val work = arguments?.getSerializable("work") as Work
+        arguments.notNullIf({
+            it.containsKey("work")
+        }, {
+            val work = it.getSerializable("work") as Work
             workInfoItemAdapter.add(WorkInfoItem(work, activity))
-        }
+        })
 
-        val listener = loadMoreListener(llm)
+        val listener = loadMoreListener()
         recyclerView.addOnScrollListener(listener)
-        // listener.onLoadMore(1)
     }
 
-    private fun loadMoreListener(llm: LinearLayoutManager): EndlessScrollListener {
-        return object : EndlessScrollListener(llm) {
+    private fun loadMoreListener(): EndlessScrollListener {
+        return object : EndlessScrollListener() {
 
             override fun onLoadMore(currentPage: Int) {
                 val accessToken = UserInfo.accessToken
                 if (accessToken != null) {
-                    val workId =
-                            if(arguments?.containsKey("work_id") == true) {
-                                arguments?.getLong("work_id")
-                            } else {
-                                null
-                            }
+                    val workId = arguments.notNullIf({
+                        it.containsKey("work_id")
+                    }, {
+                        it.getLong("work_id")
+                    })
+
                     annict.episodes(
                             access_token = accessToken,
                             filter_work_id = workId.toString(),
                             sort_sort_number = "asc",
                             page = currentPage
-                    ).subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
+                    ).defaultOn()
                         .doFinally {
                             swipeRefreshView?.isRefreshing = false
                         }
                         .subscribe({
                             val episodes = it.body()
-                            episodeItemAdapter.add(episodes.episodes.map { EpisodeItem(it, activity) })
+                            episodeItemAdapter.add(episodes.episodes.map { EpisodeItem(it) })
                             nextPage = episodes.next_page ?: 0
                         }, {
                         })
@@ -93,6 +92,7 @@ class EpisodeListFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        // DI
         (activity?.application as? DaggerApplication)?.getComponent()?.inject(this)
 
         retainInstance = true

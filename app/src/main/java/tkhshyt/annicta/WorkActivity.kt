@@ -1,14 +1,11 @@
 package tkhshyt.annicta
 
-import android.content.Intent
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.support.design.widget.AppBarLayout
 import android.support.v4.app.ActivityOptionsCompat
 import android.support.v4.content.res.ResourcesCompat
 import android.support.v7.app.AppCompatActivity
-import android.view.View
 import com.bumptech.glide.Glide
 import com.chibatching.kotpref.Kotpref
 import kotlinx.android.synthetic.main.activity_work.*
@@ -44,7 +41,7 @@ class WorkActivity : AppCompatActivity() {
 
         toolbar.navigationIcon = ResourcesCompat.getDrawable(resources, R.drawable.ic_action_arrow_left, null)
         toolbar.setNavigationOnClickListener({
-            finish()
+            supportFinishAfterTransition()
         })
 
         if(intent.hasExtra("work")) {
@@ -68,10 +65,10 @@ class WorkActivity : AppCompatActivity() {
             })
 
             var imageUrl: String? = null
-            if (work.images?.twitter?.image_url != null && work.images.twitter.image_url.isNotBlank()) {
-                imageUrl = work.images.twitter.image_url
-            } else if (work.images?.recommended_url != null && work.images.recommended_url.isNotBlank()) {
+            if (work.images?.recommended_url != null && work.images.recommended_url.isNotBlank()) {
                 imageUrl = work.images.recommended_url
+            } else if (work.images?.twitter?.image_url != null && work.images.twitter.image_url.isNotBlank()) {
+                imageUrl = work.images.twitter.image_url
             }
             if (imageUrl != null) {
                 Glide.with(this)

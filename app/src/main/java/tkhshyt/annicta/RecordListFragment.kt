@@ -51,15 +51,15 @@ class RecordListFragment : Fragment() {
         llm.isAutoMeasureEnabled = true
         recyclerView.layoutManager = llm
 
-        val listener = loadMoreListener(llm)
+        val listener = loadMoreListener()
         listener.onLoadMore(1)
 
         recyclerView.clearOnScrollListeners()
         recyclerView.addOnScrollListener(listener)
     }
 
-    private fun loadMoreListener(llm: LinearLayoutManager): EndlessScrollListener {
-        return object : EndlessScrollListener(llm) {
+    private fun loadMoreListener(): EndlessScrollListener {
+        return object : EndlessScrollListener() {
 
             override fun onLoadMore(currentPage: Int) {
                 val accessToken = UserInfo.accessToken

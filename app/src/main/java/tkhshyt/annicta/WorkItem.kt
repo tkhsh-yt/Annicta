@@ -57,10 +57,10 @@ class WorkItem(val work: Work, val activity: Activity?) : AbstractItem<WorkItem,
 
                 var imageUrl: String? = null
                 if (activity != null) {
-                    if (work.images?.twitter?.image_url != null && work.images.twitter.image_url.isNotBlank()) {
-                        imageUrl = work.images.twitter.image_url
-                    } else if (work.images?.recommended_url != null && work.images.recommended_url.isNotBlank()) {
+                    if (work.images?.recommended_url != null && work.images.recommended_url.isNotBlank()) {
                         imageUrl = work.images.recommended_url
+                    } else if (work.images?.twitter?.image_url != null && work.images.twitter.image_url.isNotBlank()) {
+                        imageUrl = work.images.twitter.image_url
                     }
                     if (imageUrl != null) {
                         Glide.with(activity)

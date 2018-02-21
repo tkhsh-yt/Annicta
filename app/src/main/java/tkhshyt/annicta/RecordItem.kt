@@ -65,6 +65,7 @@ class RecordItem(val record: Record, val activity: Activity?) : AbstractItem<Rec
         }
 
         override fun unbindView(item: RecordItem?) {
+            itemView.userIcon.setImageResource(R.drawable.ic_account_circle)
         }
 
         fun applyBlurMaskFilter(tv: TextView, style: BlurMaskFilter.Blur) {

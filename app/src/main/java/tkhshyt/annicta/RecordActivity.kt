@@ -56,7 +56,7 @@ class RecordActivity : AppCompatActivity() {
 
         toolbar.navigationIcon = ResourcesCompat.getDrawable(resources, R.drawable.ic_action_arrow_left, null)
         toolbar.setNavigationOnClickListener({
-            finish()
+            supportFinishAfterTransition()
         })
 
         if (intent.hasExtra("episode")) {

@@ -50,14 +50,14 @@ class TopActivity : AppCompatActivity() {
                     UserInfo.accessToken = data?.getStringExtra("access_token")
                     message.create()
                         .context(this)
-                        .message("認証に成功しました")
+                        .message(getString(R.string.success_to_authorize))
                         .build().show()
                     go(Page.MAIN)
                     finish()
                 } else {
                     message.create()
                         .context(this)
-                        .message("認証に失敗しました")
+                        .message(getString(R.string.fail_to_authorize))
                         .build().show()
                     launchAuthorizeActivity()
                 }

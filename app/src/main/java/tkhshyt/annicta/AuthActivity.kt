@@ -54,14 +54,12 @@ class AuthActivity : AppCompatActivity() {
     }
 
     // 認証URLを開いた後の処理
-    // tkhshyt.annicta.OpeanAnnictFragment からイベントが投げられてくる．
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onOpenAnnictEvent(event: OpenAnnictEvent) {
         setupAuthorizeFragment()
     }
 
     // 認証に失敗したときの処理
-    // tkhshyt.annicta.AuthFragment からイベントが投げられてくる．
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onFailToAuthorizeEvent(event: FailToAuthorizeEvent) {
         message.create()
