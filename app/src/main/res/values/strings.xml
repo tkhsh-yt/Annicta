@@ -1,60 +1,64 @@
 <resources>
     <string name="app_name">Annicta</string>
-    <string name="channel">チャンネル</string>
-    <string name="title">タイトル</string>
-    <string name="episode">エピソード</string>
-    <string name="started_at">放送開始日時</string>
 
-    <string name="fa_pencil_square_o">&#xf044;</string>
-    <string name="fa_check">&#xf00c;</string>
-    <string name="oauth_code">認証コード</string>
-    <string name="oauth">認証</string>
     <string name="page_main">Main</string>
     <string name="page_auth">Auth</string>
     <string name="page_top">Top</string>
-    <string name="start_at">放送日時</string>
 
-    <string name="rebroadcast">再放送</string>
+    <string name="oauth_code">認証コード</string>
+    <string name="oauth">認証</string>
     <string name="authorize">Annictでログインして連携</string>
     <string name="have_code">既にコードを持っている場合</string>
     <string name="how_to_authorize">アプリを使用するためには，Annict と連携をするために認証コードが必要です．下のボタンをタップするとブラウザが開きます．そこでログインして認証コードを手に入れてください．</string>
     <string name="fail_to_authorize">認証に失敗しました</string>
+
+    <string name="channel">チャンネル</string>
+    <string name="title">タイトル</string>
+    <string name="episode">エピソード</string>
+    <string name="started_at">放送開始日時</string>
+    <string name="start_at">放送日時</string>
+    <string name="rebroadcast">再放送</string>
+
     <string name="bad">良くない</string>
     <string name="average">普通</string>
     <string name="good">良い</string>
     <string name="great">とても良い</string>
+
     <string name="record">記録</string>
     <string name="page_record">記録</string>
     <string name="comment_hint">見た感想を残しませんか？（自由入力）</string>
-    <string name="menu_refresh">更新</string>
+
+    <string name="dummy_count">0</string>
+
     <string name="page_work">作品</string>
-    <string name="work_icon_description">作品のアイコン</string>
     <string name="prev_episode">前のエピソード</string>
     <string name="next_episode">次のエピソード</string>
     <string name="suggest_recording">見た感想を残しませんか？</string>
     <string name="episode_count">話数</string>
-    <string name="dummy_count">0</string>
     <string name="record_count">記録数</string>
     <string name="user_name">ユーザー名</string>
     <string name="date">日付</string>
     <string name="rating">評価</string>
     <string name="comment">コメント</string>
-    <string name="dummy_work_title">SHIROBAKO</string>
     <string name="watchers">watchers</string>
     <string name="media">メディア</string>
-    <string name="dummy_media">TV</string>
     <string name="release_season">リリース時期</string>
-    <string name="dummy_release_season">2014年秋</string>
     <string name="released_on">公開日</string>
-    <string name="dummy_release_on">2014年10月08日</string>
     <string name="official_twitter">公式Twitter</string>
-    <string name="dummy_twitter_hashtag">#musani</string>
     <string name="wikipedia">wikipedia</string>
     <string name="my_anime_list">MyAnimeList</string>
-    <string name="dummy_episode_count">26</string>
+
     <string name="fail_to_update_status">ステータスの更新に失敗しました</string>
     <string name="update_status">ステータスを更新しました</string>
+
     <string name="page_license">ライセンス</string>
+
+    <string name="dummy_work_title">SHIROBAKO</string>
+    <string name="dummy_media">TV</string>
+    <string name="dummy_release_season">2014年秋</string>
+    <string name="dummy_release_on">2014年10月08日</string>
+    <string name="dummy_twitter_hashtag">#musani</string>
+    <string name="dummy_episode_count">26</string>
 
     <string-array name="rating_array">
         <item>未選択</item>
