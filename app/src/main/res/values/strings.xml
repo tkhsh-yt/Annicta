@@ -10,6 +10,7 @@
     <string name="authorize">Annictでログインして連携</string>
     <string name="have_code">既にコードを持っている場合</string>
     <string name="how_to_authorize">アプリを使用するためには，Annict と連携をするために認証コードが必要です．下のボタンをタップするとブラウザが開きます．そこでログインして認証コードを手に入れてください．</string>
+    <string name="success_to_authorize">認証に成功しました</string>
     <string name="fail_to_authorize">認証に失敗しました</string>
 
     <string name="channel">チャンネル</string>
@@ -59,8 +60,6 @@
     <string name="dummy_release_on">2014年10月08日</string>
     <string name="dummy_twitter_hashtag">#musani</string>
     <string name="dummy_episode_count">26</string>
-    <string name="success_to_authorize">認証に成功しました</string>
-    <string name="fail_to_authorize">認証に失敗しました</string>
 
     <string-array name="rating_array">
         <item>未選択</item>

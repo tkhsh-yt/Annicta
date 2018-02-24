@@ -90,7 +90,7 @@ class WorkItem(val work: Work, val activity: Activity?) : AbstractItem<WorkItem,
                         if (position == selectedItem) {
                             view.setBackgroundColor(ContextCompat.getColor(context, R.color.blue_700))
                         } else {
-                            view.setBackgroundColor(ContextCompat.getColor(context, R.color.status_dropdown_color))
+                            view.setBackgroundColor(ContextCompat.getColor(context, R.color.grey_800))
                         }
                         return view
                     }

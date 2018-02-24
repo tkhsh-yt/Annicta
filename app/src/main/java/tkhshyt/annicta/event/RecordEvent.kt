@@ -5,14 +5,7 @@ import tkhshyt.annict.json.Record
 
 data class StartRecordActivityEvent(val episode: Episode)
 
-data class CreateRecord(
-        val episode: Episode,
-        val rating_state: String?,
-        val comment: String?,
-        val share_twitter: Boolean,
-        val share_facebook: Boolean
-)
-
-data class CreateRecordEvent(val createRecord: CreateRecord)
-
+/**
+ * 視聴を記録したときのイベント．
+ */
 data class RecordedEvent(val record: Record)

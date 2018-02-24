@@ -8,6 +8,6 @@
     android:textSize="21sp"
     android:gravity="left"
     android:textColor="@android:color/white"
-    android:background="@color/status_dropdown_color"
+    android:background="@color/grey_800"
     android:padding="5dip"
     tools:ignore="RtlHardcoded" />
