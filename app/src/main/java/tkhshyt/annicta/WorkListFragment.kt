@@ -30,13 +30,13 @@ import javax.inject.Inject
 import android.support.v7.app.AlertDialog
 import android.widget.ArrayAdapter
 import tkhshyt.annicta.event.SeasonSelectedEvent
-
-
-enum class Sort {
-    ID, WATCHER_COUNT
-}
+import tkhshyt.annicta.extension.worksWithStatus
 
 class WorkListFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
+
+    enum class Sort {
+        ID, WATCHER_COUNT
+    }
 
     @Inject
     lateinit var annict: AnnictService
@@ -74,14 +74,14 @@ class WorkListFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
                 if (accessToken != null) {
                     val request = when(sort) {
                         Sort.ID -> {
-                            annict.works(
+                            annict.worksWithStatus(
                                     access_token = accessToken,
                                     sort_id = "desc",
                                     page = currentPage
                             )
                         }
                         Sort.WATCHER_COUNT -> {
-                            annict.works(
+                            annict.worksWithStatus(
                                     access_token = accessToken,
                                     sort_watchers_count = "desc",
                                     filter_season = season?.param(),
@@ -89,43 +89,17 @@ class WorkListFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
                             )
                         }
                     }
-                    request.subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe({ response ->
-                            val works = response.body()
-
-                            // これ別のやり方がある気がする
-                            annict.followingWorks(
-                                    access_token = accessToken,
-                                    sort_watchers_count = "desc",
-                                    filter_ids = works.works.map { it.id }.joinToString(",")
-                            ).subscribeOn(Schedulers.io())
-                                .observeOn(AndroidSchedulers.mainThread())
-                                .doFinally {
-                                    swipeRefreshView?.isRefreshing = false
-                                    loading = false
-                                }
-                                .subscribe({ response ->
-                                    val statusWorks = response.body().works
-                                    val merge = works.works.map { work ->
-                                        statusWorks.find { it.id == work.id } ?: work
-                                    }
-
-                                    workItemAdapter.add(merge.map { WorkItem(it, activity) })
-                                }, { throwable ->
-                                    message.create()
-                                        .context(context)
-                                        .message("ステータス情報の取得に失敗しました")
-                                        .build().show()
-                                })
-
-                            nextPage = works.next_page ?: -1
-                        }, { throwable: Throwable? ->
-                            message.create()
-                                .context(context)
-                                .message("読み込みに失敗しました")
-                                .build().show()
-                        })
+                    request({
+                        workItemAdapter.add(it.works.map { WorkItem(it, activity) })
+                    }, {
+                        swipeRefreshView?.isRefreshing = false
+                        loading = false
+                    }, {
+                        message.create()
+                            .context(context)
+                            .message("読み込みに失敗しました")
+                            .build().show()
+                    })
                 }
             }
         }

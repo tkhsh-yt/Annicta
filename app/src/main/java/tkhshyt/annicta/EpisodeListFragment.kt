@@ -12,9 +12,9 @@ import com.mikepenz.fastadapter.items.AbstractItem
 import kotlinx.android.synthetic.main.fragment_list.*
 import tkhshyt.annict.AnnictService
 import tkhshyt.annict.json.Work
+import tkhshyt.annicta.extension.defaultOn
 import tkhshyt.annicta.layout.recycler.EndlessScrollListener
 import tkhshyt.annicta.pref.UserInfo
-import tkhshyt.annicta.utils.defaultOn
 import tkhshyt.annicta.utils.notNullIf
 import javax.inject.Inject
 

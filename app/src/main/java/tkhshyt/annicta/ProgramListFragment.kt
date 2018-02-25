@@ -17,12 +17,12 @@ import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import tkhshyt.annict.AnnictService
 import tkhshyt.annicta.event.RecordedEvent
+import tkhshyt.annicta.extension.defaultOn
 import tkhshyt.annicta.layout.message.MessageCreator
 import tkhshyt.annicta.layout.recycler.EndlessScrollListener
 import tkhshyt.annicta.pref.UserConfig
 import tkhshyt.annicta.pref.UserInfo
 import tkhshyt.annicta.utils.AnnictUtil
-import tkhshyt.annicta.utils.defaultOn
 import java.util.*
 import javax.inject.Inject
 
@@ -84,7 +84,7 @@ class ProgramListFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
                     ).defaultOn()
                         .doFinally {
                             loading = false
-                            swipeRefreshView.isRefreshing = false
+                            swipeRefreshView?.isRefreshing = false
                         }
                         .subscribe({ response ->
                             val programs = response.body()

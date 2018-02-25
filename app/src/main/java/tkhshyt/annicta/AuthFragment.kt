@@ -11,7 +11,7 @@ import kotlinx.android.synthetic.main.fragment_auth.*
 import org.greenrobot.eventbus.EventBus
 import tkhshyt.annict.AnnictService
 import tkhshyt.annicta.event.FailToAuthorizeEvent
-import tkhshyt.annicta.utils.defaultOn
+import tkhshyt.annicta.extension.defaultOn
 import javax.inject.Inject
 
 class AuthFragment : Fragment() {

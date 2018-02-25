@@ -7,9 +7,6 @@ import tkhshyt.annicta.R
 import java.text.SimpleDateFormat
 import java.util.*
 
-fun <T> Single<T>.defaultOn() = this.subscribeOn(Schedulers.io())
-    .observeOn(AndroidSchedulers.mainThread())
-
 object AnnictUtil {
 
     val textDateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.JAPAN)
