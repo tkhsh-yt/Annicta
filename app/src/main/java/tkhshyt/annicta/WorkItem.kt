@@ -12,6 +12,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.TextView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.items.AbstractItem
 import kotlinx.android.synthetic.main.item_work.view.*
@@ -65,6 +66,7 @@ class WorkItem(val work: Work, val activity: Activity?) : AbstractItem<WorkItem,
                     if (imageUrl != null) {
                         Glide.with(activity)
                             .load(imageUrl)
+                            .diskCacheStrategy(DiskCacheStrategy.ALL)
                             .into(itemView.workIcon)
                     }
                 }
