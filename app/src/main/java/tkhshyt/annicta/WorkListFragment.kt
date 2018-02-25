@@ -91,6 +91,7 @@ class WorkListFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
                     }
                     request({
                         workItemAdapter.add(it.works.map { WorkItem(it, activity) })
+                        nextPage = it.next_page ?: -1
                     }, {
                         swipeRefreshView?.isRefreshing = false
                         loading = false

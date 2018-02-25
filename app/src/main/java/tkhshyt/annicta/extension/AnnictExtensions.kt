@@ -27,7 +27,7 @@ fun AnnictService.embedStatus(
                     statusWorks.find { it.id == work.id } ?: work
                 }
 
-                success(Works(merge, works.total_count, works.prev_page, works.next_page))
+                success(Works(merge, works.total_count, works.next_page, works.prev_page))
             }, { fail(it) })
     }
 }
@@ -70,4 +70,3 @@ fun AnnictService.worksWithStatus(
             }, { fail(it) })
     }
 }
-
