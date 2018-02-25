@@ -7,6 +7,7 @@ import android.support.v4.app.ActivityOptionsCompat
 import android.support.v4.content.res.ResourcesCompat
 import android.support.v7.app.AppCompatActivity
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.chibatching.kotpref.Kotpref
 import kotlinx.android.synthetic.main.activity_work.*
 import org.greenrobot.eventbus.EventBus
@@ -73,6 +74,7 @@ class WorkActivity : AppCompatActivity() {
             if (imageUrl != null) {
                 Glide.with(this)
                     .load(imageUrl)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(workIcon)
             } else {
                 workIcon.setImageResource(R.drawable.ic_image_black_24dp)

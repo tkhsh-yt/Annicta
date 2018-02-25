@@ -5,6 +5,7 @@ import android.os.Build
 import android.support.v4.app.ActivityOptionsCompat
 import android.view.View
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.items.AbstractItem
 import kotlinx.android.synthetic.main.item_program.view.*
@@ -68,6 +69,7 @@ class ProgramItem(val program: Program, val activity: Activity?) : AbstractItem<
                     if (imageUrl != null) {
                         Glide.with(activity)
                             .load(imageUrl)
+                            .diskCacheStrategy(DiskCacheStrategy.ALL)
                             .into(itemView.workIcon)
                     }
                 }

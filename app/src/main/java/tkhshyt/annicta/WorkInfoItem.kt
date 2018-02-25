@@ -5,6 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import android.view.View
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.items.AbstractItem
 import kotlinx.android.synthetic.main.item_work_info.view.*
@@ -34,6 +35,7 @@ class WorkInfoItem(val work: Work, val activity: Activity?) : AbstractItem<WorkI
                 if (work.images?.twitter?.original_avatar_url != null && work.images.twitter.original_avatar_url.isNotBlank()) {
                     Glide.with(activity)
                         .load(work.images.twitter.original_avatar_url)
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
                         .into(itemView.twitterIcon)
                 } else {
                     itemView.twitterIcon.setImageResource(R.drawable.ic_image_black_24dp)
