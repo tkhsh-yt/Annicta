@@ -80,7 +80,7 @@ class EpisodeListFragment : Fragment() {
                         }
                         .subscribe({
                             val episodes = it.body()
-                            episodeItemAdapter.add(episodes.episodes.map { EpisodeItem(it) })
+                            episodeItemAdapter.add(episodes.resources().map { EpisodeItem(it) })
                             nextPage = episodes.next_page ?: 0
                         }, {
                         })

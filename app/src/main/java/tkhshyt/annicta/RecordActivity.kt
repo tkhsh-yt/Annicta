@@ -134,7 +134,7 @@ class RecordActivity : AppCompatActivity() {
             ).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    val newEpisode = it.body().episodes.last()
+                    val newEpisode = it.body().resources().last()
                     val prevNextEpisode = arrayOf(
                             Pair(newEpisode.prev_episode, prevEpisodeButton),
                             Pair(newEpisode.next_episode, nextEpisodeButton)

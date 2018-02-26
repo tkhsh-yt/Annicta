@@ -84,7 +84,7 @@ class RecordListFragment : Fragment() {
                         }
                         .subscribe({
                             val records = it.body()
-                            recordItemAdapter.add(records.records.map { RecordItem(it, activity) })
+                            recordItemAdapter.add(records.resources().map { RecordItem(it, activity) })
                             nextPage = records.next_page ?: 0
                         }, {
                             message.create()

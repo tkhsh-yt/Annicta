@@ -88,7 +88,7 @@ class ProgramListFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
                         }
                         .subscribe({ response ->
                             val programs = response.body()
-                            programItemAdapter.add(programs.programs.map { ProgramItem(it, activity) })
+                            programItemAdapter.add(programs.resources().map { ProgramItem(it, activity) })
                             nextPage = programs.next_page ?: 0
                         }, { throwable ->
                             message.create()

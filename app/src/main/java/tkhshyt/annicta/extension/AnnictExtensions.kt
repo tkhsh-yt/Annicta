@@ -18,12 +18,12 @@ fun AnnictService.embedStatus(
         this.followingWorks(
                 access_token = access_token,
                 sort_watchers_count = sort_watchers_count,
-                filter_ids = works.works.map { it.id }.joinToString(",")
+                filter_ids = works.resources().map { it.id }.joinToString(",")
         ).defaultOn()
             .doFinally(final)
             .subscribe({
-                val statusWorks = it.body().works
-                val merge = works.works.map { work ->
+                val statusWorks = it.body().resources()
+                val merge = works.resources().map { work ->
                     statusWorks.find { it.id == work.id } ?: work
                 }
 
