@@ -29,7 +29,7 @@ data class Activity(
         // status: create_review
         val review: Review?,
         // status: create_multi_records
-        val multiple_records: List<MultipleRecord>?,
+        val multiple_record: List<MultipleRecord>?,
         // status: create_status
         val status: Status?
 ) : Serializable

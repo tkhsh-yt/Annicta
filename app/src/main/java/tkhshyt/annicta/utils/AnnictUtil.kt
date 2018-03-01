@@ -1,8 +1,5 @@
 package tkhshyt.annicta.utils
 
-import io.reactivex.Single
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import tkhshyt.annicta.R
 import java.text.SimpleDateFormat
 import java.util.*
@@ -54,6 +51,19 @@ object AnnictUtil {
             "good" -> "良い"
             "great" -> "とても良い"
             else -> null
+        }
+    }
+
+    // kind → Japanese
+    fun kindText(kind: String?): String {
+        return when(kind) {
+            "no_select" -> "未選択"
+            "wanna_watch" -> "見たい"
+            "watching" -> "見てる"
+            "watched" -> "見た"
+            "on_hold" -> "一時中断"
+            "stop_watching" -> "視聴中止"
+            else -> ""
         }
     }
 }

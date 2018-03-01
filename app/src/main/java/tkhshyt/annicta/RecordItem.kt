@@ -31,7 +31,7 @@ class RecordItem(val record: Record, val activity: Activity?) : AbstractItem<Rec
     class ViewHolder(itemView: View, private val activity: Activity?) : FastAdapter.ViewHolder<RecordItem>(itemView) {
 
         override fun bindView(recordItem: RecordItem?, payloads: MutableList<Any>?) {
-            itemView.userName.text = recordItem?.record?.user?.name.orEmpty()
+            itemView.activity.text = recordItem?.record?.user?.name.orEmpty()
             itemView.comment.text = recordItem?.record?.comment.orEmpty()
 
             // ぼかし（エピソードが視聴済みかどうか API で取得できないため保留）

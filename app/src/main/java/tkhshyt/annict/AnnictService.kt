@@ -402,7 +402,7 @@ interface AnnictService {
             @Query("per_page") per_page: Int = 25,
             @Query("sort_id") sort_id: String? = null,
             @Query("sort_season") sort_season: String? = null,
-            @Query("sort_watchers_count") sort_watchers_count: String? = "desc"
+            @Query("sort_watchers_count") sort_watchers_count: String? = null
     ): Single<Response<Works>>
 
     /**

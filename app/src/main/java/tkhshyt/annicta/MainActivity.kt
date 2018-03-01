@@ -25,9 +25,9 @@ import tkhshyt.annicta.page.go
 
 class MainActivity : AppCompatActivity() {
 
-    private val pageTitle = arrayOf("放送予定", "シーズン")
-    private val tabViews = arrayOf(R.layout.tab_broadcast, R.layout.tab_work)
-    private val fragments = arrayOf(ProgramListFragment(), WorkListFragment())
+    private val pageTitle = arrayOf("放送予定", "シーズン", "アクティビティ")
+    private val tabViews = arrayOf(R.layout.tab_broadcast, R.layout.tab_work, R.layout.tab_home)
+    private val fragments = arrayOf(ProgramListFragment(), WorkListFragment(), ActivityListFragment())
 
     private var selectedItem = 1
 
@@ -62,8 +62,10 @@ class MainActivity : AppCompatActivity() {
             }
         }
         pager.adapter = adapter
+        pager.offscreenPageLimit = adapter.count
 
         tabs.setupWithViewPager(pager)
+
         tabs.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
 
             override fun onTabReselected(tab: TabLayout.Tab?) {
@@ -82,6 +84,9 @@ class MainActivity : AppCompatActivity() {
                     }
                     1 -> {
                         setupSeasonToolbar()
+                    }
+                    2 -> {
+                        setupSimpleToolbar()
                     }
                 }
             }

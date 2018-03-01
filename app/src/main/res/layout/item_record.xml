@@ -26,7 +26,7 @@
             app:riv_oval="true" />
 
         <TextView
-            android:id="@+id/userName"
+            android:id="@+id/activity"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
@@ -48,14 +48,14 @@
             android:id="@+id/rating"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
             android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
             android:background="@drawable/shape_channel"
             android:padding="3dp"
             android:text="@string/rating"
             android:textColor="@android:color/white"
             app:layout_constraintStart_toEndOf="@+id/userIcon"
-            app:layout_constraintTop_toBottomOf="@+id/userName" />
+            app:layout_constraintTop_toBottomOf="@+id/activity" />
 
         <TextView
             android:id="@+id/comment"
