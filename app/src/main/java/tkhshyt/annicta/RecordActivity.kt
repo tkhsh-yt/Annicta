@@ -46,17 +46,6 @@ class RecordActivity : AppCompatActivity() {
 
         (this.application as? DaggerApplication)?.getComponent()?.inject(this)
 
-        setSupportActionBar(toolbar)
-        title = ""
-
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setDisplayShowHomeEnabled(true)
-
-        toolbar.navigationIcon = ResourcesCompat.getDrawable(resources, R.drawable.ic_action_arrow_left, null)
-        toolbar.setNavigationOnClickListener({
-            supportFinishAfterTransition()
-        })
-
         if (intent.hasExtra("episode")) {
             val episode = intent.getSerializableExtra("episode") as Episode
             setupView(episode)
@@ -89,6 +78,10 @@ class RecordActivity : AppCompatActivity() {
             }
         }
 
+        toolbarIcon.setOnClickListener {
+            supportFinishAfterTransition()
+        }
+
         setupViewDependOnEpisode(episode)
     }
 
@@ -101,11 +94,14 @@ class RecordActivity : AppCompatActivity() {
 
             override fun onOffsetChanged(appBarLayout: AppBarLayout, verticalOffset: Int) {
                 if (appBar.totalScrollRange + verticalOffset < appBar.totalScrollRange * verticalOffsetRate) {
-                    title = episodeText
+                    toolbarTitle.text = episodeText
+                    toolbarTitle.visibility = View.VISIBLE
+                    toolbarIcon.setBackgroundResource(R.drawable.circle_transparent_ripple)
 
                     isShow = true
                 } else if (isShow) {
-                    title = ""
+                    toolbarTitle.visibility = View.INVISIBLE
+                    toolbarIcon.setBackgroundResource(R.drawable.circle_grey_ripple)
 
                     isShow = false
                 }
