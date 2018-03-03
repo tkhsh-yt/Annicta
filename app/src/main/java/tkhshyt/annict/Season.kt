@@ -3,13 +3,13 @@ package tkhshyt.annict
 import java.io.Serializable
 import java.util.*
 
-class Season(val year: Int, val season: Type): Serializable {
+class Season(val year: Int, val season: Type) : Serializable {
 
     enum class Type {
         WINTER, SPRING, SUMMER, AUTUMN, ALL;
 
         fun pretty(): String {
-            return when(this) {
+            return when (this) {
                 WINTER -> "冬"
                 SPRING -> "春"
                 SUMMER -> "夏"
@@ -21,19 +21,27 @@ class Season(val year: Int, val season: Type): Serializable {
 
     fun next(): Season {
         return if (season != Type.ALL) {
-            val next = Type.values()[(season.ordinal+1)%4]
-            Season(if (season == Type.AUTUMN) { year + 1 } else { year }, next)
+            val next = Type.values()[(season.ordinal + 1) % 4]
+            Season(if (season == Type.AUTUMN) {
+                year + 1
+            } else {
+                year
+            }, next)
         } else {
-            Season(year+1, season)
+            Season(year + 1, season)
         }
     }
 
     fun prev(): Season {
         return if (season != Type.ALL) {
-            val prev = Type.values()[(season.ordinal+3) % 4]
-            Season(if (season == Type.WINTER) { year - 1 } else { year }, prev)
+            val prev = Type.values()[(season.ordinal + 3) % 4]
+            Season(if (season == Type.WINTER) {
+                year - 1
+            } else {
+                year
+            }, prev)
         } else {
-            Season(year-1, season)
+            Season(year - 1, season)
         }
     }
 

@@ -1,5 +1,6 @@
 package tkhshyt.annicta
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Build
 import android.support.v4.app.ActivityOptionsCompat
@@ -51,27 +52,39 @@ class ActivityItem(val activity: Activity, val act: android.app.Activity?) : Abs
             val work = activity?.work
             if (activity != null) {
                 when (activity.action) {
-                    Action.CreateRecord-> {
-                        val text = "${activity.user?.name.orEmpty()} が ${activity.work?.title.orEmpty()} ${activity.episode?.number_text.orEmpty()} を見ました"
+                    Action.CreateRecord -> {
+                        val text = String.format("%s が %s %s を見ました",
+                                activity.user?.name.orEmpty(),
+                                activity.work?.title.orEmpty(),
+                                activity.episode?.number_text.orEmpty())
                         itemView.activity.text = AndroidUtil.fromHtml(text)
                     }
                     Action.CreateReview -> {
-                        val text = "${activity.user?.name.orEmpty()} が ${work?.title.orEmpty()} のレビューを書きました"
+                        val text = String.format("%s が %s のレビューを書きました ",
+                                activity.user?.name.orEmpty(),
+                                work?.title.orEmpty())
                         itemView.activity.text = AndroidUtil.fromHtml(text)
                     }
                     Action.CreateMultipleRecords -> {
-                        var text = "${activity.user?.name.orEmpty()} が ${work?.title.orEmpty()} "
+                        var text = String.format("%s が %s ",
+                                activity.user?.name.orEmpty(),
+                                work?.title.orEmpty())
                         val records = activity.multiple_record
                         if (records?.size == 1) {
                             text += records.first().episode.number_text.orEmpty()
                         } else {
-                            text += "${records?.last()?.episode?.number_text.orEmpty()} から ${records?.first()?.episode?.number_text.orEmpty()}"
+                            text += String.format("%s から %s",
+                                    records?.last()?.episode?.number_text.orEmpty(),
+                                    records?.first()?.episode?.number_text.orEmpty())
                         }
                         text += "を見ました"
                         itemView.activity.text = AndroidUtil.fromHtml(text)
                     }
                     Action.CreateStatus -> {
-                        val text = "${activity.user?.name.orEmpty()} が ${work?.title.orEmpty()} を「${AnnictUtil.kindText(activity.status?.kind)}」に変更しました"
+                        val text = String.format("%s が %s を「%s」に変更しました",
+                                activity.user?.name.orEmpty(),
+                                work?.title.orEmpty(),
+                                AnnictUtil.kindText(activity.status?.kind))
                         itemView.activity.text = AndroidUtil.fromHtml(text)
                     }
                 }
@@ -109,7 +122,8 @@ class ActivityItem(val activity: Activity, val act: android.app.Activity?) : Abs
                 override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
                     val view: View?
                     if (convertView == null) {
-                        view = (context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater).inflate(R.layout.item_status, null)
+                        view = (context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater)
+                            .inflate(R.layout.item_status, null)
                         view.findViewById<TextView>(R.id.status)?.text = getItem(position)
                         return view
                     }

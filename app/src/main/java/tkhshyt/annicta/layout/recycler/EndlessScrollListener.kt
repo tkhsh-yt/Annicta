@@ -16,7 +16,7 @@ abstract class EndlessScrollListener(val llm: LinearLayoutManager) : RecyclerVie
         val totalItemCount = llm.itemCount
         val firstVisibleItem = llm.findFirstVisibleItemPosition()
 
-        if (!loading && canLoadMore() && (totalItemCount - visibleItemCount) <= (firstVisibleItem+visibleThreshold)) {
+        if (!loading && canLoadMore() && (totalItemCount - visibleItemCount) <= (firstVisibleItem + visibleThreshold)) {
             loading = true
             onLoadMore(nextPage)
         }

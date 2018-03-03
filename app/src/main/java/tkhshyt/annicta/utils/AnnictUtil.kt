@@ -56,7 +56,7 @@ object AnnictUtil {
 
     // kind → Japanese
     fun kindText(kind: String?): String {
-        return when(kind) {
+        return when (kind) {
             "no_select" -> "未選択"
             "wanna_watch" -> "見たい"
             "watching" -> "見てる"

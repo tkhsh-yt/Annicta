@@ -10,9 +10,7 @@ import android.view.ViewGroup
 import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.adapters.ItemAdapter
 import kotlinx.android.synthetic.main.fragment_list.*
-import org.greenrobot.eventbus.EventBus
 import tkhshyt.annict.AnnictService
-import tkhshyt.annicta.extension.defaultOn
 import tkhshyt.annicta.extension.followingActivitiesWithStatus
 import tkhshyt.annicta.layout.message.MessageCreator
 import tkhshyt.annicta.layout.recycler.EndlessScrollListener

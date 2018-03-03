@@ -13,9 +13,9 @@ fun <T> Single<T>.defaultOn() = this.subscribeOn(Schedulers.io())
 
 fun AnnictService.embedStatus(
         works: List<Work>,
-        access_token : String,
-        sort_watchers_count : String? = null
-) : ((List<Work>) -> Unit, () -> Unit, (Throwable) -> Unit) -> Unit {
+        access_token: String,
+        sort_watchers_count: String? = null
+): ((List<Work>) -> Unit, () -> Unit, (Throwable) -> Unit) -> Unit {
     return { success, final, fail ->
         this.followingWorks(
                 access_token = access_token,

@@ -8,7 +8,10 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentPagerAdapter
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.view.Window
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.TextView
@@ -114,7 +117,7 @@ class MainActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener {
         toolbarSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                if ((selectedItem != -1 && selectedItem != position) || position == adapter.count-1) {
+                if ((selectedItem != -1 && selectedItem != position) || position == adapter.count - 1) {
                     EventBus.getDefault().post(SeasonSpinnerSelectedEvent(SeasonSpinner.values()[position]))
                 }
                 selectedItem = position
@@ -142,7 +145,7 @@ class MainActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener {
         val position = tabs.selectedTabPosition
         toolbarTitle.text = pageTitle[position]
 
-        when(position) {
+        when (position) {
             0, 2 -> {
                 toolbarTitle.visibility = View.VISIBLE
                 toolbarSpinner.visibility = View.GONE

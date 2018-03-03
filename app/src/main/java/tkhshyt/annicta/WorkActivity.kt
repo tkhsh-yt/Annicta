@@ -45,7 +45,7 @@ class WorkActivity : AppCompatActivity() {
             supportFinishAfterTransition()
         })
 
-        if(intent.hasExtra("work")) {
+        if (intent.hasExtra("work")) {
             val work = intent.getSerializableExtra("work") as Work
 
             appBar.addOnOffsetChangedListener(object : AppBarLayout.OnOffsetChangedListener {

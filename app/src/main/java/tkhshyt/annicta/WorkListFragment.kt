@@ -1,7 +1,6 @@
 package tkhshyt.annicta
 
 import android.os.Bundle
-import android.support.v4.app.DialogFragment
 import android.support.v4.app.Fragment
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.GridLayoutManager
@@ -19,22 +18,23 @@ import org.greenrobot.eventbus.Subscribe
 import tkhshyt.annict.AnnictService
 import tkhshyt.annict.Season
 import tkhshyt.annict.json.Status
+import tkhshyt.annicta.SeasonSpinner.*
+import tkhshyt.annicta.WorkListFragment.SortWork.ID
+import tkhshyt.annicta.WorkListFragment.SortWork.WATCHER_COUNT
+import tkhshyt.annicta.event.SeasonSelectedEvent
 import tkhshyt.annicta.event.SeasonSpinnerSelectedEvent
 import tkhshyt.annicta.event.UpdateStatusEvent
+import tkhshyt.annicta.extension.worksWithStatus
 import tkhshyt.annicta.layout.message.MessageCreator
 import tkhshyt.annicta.layout.recycler.EndlessScrollListener
 import tkhshyt.annicta.layout.recycler.Util
 import tkhshyt.annicta.pref.UserInfo
 import java.util.*
 import javax.inject.Inject
-import android.support.v7.app.AlertDialog
-import android.widget.ArrayAdapter
-import tkhshyt.annicta.event.SeasonSelectedEvent
-import tkhshyt.annicta.extension.worksWithStatus
 
 class WorkListFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 
-    enum class Sort {
+    enum class SortWork {
         ID, WATCHER_COUNT
     }
 
@@ -47,7 +47,15 @@ class WorkListFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
     private val workItemAdapter = ItemAdapter<WorkItem>()
 
     private var season: Season? = Season.season(Calendar.getInstance())
-    private var sort: Sort = Sort.WATCHER_COUNT
+    private var sort: SortWork = WATCHER_COUNT
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        (activity?.application as? DaggerApplication)?.getComponent()?.inject(this)
+
+        retainInstance = true
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_list, container, false)
@@ -72,15 +80,15 @@ class WorkListFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
             override fun onLoadMore(currentPage: Int) {
                 val accessToken = UserInfo.accessToken
                 if (accessToken != null) {
-                    val request = when(sort) {
-                        Sort.ID -> {
+                    val request = when (sort) {
+                        ID -> {
                             annict.worksWithStatus(
                                     access_token = accessToken,
                                     sort_id = "desc",
                                     page = currentPage
                             )
                         }
-                        Sort.WATCHER_COUNT -> {
+                        WATCHER_COUNT -> {
                             annict.worksWithStatus(
                                     access_token = accessToken,
                                     sort_watchers_count = "desc",
@@ -122,14 +130,6 @@ class WorkListFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
         recyclerView.addOnScrollListener(listener)
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        (activity?.application as? DaggerApplication)?.getComponent()?.inject(this)
-
-        retainInstance = true
-    }
-
     override fun onStart() {
         super.onStart()
         EventBus.getDefault().register(this)
@@ -150,7 +150,7 @@ class WorkListFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
                     kind = event.status
             ).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ response ->
+                .subscribe({
                     val index = workItemAdapter.adapterItems.indexOfFirst { it.work.id == event.workId }
                     val item = workItemAdapter.getAdapterItem(index)
                     if (item != null) {
@@ -160,7 +160,7 @@ class WorkListFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
                         .context(context)
                         .message(resources.getString(R.string.update_status))
                         .build().show()
-                }, { throwable ->
+                }, {
                     message.create()
                         .context(context)
                         .message(resources.getString(R.string.fail_to_update_status))
@@ -172,24 +172,24 @@ class WorkListFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
     @Subscribe
     fun onSeasonSpinnerSelectedEvent(event: SeasonSpinnerSelectedEvent) {
         season = Season.season(Calendar.getInstance())
-        sort = Sort.WATCHER_COUNT
-        when(event.season) {
-            SeasonSpinner.NEXT_SEASON -> {
+        sort = WATCHER_COUNT
+        when (event.season) {
+            NEXT_SEASON -> {
                 season = season?.next()
             }
-            SeasonSpinner.CURRENT_SEASON -> {
+            CURRENT_SEASON -> {
             }
-            SeasonSpinner.PREV_SEASON -> {
+            PREV_SEASON -> {
                 season = season?.prev()
             }
-            SeasonSpinner.FAVORITE -> {
+            FAVORITE -> {
                 season = null
             }
-            SeasonSpinner.NEW -> {
-                sort = Sort.ID
+            NEW -> {
+                sort = ID
                 season = null
             }
-            SeasonSpinner.SELECT -> {
+            SELECT -> {
                 val dialog = SeasonSelectDialogFragment()
                 val bundle = Bundle()
                 bundle.putSerializable("season", season)
@@ -198,7 +198,7 @@ class WorkListFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
             }
         }
 
-        if(event.season != SeasonSpinner.SELECT) {
+        if (event.season != SELECT) {
             onRefresh()
         }
     }
@@ -207,26 +207,5 @@ class WorkListFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
     fun onSeasonSlectedEvent(event: SeasonSelectedEvent) {
         season = event.season
         onRefresh()
-    }
-
-    class SeasonSelectDialogFragment : DialogFragment() {
-        override fun onCreateDialog(savedInstanceState: Bundle?): AlertDialog {
-            val season = arguments?.getSerializable("season") as Season
-            val items = (season.year+1 downTo 1960).flatMap { y ->
-                val seasons = Season.Type.values().map {
-                    Season(y, it)
-                }
-                seasons.asIterable()
-            }
-            val adapter = ArrayAdapter(context, android.R.layout.simple_list_item_1, items)
-
-            val builder = context?.let {
-                AlertDialog.Builder(it)
-                    .setAdapter(adapter, { _, which ->
-                        EventBus.getDefault().post(SeasonSelectedEvent(adapter.getItem(which)))
-                    })
-            }
-            return builder!!.create()
-        }
     }
 }

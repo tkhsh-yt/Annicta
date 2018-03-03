@@ -5,7 +5,6 @@ import android.os.Build
 import android.os.Bundle
 import android.support.design.widget.AppBarLayout
 import android.support.v4.app.ActivityOptionsCompat
-import android.support.v4.content.ContextCompat
 import android.support.v4.content.res.ResourcesCompat
 import android.support.v7.app.AppCompatActivity
 import android.view.View
@@ -17,7 +16,6 @@ import com.chibatching.kotpref.Kotpref
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_record.*
-import kotlinx.android.synthetic.main.item_work.view.*
 import org.greenrobot.eventbus.EventBus
 import tkhshyt.annict.AnnictService
 import tkhshyt.annict.json.Episode

@@ -1,6 +1,5 @@
 package tkhshyt.annict.json
 
-import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
 /**
@@ -18,19 +17,19 @@ data class Records(
         val prev_page: Int?
 ) : Serializable, Pagination<Record> {
 
-        override fun total_count(): Int {
-                return total_count
-        }
+    override fun total_count(): Int {
+        return total_count
+    }
 
-        override fun next_page(): Int? {
-                return next_page
-        }
+    override fun next_page(): Int? {
+        return next_page
+    }
 
-        override fun prev_page(): Int? {
-                return  prev_page
-        }
+    override fun prev_page(): Int? {
+        return prev_page
+    }
 
-        override fun resources(): List<Record> {
-                return records
-        }
+    override fun resources(): List<Record> {
+        return records
+    }
 }
