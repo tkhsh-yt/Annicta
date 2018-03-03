@@ -66,8 +66,8 @@ class WorkListFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
         onRefresh()
     }
 
-    private fun loadMoreListener(): EndlessScrollListener {
-        return object : EndlessScrollListener() {
+    private fun loadMoreListener(llm: LinearLayoutManager): EndlessScrollListener {
+        return object : EndlessScrollListener(llm) {
 
             override fun onLoadMore(currentPage: Int) {
                 val accessToken = UserInfo.accessToken
@@ -115,7 +115,7 @@ class WorkListFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
         val glm = GridLayoutManager(context, columns)
         recyclerView.layoutManager = glm
 
-        val listener = loadMoreListener()
+        val listener = loadMoreListener(glm)
         listener.onLoadMore(1)
 
         recyclerView.clearOnScrollListeners()

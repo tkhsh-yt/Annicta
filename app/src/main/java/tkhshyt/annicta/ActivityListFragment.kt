@@ -54,15 +54,15 @@ class ActivityListFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
         val llm = LinearLayoutManager(context)
         recyclerView.layoutManager = llm
 
-        val listener = loadMoreListener()
+        val listener = loadMoreListener(llm)
         listener.onLoadMore(1)
 
         recyclerView.clearOnScrollListeners()
         recyclerView.addOnScrollListener(listener)
     }
 
-    private fun loadMoreListener(): EndlessScrollListener {
-        return object : EndlessScrollListener() {
+    private fun loadMoreListener(llm: LinearLayoutManager): EndlessScrollListener {
+        return object : EndlessScrollListener(llm) {
 
             override fun onLoadMore(currentPage: Int) {
                 val accessToken = UserInfo.accessToken

@@ -53,12 +53,12 @@ class EpisodeListFragment : Fragment() {
             workInfoItemAdapter.add(WorkInfoItem(work, activity))
         })
 
-        val listener = loadMoreListener()
+        val listener = loadMoreListener(llm)
         recyclerView.addOnScrollListener(listener)
     }
 
-    private fun loadMoreListener(): EndlessScrollListener {
-        return object : EndlessScrollListener() {
+    private fun loadMoreListener(llm: LinearLayoutManager): EndlessScrollListener {
+        return object : EndlessScrollListener(llm) {
 
             override fun onLoadMore(currentPage: Int) {
                 val accessToken = UserInfo.accessToken
