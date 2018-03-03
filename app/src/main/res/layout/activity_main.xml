@@ -14,7 +14,24 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:layout_scrollFlags="scroll|enterAlways" />
+            app:layout_scrollFlags="scroll|enterAlways" >
+
+            <TextView
+                android:id="@+id/toolbarTitle"
+                android:text="@string/title"
+                android:textColor="@android:color/white"
+                android:textSize="21sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <tkhshyt.annicta.layout.spinner.NoDefaultSpinner
+                android:id="@+id/toolbarSpinner"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@drawable/season_spinner_background"
+                android:visibility="gone" />
+
+        </android.support.v7.widget.Toolbar>
 
         <android.support.design.widget.TabLayout
             android:id="@+id/tabs"

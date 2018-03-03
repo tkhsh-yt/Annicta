@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/toolbarTitle"
+        android:text="@string/title"
+        android:textColor="@android:color/white"
+        android:textSize="21sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <tkhshyt.annicta.layout.spinner.NoDefaultSpinner
+        android:id="@+id/toolbarSpinner"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:background="@drawable/season_spinner_background"
+        android:visibility="gone" />
+
+</LinearLayout>
