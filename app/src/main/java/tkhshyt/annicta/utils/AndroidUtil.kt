@@ -15,4 +15,9 @@ object AndroidUtil {
             Html.fromHtml(html)
         }
     }
+
+    fun colorHtml(text: String, color: Int): String {
+        val hexColor = String.format("#%06X", 0xFFFFFF and color)
+        return String.format("<font color=\"%s\">%s</font>", hexColor, text)
+    }
 }

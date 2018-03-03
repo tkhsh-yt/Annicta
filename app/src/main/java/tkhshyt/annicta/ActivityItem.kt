@@ -50,19 +50,20 @@ class ActivityItem(val activity: Activity, val act: android.app.Activity?) : Abs
 
             val activity = item?.activity
             val work = activity?.work
-            if (activity != null) {
+            if (activity != null && act != null) {
+                val linkColor = ContextCompat.getColor(act, R.color.light_blue_800)
                 when (activity.action) {
                     Action.CreateRecord -> {
                         val text = String.format("%s が %s %s を見ました",
-                                activity.user?.name.orEmpty(),
-                                activity.work?.title.orEmpty(),
-                                activity.episode?.number_text.orEmpty())
+                                AndroidUtil.colorHtml(activity.user?.name.orEmpty(), linkColor),
+                                AndroidUtil.colorHtml(activity.work?.title.orEmpty(), linkColor),
+                                AndroidUtil.colorHtml(activity.episode?.number_text.orEmpty(), linkColor))
                         itemView.activity.text = AndroidUtil.fromHtml(text)
                     }
                     Action.CreateReview -> {
                         val text = String.format("%s が %s のレビューを書きました ",
-                                activity.user?.name.orEmpty(),
-                                work?.title.orEmpty())
+                                AndroidUtil.colorHtml(activity.user?.name.orEmpty(), linkColor),
+                                AndroidUtil.colorHtml(work?.title.orEmpty(), linkColor))
                         itemView.activity.text = AndroidUtil.fromHtml(text)
                     }
                     Action.CreateMultipleRecords -> {
@@ -70,21 +71,21 @@ class ActivityItem(val activity: Activity, val act: android.app.Activity?) : Abs
                                 activity.user?.name.orEmpty(),
                                 work?.title.orEmpty())
                         val records = activity.multiple_record
-                        if (records?.size == 1) {
-                            text += records.first().episode.number_text.orEmpty()
+                        text += if (records?.size == 1) {
+                            records.first().episode.number_text.orEmpty()
                         } else {
-                            text += String.format("%s から %s",
-                                    records?.last()?.episode?.number_text.orEmpty(),
-                                    records?.first()?.episode?.number_text.orEmpty())
+                            String.format("%s から %s",
+                                    AndroidUtil.colorHtml(records?.last()?.episode?.number_text.orEmpty(), linkColor),
+                                    AndroidUtil.colorHtml(records?.first()?.episode?.number_text.orEmpty(), linkColor))
                         }
                         text += "を見ました"
                         itemView.activity.text = AndroidUtil.fromHtml(text)
                     }
                     Action.CreateStatus -> {
                         val text = String.format("%s が %s を「%s」に変更しました",
-                                activity.user?.name.orEmpty(),
-                                work?.title.orEmpty(),
-                                AnnictUtil.kindText(activity.status?.kind))
+                                AndroidUtil.colorHtml(activity.user?.name.orEmpty(), linkColor),
+                                AndroidUtil.colorHtml(work?.title.orEmpty(), linkColor),
+                                AndroidUtil.colorHtml(AnnictUtil.kindText(activity.status?.kind), linkColor))
                         itemView.activity.text = AndroidUtil.fromHtml(text)
                     }
                 }
