@@ -47,7 +47,29 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                app:layout_collapseMode="pin" />
+                app:layout_collapseMode="pin" >
+
+                <ImageButton
+                    android:id="@+id/toolbarIcon"
+                    android:src="@drawable/ic_action_arrow_left"
+                    android:background="@drawable/circle_grey_ripple"
+                    android:padding="3dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/toolbarTitle"
+                    android:text="@string/title"
+                    android:textColor="@android:color/white"
+                    android:visibility="gone"
+                    android:textSize="18sp"
+                    android:paddingLeft="8dp"
+                    android:paddingStart="8dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:ignore="RtlSymmetry" />
+
+            </android.support.v7.widget.Toolbar>
 
         </android.support.design.widget.CollapsingToolbarLayout>
 

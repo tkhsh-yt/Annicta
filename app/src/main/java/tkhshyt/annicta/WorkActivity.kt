@@ -4,8 +4,8 @@ import android.os.Build
 import android.os.Bundle
 import android.support.design.widget.AppBarLayout
 import android.support.v4.app.ActivityOptionsCompat
-import android.support.v4.content.res.ResourcesCompat
 import android.support.v7.app.AppCompatActivity
+import android.view.View
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.chibatching.kotpref.Kotpref
@@ -34,16 +34,9 @@ class WorkActivity : AppCompatActivity() {
         // DI
         (this.application as? DaggerApplication)?.getComponent()?.inject(this)
 
-        setSupportActionBar(toolbar)
-        title = ""
-
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setDisplayShowHomeEnabled(true)
-
-        toolbar.navigationIcon = ResourcesCompat.getDrawable(resources, R.drawable.ic_action_arrow_left, null)
-        toolbar.setNavigationOnClickListener({
+        toolbarIcon.setOnClickListener {
             supportFinishAfterTransition()
-        })
+        }
 
         if (intent.hasExtra("work")) {
             val work = intent.getSerializableExtra("work") as Work
@@ -54,11 +47,14 @@ class WorkActivity : AppCompatActivity() {
 
                 override fun onOffsetChanged(appBarLayout: AppBarLayout, verticalOffset: Int) {
                     if (appBar.totalScrollRange + verticalOffset < appBar.totalScrollRange * verticalOffsetRate) {
-                        title = work.title
+                        toolbarTitle.text = work.title
+                        toolbarTitle.visibility = View.VISIBLE
+                        toolbarIcon.setBackgroundResource(R.drawable.circle_transparent_ripple)
 
                         isShow = true
                     } else if (isShow) {
-                        title = ""
+                        toolbarTitle.visibility = View.INVISIBLE
+                        toolbarIcon.setBackgroundResource(R.drawable.circle_grey_ripple)
 
                         isShow = false
                     }
