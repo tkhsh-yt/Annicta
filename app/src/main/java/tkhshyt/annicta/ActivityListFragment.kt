@@ -76,7 +76,7 @@ class ActivityListFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
                     }, {
                         loading = false
                         swipeRefreshView?.isRefreshing = false
-                    }, { throwable ->
+                    }, {
                         message.create()
                             .context(context)
                             .message("取得に失敗しました")

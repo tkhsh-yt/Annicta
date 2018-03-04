@@ -42,7 +42,6 @@ class WorkActivity : AppCompatActivity() {
             val work = intent.getSerializableExtra("work") as Work
 
             appBar.addOnOffsetChangedListener(object : AppBarLayout.OnOffsetChangedListener {
-                internal var isShow = false
                 val verticalOffsetRate = 0.2
 
                 override fun onOffsetChanged(appBarLayout: AppBarLayout, verticalOffset: Int) {
@@ -50,13 +49,9 @@ class WorkActivity : AppCompatActivity() {
                         toolbarTitle.text = work.title
                         toolbarTitle.visibility = View.VISIBLE
                         toolbarIcon.setBackgroundResource(R.drawable.circle_transparent_ripple)
-
-                        isShow = true
-                    } else if (isShow) {
+                    } else {
                         toolbarTitle.visibility = View.INVISIBLE
                         toolbarIcon.setBackgroundResource(R.drawable.circle_grey_ripple)
-
-                        isShow = false
                     }
                 }
             })

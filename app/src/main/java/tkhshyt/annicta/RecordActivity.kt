@@ -89,7 +89,6 @@ class RecordActivity : AppCompatActivity() {
         val episodeText = "${episode.number_text} ${episode.title.orEmpty()}"
         episodeTitle?.text = episodeText
         appBar.addOnOffsetChangedListener(object : AppBarLayout.OnOffsetChangedListener {
-            internal var isShow = false
             val verticalOffsetRate = 0.2
 
             override fun onOffsetChanged(appBarLayout: AppBarLayout, verticalOffset: Int) {
@@ -97,13 +96,9 @@ class RecordActivity : AppCompatActivity() {
                     toolbarTitle.text = episodeText
                     toolbarTitle.visibility = View.VISIBLE
                     toolbarIcon.setBackgroundResource(R.drawable.circle_transparent_ripple)
-
-                    isShow = true
-                } else if (isShow) {
+                } else {
                     toolbarTitle.visibility = View.INVISIBLE
                     toolbarIcon.setBackgroundResource(R.drawable.circle_grey_ripple)
-
-                    isShow = false
                 }
             }
         })

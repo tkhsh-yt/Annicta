@@ -88,7 +88,7 @@ class ProgramListFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
                             val programs = response.body()
                             programItemAdapter.add(programs.resources().map { ProgramItem(it, activity) })
                             nextPage = programs.next_page ?: 0
-                        }, { throwable ->
+                        }, {
                             message.create()
                                 .context(context)
                                 .message("取得に失敗しました")
