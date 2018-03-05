@@ -19,6 +19,9 @@
     <color name="blue_700">#1976D2</color>
     <color name="blue_800">#1565c0</color>
 
+    <color name="teal_500">#009688</color>
+    <color name="teal_200">#80CBC4</color>
+
     <color name="light_blue_800">#0277BD</color>
 
     <color name="red_500">#F44336</color>

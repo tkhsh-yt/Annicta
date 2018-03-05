@@ -3,6 +3,7 @@ package tkhshyt.annicta
 import android.app.Activity
 import android.os.Build
 import android.support.v4.app.ActivityOptionsCompat
+import android.support.v4.content.ContextCompat
 import android.view.View
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -15,6 +16,7 @@ import tkhshyt.annicta.event.StartRecordActivityEvent
 import tkhshyt.annicta.page.Page
 import tkhshyt.annicta.page.go
 import tkhshyt.annicta.utils.AnnictUtil
+import java.util.*
 
 class ProgramItem(val program: Program, val activity: Activity?) : AbstractItem<ProgramItem, ProgramItem.ViewHolder>() {
 
@@ -57,6 +59,15 @@ class ProgramItem(val program: Program, val activity: Activity?) : AbstractItem<
                             )
                         }
                     }
+                }
+
+                val now = Calendar.getInstance()
+                if (program.started_at.time > now.time.time) {
+                    itemView.bar.setBackgroundResource(R.drawable.circle_broadcast)
+                    activity?.let { itemView.circle.setBackgroundColor(ContextCompat.getColor(it, R.color.teal_200)) }
+                } else {
+                    itemView.bar.setBackgroundResource(R.drawable.circle_broadcasted)
+                    activity?.let { itemView.circle.setBackgroundColor(ContextCompat.getColor(it, R.color.teal_500)) }
                 }
 
                 var imageUrl: String? = null
