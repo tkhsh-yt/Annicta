@@ -1,6 +1,5 @@
 package tkhshyt.annicta
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Build
 import android.support.v4.app.ActivityOptionsCompat
