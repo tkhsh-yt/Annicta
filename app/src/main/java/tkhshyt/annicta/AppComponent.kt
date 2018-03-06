@@ -23,4 +23,6 @@ interface AppComponent {
     fun inject(fragment: EpisodeListFragment)
 
     fun inject(fragment: ActivityListFragment)
+
+    fun inject(item: WorkItem.ViewHolder)
 }

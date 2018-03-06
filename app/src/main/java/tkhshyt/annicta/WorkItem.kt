@@ -18,12 +18,13 @@ import com.mikepenz.fastadapter.items.AbstractItem
 import kotlinx.android.synthetic.main.item_work.view.*
 import org.greenrobot.eventbus.EventBus
 import tkhshyt.annict.Kind
-import tkhshyt.annict.json.Work
 import tkhshyt.annicta.event.UpdateStatusEvent
 import tkhshyt.annicta.page.Page
 import tkhshyt.annicta.page.go
+import tkhshyt.annicta.pool.WorkPool
+import javax.inject.Inject
 
-class WorkItem(val work: Work, val activity: Activity?) : AbstractItem<WorkItem, WorkItem.ViewHolder>() {
+class WorkItem(val id: Long, val activity: Activity) : AbstractItem<WorkItem, WorkItem.ViewHolder>() {
 
     override fun getViewHolder(v: View): ViewHolder {
         return ViewHolder(v, activity)
@@ -37,38 +38,41 @@ class WorkItem(val work: Work, val activity: Activity?) : AbstractItem<WorkItem,
         return R.layout.item_work
     }
 
-    class ViewHolder(itemView: View, private val activity: Activity?) : FastAdapter.ViewHolder<WorkItem>(itemView) {
+    class ViewHolder(itemView: View, private val activity: Activity) : FastAdapter.ViewHolder<WorkItem>(itemView) {
+
+        @Inject
+        lateinit var workPool: WorkPool
+
+        init {
+            (activity.application as? MyApplication)?.getComponent()?.inject(this)
+        }
 
         override fun bindView(workItem: WorkItem?, payloads: MutableList<Any>?) {
-            if (workItem != null) {
-                val work = workItem.work
+            if (workItem != null && workPool.containsWork(workItem.id)) {
+                val work = workPool.getWork(workItem.id)!!
                 itemView.setOnClickListener {
-                    if (activity != null) {
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                            activity.go(
-                                    Page.WORK,
-                                    ActivityOptionsCompat.makeSceneTransitionAnimation(activity, itemView.workIcon, itemView.workIcon.transitionName).toBundle(),
-                                    { it.putExtra("work", workItem.work) }
-                            )
-                        } else {
-                            activity.go(Page.WORK, { it.putExtra("work", workItem.work) })
-                        }
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        activity.go(
+                                Page.WORK,
+                                ActivityOptionsCompat.makeSceneTransitionAnimation(activity, itemView.workIcon, itemView.workIcon.transitionName).toBundle(),
+                                { it.putExtra("work_id", workItem.id) }
+                        )
+                    } else {
+                        activity.go(Page.WORK, { it.putExtra("work_id", workItem.id) })
                     }
                 }
 
                 var imageUrl: String? = null
-                if (activity != null) {
-                    if (work.images?.recommended_url != null && work.images.recommended_url.isNotBlank()) {
-                        imageUrl = work.images.recommended_url
-                    } else if (work.images?.twitter?.image_url != null && work.images.twitter.image_url.isNotBlank()) {
-                        imageUrl = work.images.twitter.image_url
-                    }
-                    if (imageUrl != null) {
-                        Glide.with(activity)
-                            .load(imageUrl)
-                            .diskCacheStrategy(DiskCacheStrategy.ALL)
-                            .into(itemView.workIcon)
-                    }
+                if (work.images?.recommended_url != null && work.images.recommended_url.isNotBlank()) {
+                    imageUrl = work.images.recommended_url
+                } else if (work.images?.twitter?.image_url != null && work.images.twitter.image_url.isNotBlank()) {
+                    imageUrl = work.images.twitter.image_url
+                }
+                if (imageUrl != null) {
+                    Glide.with(activity)
+                        .load(imageUrl)
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .into(itemView.workIcon)
                 }
                 itemView.workTitle.text = work.title
 
@@ -107,7 +111,7 @@ class WorkItem(val work: Work, val activity: Activity?) : AbstractItem<WorkItem,
 
                     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                         if (selectedItem != -1 && selectedItem != position) {
-                            EventBus.getDefault().post(UpdateStatusEvent(workItem.work.id
+                            EventBus.getDefault().post(UpdateStatusEvent(work.id
                                     ?: -1, Kind.values()[position].kind))
                         }
                         selectedItem = position

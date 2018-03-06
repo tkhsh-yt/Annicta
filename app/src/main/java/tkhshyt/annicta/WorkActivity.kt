@@ -16,14 +16,22 @@ import org.greenrobot.eventbus.ThreadMode
 import tkhshyt.annict.AnnictService
 import tkhshyt.annict.json.Work
 import tkhshyt.annicta.event.StartRecordActivityEvent
+import tkhshyt.annicta.layout.message.MessageCreator
 import tkhshyt.annicta.page.Page
 import tkhshyt.annicta.page.go
+import tkhshyt.annicta.pool.WorkPool
 import javax.inject.Inject
 
 class WorkActivity : AppCompatActivity() {
 
     @Inject
     lateinit var annict: AnnictService
+
+    @Inject
+    lateinit var message: MessageCreator
+
+    @Inject
+    lateinit var workPool: WorkPool
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,47 +46,54 @@ class WorkActivity : AppCompatActivity() {
             supportFinishAfterTransition()
         }
 
-        if (intent.hasExtra("work")) {
-            val work = intent.getSerializableExtra("work") as Work
+        if (intent.hasExtra("work_id")) {
+            val workId = intent.getLongExtra("work_id", 0)
+            val work = workPool.getWork(workId)
 
-            appBar.addOnOffsetChangedListener(object : AppBarLayout.OnOffsetChangedListener {
-                val verticalOffsetRate = 0.2
+            if (work != null) {
+                setupWorkInfo(work)
 
-                override fun onOffsetChanged(appBarLayout: AppBarLayout, verticalOffset: Int) {
-                    if (appBar.totalScrollRange + verticalOffset < appBar.totalScrollRange * verticalOffsetRate) {
-                        toolbarTitle.text = work.title
-                        toolbarTitle.visibility = View.VISIBLE
-                        toolbarIcon.setBackgroundResource(R.drawable.circle_transparent_ripple)
-                    } else {
-                        toolbarTitle.visibility = View.INVISIBLE
-                        toolbarIcon.setBackgroundResource(R.drawable.circle_grey_ripple)
-                    }
+                val episodeListFragment = EpisodeListFragment()
+                val args = Bundle()
+                args.putSerializable("work", work)
+                work.id?.let { args.putLong("work_id", it) }
+                episodeListFragment.arguments = args
+                val transaction = supportFragmentManager.beginTransaction()
+                transaction.replace(R.id.container, episodeListFragment)
+                transaction.commit()
+            }
+        }
+    }
+
+    fun setupWorkInfo(work: Work) {
+        appBar.addOnOffsetChangedListener(object : AppBarLayout.OnOffsetChangedListener {
+            val verticalOffsetRate = 0.2
+
+            override fun onOffsetChanged(appBarLayout: AppBarLayout, verticalOffset: Int) {
+                if (appBar.totalScrollRange + verticalOffset < appBar.totalScrollRange * verticalOffsetRate) {
+                    toolbarTitle.text = work.title
+                    toolbarTitle.visibility = View.VISIBLE
+                    toolbarIcon.setBackgroundResource(R.drawable.circle_transparent_ripple)
+                } else {
+                    toolbarTitle.visibility = View.INVISIBLE
+                    toolbarIcon.setBackgroundResource(R.drawable.circle_grey_ripple)
                 }
-            })
-
-            var imageUrl: String? = null
-            if (work.images?.recommended_url != null && work.images.recommended_url.isNotBlank()) {
-                imageUrl = work.images.recommended_url
-            } else if (work.images?.twitter?.image_url != null && work.images.twitter.image_url.isNotBlank()) {
-                imageUrl = work.images.twitter.image_url
             }
-            if (imageUrl != null) {
-                Glide.with(this)
-                    .load(imageUrl)
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .into(workIcon)
-            } else {
-                workIcon.setImageResource(R.drawable.ic_image_black_24dp)
-            }
+        })
 
-            val episodeListFragment = EpisodeListFragment()
-            val args = Bundle()
-            args.putSerializable("work", work)
-            work.id?.let { args.putLong("work_id", it) }
-            episodeListFragment.arguments = args
-            val transaction = supportFragmentManager.beginTransaction()
-            transaction.replace(R.id.container, episodeListFragment)
-            transaction.commit()
+        var imageUrl: String? = null
+        if (work.images?.recommended_url != null && work.images.recommended_url.isNotBlank()) {
+            imageUrl = work.images.recommended_url
+        } else if (work.images?.twitter?.image_url != null && work.images.twitter.image_url.isNotBlank()) {
+            imageUrl = work.images.twitter.image_url
+        }
+        if (imageUrl != null) {
+            Glide.with(this)
+                .load(imageUrl)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .into(workIcon)
+        } else {
+            workIcon.setImageResource(R.drawable.ic_image_black_24dp)
         }
     }
 

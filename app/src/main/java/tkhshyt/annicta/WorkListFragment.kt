@@ -1,5 +1,6 @@
 package tkhshyt.annicta
 
+import android.app.Activity
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.widget.SwipeRefreshLayout
@@ -17,7 +18,6 @@ import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import tkhshyt.annict.AnnictService
 import tkhshyt.annict.Season
-import tkhshyt.annict.json.Status
 import tkhshyt.annicta.SeasonSpinner.*
 import tkhshyt.annicta.WorkListFragment.SortWork.ID
 import tkhshyt.annicta.WorkListFragment.SortWork.WATCHER_COUNT
@@ -28,6 +28,7 @@ import tkhshyt.annicta.extension.worksWithStatus
 import tkhshyt.annicta.layout.message.MessageCreator
 import tkhshyt.annicta.layout.recycler.EndlessScrollListener
 import tkhshyt.annicta.layout.recycler.Util
+import tkhshyt.annicta.pool.WorkPool
 import tkhshyt.annicta.pref.UserInfo
 import java.util.*
 import javax.inject.Inject
@@ -43,6 +44,9 @@ class WorkListFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 
     @Inject
     lateinit var message: MessageCreator
+
+    @Inject
+    lateinit var workPool: WorkPool
 
     private val workItemAdapter = ItemAdapter<WorkItem>()
 
@@ -98,7 +102,13 @@ class WorkListFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
                         }
                     }
                     request({
-                        workItemAdapter.add(it.resources().map { WorkItem(it, activity) })
+                        it.resources().forEach { workPool.setWork(it) }
+                        if (activity != null) {
+                            val ids = it.resources().mapNotNull { it.id }
+                            workItemAdapter.add(ids.map {
+                                WorkItem(it, activity as Activity)
+                            })
+                        }
                         nextPage = it.next_page ?: -1
                     }, {
                         swipeRefreshView?.isRefreshing = false
@@ -151,10 +161,8 @@ class WorkListFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
             ).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    val index = workItemAdapter.adapterItems.indexOfFirst { it.work.id == event.workId }
-                    val item = workItemAdapter.getAdapterItem(index)
-                    if (item != null) {
-                        workItemAdapter.set(index, WorkItem(item.work.copy(status = Status(event.status)), activity))
+                    if (activity != null) {
+                        workPool.updateWorkStatus(event.workId, event.status)
                     }
                     message.create()
                         .context(context)

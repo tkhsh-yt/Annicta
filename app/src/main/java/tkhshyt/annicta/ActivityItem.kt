@@ -95,10 +95,10 @@ class ActivityItem(val activity: Activity, val act: android.app.Activity?) : Abs
                     act?.go(
                             Page.WORK,
                             ActivityOptionsCompat.makeSceneTransitionAnimation(act, itemView.workIcon, itemView.workIcon.transitionName).toBundle(),
-                            { it.putExtra("work", work) }
+                            { it.putExtra("work_id", work?.id) }
                     )
                 } else {
-                    act?.go(Page.WORK, { it.putExtra("work", work) })
+                    act?.go(Page.WORK, { it.putExtra("work_id", work?.id) })
                 }
             }
 

@@ -8,6 +8,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 import tkhshyt.annict.AnnictService
 import tkhshyt.annicta.layout.message.MessageCreator
 import tkhshyt.annicta.layout.message.ToastMessageCreator
+import tkhshyt.annicta.pool.WorkPool
+import tkhshyt.annicta.pool.WorkPoolMap
 import javax.inject.Singleton
 
 @Module
@@ -29,5 +31,11 @@ class ReleaseModule {
     @Provides
     fun provideMessageCreator(): MessageCreator {
         return ToastMessageCreator()
+    }
+
+    @Singleton
+    @Provides
+    fun provideWorkPool(): WorkPool {
+        return WorkPoolMap()
     }
 }
