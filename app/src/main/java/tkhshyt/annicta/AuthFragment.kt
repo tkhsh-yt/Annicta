@@ -23,7 +23,7 @@ class AuthFragment : Fragment() {
         super.onCreate(savedInstanceState)
 
         // DI
-        (activity?.application as? DaggerApplication)?.getComponent()?.inject(this)
+        (activity?.application as? MyApplication)?.getComponent()?.inject(this)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

@@ -22,7 +22,7 @@ class TopActivity : AppCompatActivity() {
 
         Kotpref.init(this)
 
-        (this.application as? DaggerApplication)?.getComponent()?.inject(this)
+        (this.application as? MyApplication)?.getComponent()?.inject(this)
 
         if (UserInfo.accessToken != null) {
             go(Page.MAIN)

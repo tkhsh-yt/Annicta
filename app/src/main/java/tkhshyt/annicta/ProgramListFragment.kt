@@ -102,7 +102,7 @@ class ProgramListFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        (activity?.application as? DaggerApplication)?.getComponent()?.inject(this)
+        (activity?.application as? MyApplication)?.getComponent()?.inject(this)
 
         EventBus.getDefault().register(this)
 

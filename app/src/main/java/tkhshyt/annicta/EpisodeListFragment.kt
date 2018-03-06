@@ -93,7 +93,7 @@ class EpisodeListFragment : Fragment() {
         super.onCreate(savedInstanceState)
 
         // DI
-        (activity?.application as? DaggerApplication)?.getComponent()?.inject(this)
+        (activity?.application as? MyApplication)?.getComponent()?.inject(this)
 
         retainInstance = true
     }

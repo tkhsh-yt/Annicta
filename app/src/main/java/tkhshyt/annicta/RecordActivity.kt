@@ -43,7 +43,7 @@ class RecordActivity : AppCompatActivity() {
 
         Kotpref.init(this)
 
-        (this.application as? DaggerApplication)?.getComponent()?.inject(this)
+        (this.application as? MyApplication)?.getComponent()?.inject(this)
 
         if (intent.hasExtra("episode")) {
             val episode = intent.getSerializableExtra("episode") as Episode

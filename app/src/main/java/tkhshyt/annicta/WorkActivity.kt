@@ -32,7 +32,7 @@ class WorkActivity : AppCompatActivity() {
         Kotpref.init(this)
 
         // DI
-        (this.application as? DaggerApplication)?.getComponent()?.inject(this)
+        (this.application as? MyApplication)?.getComponent()?.inject(this)
 
         toolbarIcon.setOnClickListener {
             supportFinishAfterTransition()

@@ -40,6 +40,8 @@ class MainActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        (this.application as? MyApplication)?.getComponent()?.inject(this)
+
         // SharePreferences を扱うためのライブラリの初期化
         Kotpref.init(this)
 
