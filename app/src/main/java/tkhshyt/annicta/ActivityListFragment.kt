@@ -14,6 +14,7 @@ import tkhshyt.annict.AnnictService
 import tkhshyt.annicta.extension.followingActivitiesWithStatus
 import tkhshyt.annicta.layout.message.MessageCreator
 import tkhshyt.annicta.layout.recycler.EndlessScrollListener
+import tkhshyt.annicta.pool.WorkPool
 import tkhshyt.annicta.pref.UserInfo
 import javax.inject.Inject
 
@@ -25,6 +26,9 @@ class ActivityListFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 
     @Inject
     lateinit var message: MessageCreator
+
+    @Inject
+    lateinit var workPool: WorkPool
 
     private val activityItemAdapter = ItemAdapter<ActivityItem>()
 
@@ -70,6 +74,7 @@ class ActivityListFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
                             sort_id = "desc",
                             page = currentPage
                     )({
+                        workPool.setWorks(it.resources().mapNotNull { it.work })
                         activityItemAdapter.add(it.resources().map { ActivityItem(it, activity) })
 
                         nextPage = it.next_page ?: 0

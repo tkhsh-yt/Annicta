@@ -8,6 +8,8 @@ interface WorkPool {
 
     fun setWork(work: Work)
 
+    fun setWorks(works: Collection<Work?>)
+
     fun updateWorkStatus(id: Long, status: String)
 
     fun containsWork(id: Long): Boolean

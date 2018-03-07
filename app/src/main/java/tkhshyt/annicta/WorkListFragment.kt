@@ -102,7 +102,7 @@ class WorkListFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
                         }
                     }
                     request({
-                        it.resources().forEach { workPool.setWork(it) }
+                        workPool.setWorks(it.works)
                         if (activity != null) {
                             val ids = it.resources().mapNotNull { it.id }
                             workItemAdapter.add(ids.map {

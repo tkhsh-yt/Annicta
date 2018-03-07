@@ -30,6 +30,14 @@ class WorkPoolMap : WorkPool {
         }
     }
 
+    override fun setWorks(works: Collection<Work?>) {
+        works.forEach {
+            if(it != null) {
+                setWork(it)
+            }
+        }
+    }
+
     override fun updateWorkStatus(id: Long, status: String) {
         if (containsWork(id)) {
             val work = getWork(id)
