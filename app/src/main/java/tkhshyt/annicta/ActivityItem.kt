@@ -11,7 +11,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.TextView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.request.RequestOptions
 import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.items.AbstractItem
 import kotlinx.android.synthetic.main.item_activity.view.*
@@ -42,15 +42,17 @@ class ActivityItem(val activity: Activity, val act: android.app.Activity?) : Abs
     class ViewHolder(itemView: View, val act: android.app.Activity?) : FastAdapter.ViewHolder<ActivityItem>(itemView) {
 
         override fun bindView(item: ActivityItem?, payloads: MutableList<Any>?) {
-            Glide.with(act)
-                .load(item?.activity?.user?.avatar_url)
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .into(itemView.userIcon)
-
             val activity = item?.activity
             val work = activity?.work
 
             if (activity != null && act != null && work != null) {
+                Glide.with(act)
+                    .load(item.activity.user?.avatar_url)
+                    .apply(RequestOptions()
+                        .circleCrop()
+                        .placeholder(R.drawable.ic_account_circle)
+                    ).into(itemView.userIcon)
+
                 val linkColor = ContextCompat.getColor(act, R.color.light_blue_800)
                 when (activity.action) {
                     Action.CreateRecord -> {
@@ -111,7 +113,6 @@ class ActivityItem(val activity: Activity, val act: android.app.Activity?) : Abs
                 if (imageUrl != null) {
                     Glide.with(this.act)
                         .load(imageUrl)
-                        .diskCacheStrategy(DiskCacheStrategy.ALL)
                         .into(itemView.workIcon)
                 }
 

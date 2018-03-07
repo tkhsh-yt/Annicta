@@ -7,7 +7,6 @@ import android.support.v4.app.ActivityOptionsCompat
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.chibatching.kotpref.Kotpref
 import kotlinx.android.synthetic.main.activity_work.*
 import org.greenrobot.eventbus.EventBus
@@ -16,10 +15,13 @@ import org.greenrobot.eventbus.ThreadMode
 import tkhshyt.annict.AnnictService
 import tkhshyt.annict.json.Work
 import tkhshyt.annicta.event.StartRecordActivityEvent
+import tkhshyt.annicta.event.UpdateStatusEvent
+import tkhshyt.annicta.extension.defaultOn
 import tkhshyt.annicta.layout.message.MessageCreator
 import tkhshyt.annicta.page.Page
 import tkhshyt.annicta.page.go
 import tkhshyt.annicta.pool.WorkPool
+import tkhshyt.annicta.pref.UserInfo
 import javax.inject.Inject
 
 class WorkActivity : AppCompatActivity() {
@@ -90,7 +92,6 @@ class WorkActivity : AppCompatActivity() {
         if (imageUrl != null) {
             Glide.with(this)
                 .load(imageUrl)
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(workIcon)
         } else {
             workIcon.setImageResource(R.drawable.ic_image_black_24dp)
@@ -109,6 +110,30 @@ class WorkActivity : AppCompatActivity() {
             )
         } else {
             go(Page.RECORD, { it.putExtra("episode", episode) })
+        }
+    }
+
+    @Subscribe
+    fun onUpdateStatus(event: UpdateStatusEvent) {
+        val accessToken = UserInfo.accessToken
+        if (accessToken != null) {
+            annict.updateState(
+                    access_token = accessToken,
+                    work_id = event.workId,
+                    kind = event.status
+            ).defaultOn()
+                .subscribe({
+                    workPool.updateWorkStatus(event.workId, event.status)
+                    message.create()
+                        .context(this)
+                        .message(resources.getString(R.string.update_status))
+                        .build().show()
+                }, {
+                    message.create()
+                        .context(this)
+                        .message(resources.getString(R.string.fail_to_update_status))
+                        .build().show()
+                })
         }
     }
 

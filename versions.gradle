@@ -1,0 +1,87 @@
+ext.deps = [:]
+def versions = [:]
+versions.support = "27.0.2"
+versions.constraint_layout = "1.1.0-beta5"
+versions.espresso = "2.2.2"
+versions.junit = "4.12"
+versions.dagger = "2.14.1"
+versions.retrofit = "2.2.0"
+versions.rxjava = "2.1.6"
+versions.rxandroid = "2.0.2"
+versions.eventbus = "3.1.1"
+versions.glide = "4.6.1"
+versions.fastadapter = "3.2.4@aar"
+versions.material = "1.2.4"
+versions.firebase = "11.8.0"
+versions.dagger = "2.14.1"
+versions.kotpref = "2.2.0"
+versions.kotlin = "1.2.30"
+versions.android_gradle_plugin = "3.0.1"
+def deps = [:]
+
+def support = [:]
+support.appcompat = "com.android.support:appcompat-v7:$versions.support"
+support.design = "com.android.support:design:$versions.support"
+support.cardview = "com.android.support:cardview-v7:$versions.support"
+support.recyclerview = "com.android.support:recyclerview-v7:$versions.support"
+support.annotations = "com.android.support:support-annotations:$versions.support"
+deps.support = support
+
+def espresso = [:]
+espresso.core = "com.android.support.test.espresso:espresso-core:$versions.espresso"
+deps.espresso = espresso
+
+def retrofit = [:]
+retrofit.core = "com.squareup.retrofit2:retrofit:$versions.retrofit"
+retrofit.gson = "com.squareup.retrofit2:converter-gson:$versions.retrofit"
+retrofit.rxjava = "com.squareup.retrofit2:adapter-rxjava2:$versions.retrofit"
+deps.retrofit = retrofit
+
+def dagger = [:]
+dagger.core = "com.google.dagger:dagger:$versions.dagger"
+dagger.android_support = "com.google.dagger:dagger-android-support:$versions.dagger"
+dagger.compiler = "com.google.dagger:dagger-compiler:$versions.dagger"
+dagger.processor = "com.google.dagger:dagger-android-processor:$versions.dagger"
+deps.dagger = dagger
+
+def glide = [:]
+glide.core = "com.github.bumptech.glide:glide:$versions.glide"
+glide.annotation = "com.github.bumptech.glide:compiler:$versions.glide"
+deps.glide = glide
+
+def firebase = [:]
+firebase.crash = "com.google.firebase:firebase-crash:$versions.firebase"
+firebase.core = "com.google.firebase:firebase-core:$versions.firebase"
+firebase.messaging = "com.google.firebase:firebase-messaging:$versions.firebase"
+deps.firebase = firebase
+
+def kotlin = [:]
+kotlin.stdlib = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$versions.kotlin"
+kotlin.plugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$versions.kotlin"
+kotlin.extensions = "org.jetbrains.kotlin:kotlin-android-extensions:$versions.kotlin"
+deps.kotlin = kotlin
+
+deps.constraint_layout = "com.android.support.constraint:constraint-layout:$versions.constraint_layout"
+deps.android_gradle_plugin = "com.android.tools.build:gradle:$versions.android_gradle_plugin"
+deps.junit = "junit:junit:$versions.junit"
+deps.rxjava = "io.reactivex.rxjava2:rxjava:$versions.rxjava"
+deps.rxandroid = "io.reactivex.rxjava2:rxandroid:$versions.rxandroid"
+deps.eventbus = "org.greenrobot:eventbus:$versions.eventbus"
+deps.kotpref = "com.chibatching.kotpref:kotpref:$versions.kotpref"
+deps.fastadapter = "com.mikepenz:fastadapter:$versions.fastadapter"
+// これへの依存は取り除ける気がするので除く
+deps.material = "com.github.rey5137:material:$versions.material"
+
+ext.deps = deps
+
+def build_versions = [:]
+build_versions.min_sdk = 15
+build_versions.target_sdk = 27
+build_versions.build_tools = "27.0.3"
+ext.build_versions = build_versions
+
+def addRepos(RepositoryHandler handler) {
+    handler.google()
+    handler.jcenter()
+}
+ext.addRepos = this.&addRepos

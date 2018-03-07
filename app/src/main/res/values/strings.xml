@@ -61,6 +61,7 @@
     <string name="dummy_twitter_hashtag">#musani</string>
     <string name="dummy_episode_count">26</string>
     <string name="activity">アクティビティ</string>
+    <string name="status">視聴状況</string>
 
     <string-array name="rating_array">
         <item>未選択</item>

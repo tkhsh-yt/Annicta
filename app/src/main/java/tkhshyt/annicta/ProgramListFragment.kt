@@ -1,5 +1,6 @@
 package tkhshyt.annicta
 
+import android.app.Activity
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.widget.SwipeRefreshLayout
@@ -86,7 +87,7 @@ class ProgramListFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
                         }
                         .subscribe({ response ->
                             val programs = response.body()
-                            programItemAdapter.add(programs.resources().map { ProgramItem(it, activity) })
+                            programItemAdapter.add(programs.resources().map { ProgramItem(it, activity as Activity) })
                             nextPage = programs.next_page ?: 0
                         }, {
                             message.create()

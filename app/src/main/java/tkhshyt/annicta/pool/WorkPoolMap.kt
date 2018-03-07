@@ -32,7 +32,7 @@ class WorkPoolMap : WorkPool {
 
     override fun setWorks(works: Collection<Work?>) {
         works.forEach {
-            if(it != null) {
+            if (it != null) {
                 setWork(it)
             }
         }

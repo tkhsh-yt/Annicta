@@ -12,20 +12,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <com.makeramen.roundedimageview.RoundedImageView
+        <ImageView
             android:id="@+id/twitterIcon"
             android:layout_width="72dp"
             android:layout_height="72dp"
             android:scaleType="centerCrop"
             android:src="@drawable/ic_account_circle"
-            android:tint="#BDBDBD"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:riv_border_color="#333333"
-            app:riv_border_width="2dip"
-            app:riv_corner_radius="30dip"
-            app:riv_mutate_background="true"
-            app:riv_oval="true" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/workTitle"
@@ -128,12 +122,10 @@
             android:id="@+id/releasedOnText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
             android:layout_marginTop="8dp"
             android:gravity="right"
             android:text="@string/released_on"
             android:textSize="18sp"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/releaseSeasonText"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/releaseSeasonText"
@@ -143,14 +135,38 @@
             android:id="@+id/releasedOn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
             android:layout_marginTop="8dp"
             android:text="@string/dummy_release_on"
             android:textSize="18sp"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/seasonName"
             app:layout_constraintTop_toBottomOf="@+id/seasonName" />
+
+        <TextView
+            android:id="@+id/statusText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="10dp"
+            android:text="@string/status"
+            android:textSize="18sp"
+            android:gravity="right"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/releasedOnText"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/releasedOnText"
+            tools:ignore="RtlHardcoded" />
+
+        <android.support.v7.widget.AppCompatSpinner
+            android:id="@+id/statusSpinner"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/status_spinner_background"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/releasedOn"
+            app:layout_constraintTop_toBottomOf="@+id/releasedOn" />
 
     </android.support.constraint.ConstraintLayout>
 

@@ -12,7 +12,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:name=".MyApplication">
-        <activity android:name="tkhshyt.annicta.TopActivity"
+        <activity
+            android:name="tkhshyt.annicta.TopActivity"
             android:screenOrientation="portrait"
             android:launchMode="singleTop">
             <intent-filter>
@@ -21,16 +22,19 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".AuthActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".AuthActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity android:name=".RecordActivity" />
-        <activity android:name=".WorkActivity"
+        <activity
+            android:name=".WorkActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".LicenseActivity"
+        <activity
+            android:name=".LicenseActivity"
             android:screenOrientation="portrait" />
     </application>
 

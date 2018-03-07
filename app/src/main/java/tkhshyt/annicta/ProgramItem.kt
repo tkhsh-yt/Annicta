@@ -6,7 +6,6 @@ import android.support.v4.app.ActivityOptionsCompat
 import android.support.v4.content.ContextCompat
 import android.view.View
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.items.AbstractItem
 import kotlinx.android.synthetic.main.item_program.view.*
@@ -18,7 +17,7 @@ import tkhshyt.annicta.page.go
 import tkhshyt.annicta.utils.AnnictUtil
 import java.util.*
 
-class ProgramItem(val program: Program, val activity: Activity?) : AbstractItem<ProgramItem, ProgramItem.ViewHolder>() {
+class ProgramItem(val program: Program, val activity: Activity) : AbstractItem<ProgramItem, ProgramItem.ViewHolder>() {
 
     override fun getViewHolder(v: View): ViewHolder {
         return ViewHolder(v, activity)
@@ -32,7 +31,7 @@ class ProgramItem(val program: Program, val activity: Activity?) : AbstractItem<
         return R.layout.item_program
     }
 
-    class ViewHolder(itemView: View, private val activity: Activity?) : FastAdapter.ViewHolder<ProgramItem>(itemView) {
+    class ViewHolder(itemView: View, private val activity: Activity) : FastAdapter.ViewHolder<ProgramItem>(itemView) {
 
         override fun bindView(programItem: ProgramItem?, payloads: MutableList<Any>?) {
             if (programItem != null) {
@@ -41,48 +40,43 @@ class ProgramItem(val program: Program, val activity: Activity?) : AbstractItem<
                     val episode = program.episode.copy(work = program.work)
                     EventBus.getDefault().post(StartRecordActivityEvent(episode))
 
-                    if (activity != null) {
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                            activity.go(
-                                    Page.RECORD,
-                                    ActivityOptionsCompat.makeSceneTransitionAnimation(
-                                            activity,
-                                            itemView.workIcon,
-                                            itemView.workIcon.transitionName
-                                    ).toBundle(),
-                                    { it.putExtra("episode", episode) }
-                            )
-                        } else {
-                            activity.go(
-                                    Page.RECORD,
-                                    { it.putExtra("episode", episode) }
-                            )
-                        }
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        activity.go(
+                                Page.RECORD,
+                                ActivityOptionsCompat.makeSceneTransitionAnimation(
+                                        activity,
+                                        itemView.workIcon,
+                                        itemView.workIcon.transitionName
+                                ).toBundle(),
+                                { it.putExtra("episode", episode) }
+                        )
+                    } else {
+                        activity.go(
+                                Page.RECORD,
+                                { it.putExtra("episode", episode) }
+                        )
                     }
                 }
 
                 val now = Calendar.getInstance()
                 if (program.started_at.time > now.time.time) {
                     itemView.bar.setBackgroundResource(R.drawable.circle_broadcast)
-                    activity?.let { itemView.circle.setBackgroundColor(ContextCompat.getColor(it, R.color.teal_200)) }
+                    itemView.circle.setBackgroundColor(ContextCompat.getColor(activity, R.color.teal_200))
                 } else {
                     itemView.bar.setBackgroundResource(R.drawable.circle_broadcasted)
-                    activity?.let { itemView.circle.setBackgroundColor(ContextCompat.getColor(it, R.color.teal_500)) }
+                    itemView.circle.setBackgroundColor(ContextCompat.getColor(activity, R.color.teal_500))
                 }
 
                 var imageUrl: String? = null
-                if (activity != null) {
-                    if (program.work.images?.twitter?.image_url != null && program.work.images.twitter.image_url.isNotBlank()) {
-                        imageUrl = program.work.images.twitter.image_url
-                    } else if (program.work.images?.recommended_url != null && program.work.images.recommended_url.isNotBlank()) {
-                        imageUrl = program.work.images.recommended_url
-                    }
-                    if (imageUrl != null) {
-                        Glide.with(activity)
-                            .load(imageUrl)
-                            .diskCacheStrategy(DiskCacheStrategy.ALL)
-                            .into(itemView.workIcon)
-                    }
+                if (program.work.images?.twitter?.image_url != null && program.work.images.twitter.image_url.isNotBlank()) {
+                    imageUrl = program.work.images.twitter.image_url
+                } else if (program.work.images?.recommended_url != null && program.work.images.recommended_url.isNotBlank()) {
+                    imageUrl = program.work.images.recommended_url
+                }
+                if (imageUrl != null) {
+                    Glide.with(activity)
+                        .load(imageUrl)
+                        .into(itemView.workIcon)
                 }
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     itemView.workIcon.transitionName = "work_icon"

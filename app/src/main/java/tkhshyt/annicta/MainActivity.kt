@@ -16,15 +16,16 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.TextView
 import com.chibatching.kotpref.Kotpref
-import com.mikepenz.materialdrawer.DrawerBuilder
-import com.mikepenz.materialdrawer.model.PrimaryDrawerItem
 import kotlinx.android.synthetic.main.activity_main.*
 import org.greenrobot.eventbus.EventBus
+import tkhshyt.annict.AnnictService
 import tkhshyt.annicta.event.SeasonSpinnerSelectedEvent
-import tkhshyt.annicta.page.Page
-import tkhshyt.annicta.page.go
+import javax.inject.Inject
 
 class MainActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener {
+
+    @Inject
+    lateinit var annict: AnnictService
 
     private val pageTitle = arrayOf("放送予定", "シーズン", "アクティビティ")
     private val tabViews = arrayOf(R.layout.tab_broadcast, R.layout.tab_work, R.layout.tab_home)
@@ -75,16 +76,6 @@ class MainActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener {
         }
 
         setupSeasonToolbar()
-
-        val item = PrimaryDrawerItem().withIdentifier(1).withName("ライセンス")
-        val result = DrawerBuilder().withActivity(this)
-            .addDrawerItems(item)
-            .build()
-        item.withOnDrawerItemClickListener { _, _, _ ->
-            result.closeDrawer()
-            go(Page.LICENSE)
-            true
-        }
     }
 
     fun setupSeasonToolbar() {

@@ -5,7 +5,7 @@ import android.graphics.BlurMaskFilter
 import android.view.View
 import android.widget.TextView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.request.RequestOptions
 import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.items.AbstractItem
 import kotlinx.android.synthetic.main.item_record.view.*
@@ -47,10 +47,14 @@ class RecordItem(val record: Record, val activity: Activity?) : AbstractItem<Rec
 //                itemView.comment?.setLayerType(View.LAYER_TYPE_SOFTWARE, null)
 //            }
 
-            Glide.with(activity)
-                .load(recordItem?.record?.user?.avatar_url)
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .into(itemView.userIcon)
+            if (activity != null) {
+                Glide.with(activity)
+                    .load(recordItem?.record?.user?.avatar_url)
+                    .apply(RequestOptions()
+                        .circleCrop()
+                        .placeholder(R.drawable.ic_account_circle)
+                    ).into(itemView.userIcon)
+            }
 
             itemView.createdAt.text = AnnictUtil.prettyDate(recordItem?.record?.created_at)
 
