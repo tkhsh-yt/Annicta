@@ -3,6 +3,7 @@ package tkhshyt.annicta.utils
 import android.os.Build
 import android.text.Html
 import android.text.Spanned
+import android.text.TextUtils
 
 
 object AndroidUtil {
@@ -18,6 +19,6 @@ object AndroidUtil {
 
     fun colorHtml(text: String, color: Int): String {
         val hexColor = String.format("#%06X", 0xFFFFFF and color)
-        return String.format("<font color=\"%s\">%s</font>", hexColor, text)
+        return String.format("<font color=\"%s\">%s</font>", hexColor, TextUtils.htmlEncode(text))
     }
 }
