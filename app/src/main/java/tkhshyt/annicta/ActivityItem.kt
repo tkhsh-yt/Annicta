@@ -22,8 +22,8 @@ import tkhshyt.annict.json.Activity
 import tkhshyt.annicta.event.UpdateStatusEvent
 import tkhshyt.annicta.page.Page
 import tkhshyt.annicta.page.go
-import tkhshyt.annicta.utils.AndroidUtil
-import tkhshyt.annicta.utils.AnnictUtil
+import tkhshyt.annicta.util.AndroidUtil
+import tkhshyt.annicta.util.AnnictUtil
 
 class ActivityItem(val activity: Activity, val act: android.app.Activity?) : AbstractItem<ActivityItem, ActivityItem.ViewHolder>() {
 

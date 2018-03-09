@@ -10,7 +10,7 @@ import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.items.AbstractItem
 import kotlinx.android.synthetic.main.item_record.view.*
 import tkhshyt.annict.json.Record
-import tkhshyt.annicta.utils.AnnictUtil
+import tkhshyt.annicta.util.AnnictUtil
 
 class RecordItem(val record: Record, val activity: Activity?) : AbstractItem<RecordItem, RecordItem.ViewHolder>() {
 

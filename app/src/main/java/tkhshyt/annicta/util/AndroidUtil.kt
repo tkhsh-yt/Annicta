@@ -1,4 +1,4 @@
-package tkhshyt.annicta.utils
+package tkhshyt.annicta.util
 
 import android.os.Build
 import android.text.Html

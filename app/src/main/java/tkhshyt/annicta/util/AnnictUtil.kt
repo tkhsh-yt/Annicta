@@ -1,4 +1,4 @@
-package tkhshyt.annicta.utils
+package tkhshyt.annicta.util
 
 import tkhshyt.annicta.R
 import java.text.SimpleDateFormat

@@ -15,7 +15,7 @@ import tkhshyt.annict.json.Work
 import tkhshyt.annicta.extension.defaultOn
 import tkhshyt.annicta.layout.recycler.EndlessScrollListener
 import tkhshyt.annicta.pref.UserInfo
-import tkhshyt.annicta.utils.notNullIf
+import tkhshyt.annicta.util.notNullIf
 import javax.inject.Inject
 
 

@@ -14,7 +14,7 @@ import tkhshyt.annict.json.Program
 import tkhshyt.annicta.event.StartRecordActivityEvent
 import tkhshyt.annicta.page.Page
 import tkhshyt.annicta.page.go
-import tkhshyt.annicta.utils.AnnictUtil
+import tkhshyt.annicta.util.AnnictUtil
 import java.util.*
 
 class ProgramItem(val program: Program, val activity: Activity) : AbstractItem<ProgramItem, ProgramItem.ViewHolder>() {

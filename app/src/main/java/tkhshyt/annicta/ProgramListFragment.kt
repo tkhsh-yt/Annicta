@@ -21,7 +21,7 @@ import tkhshyt.annicta.layout.message.MessageCreator
 import tkhshyt.annicta.layout.recycler.EndlessScrollListener
 import tkhshyt.annicta.pref.UserConfig
 import tkhshyt.annicta.pref.UserInfo
-import tkhshyt.annicta.utils.AnnictUtil
+import tkhshyt.annicta.util.AnnictUtil
 import java.util.*
 import javax.inject.Inject
 
