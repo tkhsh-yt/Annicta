@@ -12,5 +12,9 @@ jobs:
     <<: *defaults
     steps:
       - checkout
-      - ./gradlew androidDependencies
-      - ./gradlew assembleDebug
+      - run:
+        name: Download Dependencies
+        command: ./gradlew androidDependencies
+      - run:
+        name: Build apk
+        command: ./gradlew assembleDebug
