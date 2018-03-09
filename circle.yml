@@ -20,10 +20,10 @@ jobs:
           command: ./gradlew androidDependencies
       - run:
           name: Write google-services.json
-          command: echo $GOOGLE_SERVICES | base64 --decode --ignore-garbage > ~/$CIRCLE_PROJECT_REPONAME/app/google-services.json
+          command: echo $GOOGLE_SERVICES | base64 --decode --ignore-garbage > ~/$CIRCLE_PROJECT_REPONAME/code/app/google-services.json
       - run:
           name: Write google-services.json for Debug
-          command: echo $GOOGLE_SERVICES | base64 --decode --ignore-garbage > ~/$CIRCLE_PROJECT_REPONAME/app/src/debug/google-services.json
+          command: echo $GOOGLE_SERVICES | base64 --decode --ignore-garbage > ~/$CIRCLE_PROJECT_REPONAME/code/app/src/debug/google-services.json
       - run:
           name: Build apk
           command: ./gradlew assembleDebug
