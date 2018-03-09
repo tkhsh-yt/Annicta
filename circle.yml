@@ -19,6 +19,9 @@ jobs:
           name: Download Dependencies
           command: ./gradlew androidDependencies
       - run:
+          name: Current Directory
+          command: pwd
+      - run:
           name: Write google-services.json
           command: echo $GOOGLE_SERVICES | base64 --decode --ignore-garbage > ~/code/$CIRCLE_PROJECT_REPONAME/app/google-services.json
       - run:
