@@ -1,0 +1,9 @@
+test:
+  override:
+    - emulator -avd circleci-android24 -no-window:
+        background: true
+        parallel: true
+    - circle-android wait-for-boot
+    - ./gradlew connectedAndroidTest
+    - cp -r annicta/build/outputs $CIRCLE_ARTIFACTS
+    - cp -r annicta/build/outputs/androidTest-results/* $CIRCLE_TEST_REPORTS
