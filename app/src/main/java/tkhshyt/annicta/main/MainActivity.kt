@@ -1,4 +1,4 @@
-package tkhshyt.annicta
+package tkhshyt.annicta.main
 
 import android.content.Context
 import android.os.Build
@@ -19,6 +19,9 @@ import com.chibatching.kotpref.Kotpref
 import kotlinx.android.synthetic.main.activity_main.*
 import org.greenrobot.eventbus.EventBus
 import tkhshyt.annict.AnnictService
+import tkhshyt.annicta.MyApplication
+import tkhshyt.annicta.R
+import tkhshyt.annicta.SeasonSpinner
 import tkhshyt.annicta.event.SeasonSpinnerSelectedEvent
 import javax.inject.Inject
 

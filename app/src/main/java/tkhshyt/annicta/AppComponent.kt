@@ -1,6 +1,14 @@
 package tkhshyt.annicta
 
 import dagger.Component
+import tkhshyt.annicta.auth.AuthActivity
+import tkhshyt.annicta.auth.AuthFragment
+import tkhshyt.annicta.work.EpisodeListFragment
+import tkhshyt.annicta.main.*
+import tkhshyt.annicta.record.RecordActivity
+import tkhshyt.annicta.record.RecordListFragment
+import tkhshyt.annicta.top.TopActivity
+import tkhshyt.annicta.work.WorkActivity
 import javax.inject.Singleton
 
 @Singleton

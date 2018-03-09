@@ -1,4 +1,4 @@
-package tkhshyt.annicta
+package tkhshyt.annicta.auth
 
 import android.graphics.Typeface
 import android.os.Bundle
@@ -7,6 +7,7 @@ import kotlinx.android.synthetic.main.activity_auth.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import tkhshyt.annicta.R
 import tkhshyt.annicta.event.FailToAuthorizeEvent
 import tkhshyt.annicta.event.OpenAnnictEvent
 import tkhshyt.annicta.layout.message.MessageCreator

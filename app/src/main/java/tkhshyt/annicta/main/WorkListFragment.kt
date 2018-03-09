@@ -1,4 +1,4 @@
-package tkhshyt.annicta
+package tkhshyt.annicta.main
 
 import android.app.Activity
 import android.os.Bundle
@@ -18,6 +18,9 @@ import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import tkhshyt.annict.AnnictService
 import tkhshyt.annict.Season
+import tkhshyt.annicta.MyApplication
+import tkhshyt.annicta.R
+import tkhshyt.annicta.SeasonSelectDialogFragment
 import tkhshyt.annicta.SeasonSpinner.*
 import tkhshyt.annicta.WorkListFragment.SortWork.ID
 import tkhshyt.annicta.WorkListFragment.SortWork.WATCHER_COUNT

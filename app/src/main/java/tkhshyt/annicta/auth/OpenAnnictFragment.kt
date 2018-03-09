@@ -1,4 +1,4 @@
-package tkhshyt.annicta
+package tkhshyt.annicta.auth
 
 import android.content.Intent
 import android.net.Uri
@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_open_annict.*
 import org.greenrobot.eventbus.EventBus
 import tkhshyt.annict.AnnictService
+import tkhshyt.annicta.R
 import tkhshyt.annicta.event.OpenAnnictEvent
 
 class OpenAnnictFragment : Fragment() {

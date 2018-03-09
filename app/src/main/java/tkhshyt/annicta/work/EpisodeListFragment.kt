@@ -1,36 +1,33 @@
-package tkhshyt.annicta
+package tkhshyt.annicta.work
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.adapters.ItemAdapter
+import com.mikepenz.fastadapter.items.AbstractItem
 import kotlinx.android.synthetic.main.fragment_list.*
 import tkhshyt.annict.AnnictService
-import tkhshyt.annicta.extension.followingActivitiesWithStatus
-import tkhshyt.annicta.layout.message.MessageCreator
+import tkhshyt.annict.json.Work
+import tkhshyt.annicta.MyApplication
+import tkhshyt.annicta.R
+import tkhshyt.annicta.extension.defaultOn
 import tkhshyt.annicta.layout.recycler.EndlessScrollListener
-import tkhshyt.annicta.pool.WorkPool
 import tkhshyt.annicta.pref.UserInfo
+import tkhshyt.annicta.util.notNullIf
 import javax.inject.Inject
 
 
-class ActivityListFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
+class EpisodeListFragment : Fragment() {
 
     @Inject
     lateinit var annict: AnnictService
 
-    @Inject
-    lateinit var message: MessageCreator
-
-    @Inject
-    lateinit var workPool: WorkPool
-
-    private val activityItemAdapter = ItemAdapter<ActivityItem>()
+    private val workInfoItemAdapter = ItemAdapter<WorkInfoItem>()
+    private val episodeItemAdapter = ItemAdapter<EpisodeItem>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_list, container, false)
@@ -39,27 +36,26 @@ class ActivityListFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val fastAdapter = FastAdapter.with<ActivityItem, ItemAdapter<ActivityItem>>(activityItemAdapter)
+        val adapters = listOf(workInfoItemAdapter, episodeItemAdapter)
+        val fastAdapter = FastAdapter.with<AbstractItem<*, *>, ItemAdapter<*>>(adapters)
         recyclerView.adapter = fastAdapter
         recyclerView.setHasFixedSize(true)
 
-        swipeRefreshView.setOnRefreshListener(this)
         swipeRefreshView.setColorSchemeResources(R.color.green_500, R.color.red_500, R.color.indigo_500, R.color.yellow_500)
         swipeRefreshView.isRefreshing = true
-
-        onRefresh()
-    }
-
-    override fun onRefresh() {
-        activityItemAdapter.clear()
+        swipeRefreshView.isEnabled = false
 
         val llm = LinearLayoutManager(context)
         recyclerView.layoutManager = llm
 
-        val listener = loadMoreListener(llm)
-        listener.onLoadMore(1)
+        arguments.notNullIf({
+            it.containsKey("work")
+        }, {
+            val work = it.getSerializable("work") as Work
+            workInfoItemAdapter.add(WorkInfoItem(work, activity))
+        })
 
-        recyclerView.clearOnScrollListeners()
+        val listener = loadMoreListener(llm)
         recyclerView.addOnScrollListener(listener)
     }
 
@@ -69,25 +65,27 @@ class ActivityListFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
             override fun onLoadMore(currentPage: Int) {
                 val accessToken = UserInfo.accessToken
                 if (accessToken != null) {
-                    annict.followingActivitiesWithStatus(
-                            access_token = accessToken,
-                            sort_id = "desc",
-                            page = currentPage
-                    )({
-                        workPool.setWorks(it.resources().mapNotNull { it.work })
-                        activityItemAdapter.add(it.resources().map { ActivityItem(it, activity) })
-
-                        nextPage = it.next_page ?: 0
+                    val workId = arguments.notNullIf({
+                        it.containsKey("work_id")
                     }, {
-                        loading = false
-                        swipeRefreshView?.isRefreshing = false
-                    }, {
-                        message.create()
-                            .context(context)
-                            .message("取得に失敗しました")
-                            .build().show()
-
+                        it.getLong("work_id")
                     })
+
+                    annict.episodes(
+                            access_token = accessToken,
+                            filter_work_id = workId.toString(),
+                            sort_sort_number = "asc",
+                            page = currentPage
+                    ).defaultOn()
+                        .doFinally {
+                            swipeRefreshView?.isRefreshing = false
+                        }
+                        .subscribe({
+                            val episodes = it.body()
+                            episodeItemAdapter.add(episodes.resources().map { EpisodeItem(it) })
+                            nextPage = episodes.next_page ?: 0
+                        }, {
+                        })
                 }
             }
         }
@@ -96,6 +94,7 @@ class ActivityListFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        // DI
         (activity?.application as? MyApplication)?.getComponent()?.inject(this)
 
         retainInstance = true

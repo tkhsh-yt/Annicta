@@ -1,4 +1,4 @@
-package tkhshyt.annicta
+package tkhshyt.annicta.record
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -8,24 +8,26 @@ import android.view.View
 import android.view.ViewGroup
 import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.adapters.ItemAdapter
-import com.mikepenz.fastadapter.items.AbstractItem
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_list.*
 import tkhshyt.annict.AnnictService
-import tkhshyt.annict.json.Work
-import tkhshyt.annicta.extension.defaultOn
+import tkhshyt.annicta.MyApplication
+import tkhshyt.annicta.R
+import tkhshyt.annicta.layout.message.MessageCreator
 import tkhshyt.annicta.layout.recycler.EndlessScrollListener
 import tkhshyt.annicta.pref.UserInfo
-import tkhshyt.annicta.util.notNullIf
 import javax.inject.Inject
 
-
-class EpisodeListFragment : Fragment() {
+class RecordListFragment : Fragment() {
 
     @Inject
     lateinit var annict: AnnictService
 
-    private val workInfoItemAdapter = ItemAdapter<WorkInfoItem>()
-    private val episodeItemAdapter = ItemAdapter<EpisodeItem>()
+    @Inject
+    lateinit var message: MessageCreator
+
+    private val recordItemAdapter = ItemAdapter<RecordItem>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_list, container, false)
@@ -34,26 +36,27 @@ class EpisodeListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val adapters = listOf(workInfoItemAdapter, episodeItemAdapter)
-        val fastAdapter = FastAdapter.with<AbstractItem<*, *>, ItemAdapter<*>>(adapters)
+        val fastAdapter = FastAdapter.with<RecordItem, ItemAdapter<RecordItem>>(recordItemAdapter)
         recyclerView.adapter = fastAdapter
         recyclerView.setHasFixedSize(true)
 
-        swipeRefreshView.setColorSchemeResources(R.color.green_500, R.color.red_500, R.color.indigo_500, R.color.yellow_500)
-        swipeRefreshView.isRefreshing = true
         swipeRefreshView.isEnabled = false
+        swipeRefreshView.isRefreshing = true
+
+        onRefresh()
+    }
+
+    private fun onRefresh() {
+        recordItemAdapter.clear()
 
         val llm = LinearLayoutManager(context)
+        llm.isAutoMeasureEnabled = true
         recyclerView.layoutManager = llm
 
-        arguments.notNullIf({
-            it.containsKey("work")
-        }, {
-            val work = it.getSerializable("work") as Work
-            workInfoItemAdapter.add(WorkInfoItem(work, activity))
-        })
-
         val listener = loadMoreListener(llm)
+        listener.onLoadMore(1)
+
+        recyclerView.clearOnScrollListeners()
         recyclerView.addOnScrollListener(listener)
     }
 
@@ -63,26 +66,33 @@ class EpisodeListFragment : Fragment() {
             override fun onLoadMore(currentPage: Int) {
                 val accessToken = UserInfo.accessToken
                 if (accessToken != null) {
-                    val workId = arguments.notNullIf({
-                        it.containsKey("work_id")
-                    }, {
-                        it.getLong("work_id")
-                    })
-
-                    annict.episodes(
+                    val episodeId =
+                            if (arguments?.containsKey("episode_id") == true) {
+                                arguments?.getLong("episode_id")
+                            } else {
+                                null
+                            }
+                    annict.records(
                             access_token = accessToken,
-                            filter_work_id = workId.toString(),
-                            sort_sort_number = "asc",
+                            filter_episode_id = episodeId,
+                            filter_has_record_comment = true,
+                            sort_id = "desc",
                             page = currentPage
-                    ).defaultOn()
+                    ).subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
                         .doFinally {
+                            loading = false
                             swipeRefreshView?.isRefreshing = false
                         }
                         .subscribe({
-                            val episodes = it.body()
-                            episodeItemAdapter.add(episodes.resources().map { EpisodeItem(it) })
-                            nextPage = episodes.next_page ?: 0
+                            val records = it.body()
+                            recordItemAdapter.add(records.resources().map { RecordItem(it, activity) })
+                            nextPage = records.next_page ?: 0
                         }, {
+                            message.create()
+                                .context(context)
+                                .message("取得に失敗しました")
+                                .build().show()
                         })
                 }
             }
@@ -92,7 +102,6 @@ class EpisodeListFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // DI
         (activity?.application as? MyApplication)?.getComponent()?.inject(this)
 
         retainInstance = true

@@ -1,4 +1,4 @@
-package tkhshyt.annicta
+package tkhshyt.annicta.work
 
 import android.app.Activity
 import android.content.Context
@@ -19,6 +19,7 @@ import kotlinx.android.synthetic.main.item_work_info.view.*
 import org.greenrobot.eventbus.EventBus
 import tkhshyt.annict.Kind
 import tkhshyt.annict.json.Work
+import tkhshyt.annicta.R
 import tkhshyt.annicta.event.UpdateStatusEvent
 
 class WorkInfoItem(val work: Work, val activity: Activity?) : AbstractItem<WorkInfoItem, WorkInfoItem.ViewHolder>() {

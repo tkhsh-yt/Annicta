@@ -5,6 +5,11 @@ import android.content.Context
 import android.content.Intent
 import android.content.res.Resources
 import tkhshyt.annicta.*
+import tkhshyt.annicta.auth.AuthActivity
+import tkhshyt.annicta.main.MainActivity
+import tkhshyt.annicta.record.RecordActivity
+import tkhshyt.annicta.top.TopActivity
+import tkhshyt.annicta.work.WorkActivity
 
 enum class Page(val nameId: Int, val page: Class<out Activity>) {
     TOP(R.string.page_top, TopActivity::class.java) {

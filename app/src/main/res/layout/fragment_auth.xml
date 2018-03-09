@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/pink_normal"
-    tools:context="tkhshyt.annicta.TopActivity">
+    tools:context="tkhshyt.annicta.top.TopActivity">
 
     <EditText
         android:id="@+id/codeEditText"

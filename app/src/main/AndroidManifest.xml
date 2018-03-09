@@ -13,7 +13,7 @@
         android:theme="@style/AppTheme"
         android:name=".MyApplication">
         <activity
-            android:name="tkhshyt.annicta.TopActivity"
+            android:name="tkhshyt.annicta.top.TopActivity"
             android:screenOrientation="portrait"
             android:launchMode="singleTop">
             <intent-filter>
@@ -23,15 +23,15 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".AuthActivity"
+            android:name=".auth.AuthActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".MainActivity"
+            android:name=".main.MainActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
-        <activity android:name=".RecordActivity" />
+        <activity android:name=".record.RecordActivity" />
         <activity
-            android:name=".WorkActivity"
+            android:name=".work.WorkActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".LicenseActivity"

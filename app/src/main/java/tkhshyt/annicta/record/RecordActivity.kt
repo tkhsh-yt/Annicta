@@ -1,4 +1,4 @@
-package tkhshyt.annicta
+package tkhshyt.annicta.record
 
 import android.content.Context
 import android.os.Build
@@ -18,6 +18,8 @@ import kotlinx.android.synthetic.main.activity_record.*
 import org.greenrobot.eventbus.EventBus
 import tkhshyt.annict.AnnictService
 import tkhshyt.annict.json.Episode
+import tkhshyt.annicta.MyApplication
+import tkhshyt.annicta.R
 import tkhshyt.annicta.event.RecordedEvent
 import tkhshyt.annicta.layout.message.MessageCreator
 import tkhshyt.annicta.page.Page

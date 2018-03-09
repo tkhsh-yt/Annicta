@@ -1,4 +1,4 @@
-package tkhshyt.annicta
+package tkhshyt.annicta.auth
 
 import android.app.Activity
 import android.content.Intent
@@ -10,6 +10,9 @@ import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_auth.*
 import org.greenrobot.eventbus.EventBus
 import tkhshyt.annict.AnnictService
+import tkhshyt.annicta.BuildConfig
+import tkhshyt.annicta.MyApplication
+import tkhshyt.annicta.R
 import tkhshyt.annicta.event.FailToAuthorizeEvent
 import tkhshyt.annicta.extension.defaultOn
 import javax.inject.Inject

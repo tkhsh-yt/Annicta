@@ -1,10 +1,14 @@
-package tkhshyt.annicta
+package tkhshyt.annicta.top
 
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.chibatching.kotpref.Kotpref
+import tkhshyt.annicta.BuildConfig
+import tkhshyt.annicta.MyApplication
+import tkhshyt.annicta.R
+import tkhshyt.annicta.RequestCode
 import tkhshyt.annicta.layout.message.MessageCreator
 import tkhshyt.annicta.page.Page
 import tkhshyt.annicta.page.go

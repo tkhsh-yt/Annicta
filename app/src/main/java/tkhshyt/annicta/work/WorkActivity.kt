@@ -1,4 +1,4 @@
-package tkhshyt.annicta
+package tkhshyt.annicta.work
 
 import android.os.Build
 import android.os.Bundle
@@ -14,6 +14,8 @@ import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import tkhshyt.annict.AnnictService
 import tkhshyt.annict.json.Work
+import tkhshyt.annicta.MyApplication
+import tkhshyt.annicta.R
 import tkhshyt.annicta.event.StartRecordActivityEvent
 import tkhshyt.annicta.event.UpdateStatusEvent
 import tkhshyt.annicta.extension.defaultOn

@@ -1,4 +1,4 @@
-package tkhshyt.annicta
+package tkhshyt.annicta.main
 
 import android.content.Context
 import android.os.Build
@@ -19,6 +19,7 @@ import org.greenrobot.eventbus.EventBus
 import tkhshyt.annict.Action
 import tkhshyt.annict.Kind
 import tkhshyt.annict.json.Activity
+import tkhshyt.annicta.R
 import tkhshyt.annicta.event.UpdateStatusEvent
 import tkhshyt.annicta.page.Page
 import tkhshyt.annicta.page.go

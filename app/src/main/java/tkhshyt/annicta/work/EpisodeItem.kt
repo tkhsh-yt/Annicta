@@ -1,4 +1,4 @@
-package tkhshyt.annicta
+package tkhshyt.annicta.work
 
 import android.view.View
 import com.mikepenz.fastadapter.FastAdapter
@@ -6,6 +6,7 @@ import com.mikepenz.fastadapter.items.AbstractItem
 import kotlinx.android.synthetic.main.item_episode.view.*
 import org.greenrobot.eventbus.EventBus
 import tkhshyt.annict.json.Episode
+import tkhshyt.annicta.R
 import tkhshyt.annicta.event.StartRecordActivityEvent
 
 class EpisodeItem(val episode: Episode) : AbstractItem<EpisodeItem, EpisodeItem.ViewHolder>() {

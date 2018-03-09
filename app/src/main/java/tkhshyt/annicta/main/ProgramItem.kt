@@ -1,4 +1,4 @@
-package tkhshyt.annicta
+package tkhshyt.annicta.main
 
 import android.app.Activity
 import android.os.Build
@@ -8,9 +8,11 @@ import android.view.View
 import com.bumptech.glide.Glide
 import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.items.AbstractItem
+import kotlinx.android.synthetic.main.broadcast_bar.view.*
 import kotlinx.android.synthetic.main.item_program.view.*
 import org.greenrobot.eventbus.EventBus
 import tkhshyt.annict.json.Program
+import tkhshyt.annicta.R
 import tkhshyt.annicta.event.StartRecordActivityEvent
 import tkhshyt.annicta.page.Page
 import tkhshyt.annicta.page.go
@@ -18,6 +20,7 @@ import tkhshyt.annicta.util.AnnictUtil
 import java.util.*
 
 class ProgramItem(val program: Program, val activity: Activity) : AbstractItem<ProgramItem, ProgramItem.ViewHolder>() {
+
 
     override fun getViewHolder(v: View): ViewHolder {
         return ViewHolder(v, activity)
@@ -66,6 +69,7 @@ class ProgramItem(val program: Program, val activity: Activity) : AbstractItem<P
                     itemView.bar.setBackgroundResource(R.drawable.circle_broadcasted)
                     itemView.circle.setBackgroundColor(ContextCompat.getColor(activity, R.color.teal_500))
                 }
+
 
                 var imageUrl: String? = null
                 if (program.work.images?.twitter?.image_url != null && program.work.images.twitter.image_url.isNotBlank()) {

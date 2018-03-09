@@ -1,4 +1,4 @@
-package tkhshyt.annicta
+package tkhshyt.annicta.main
 
 import android.app.Activity
 import android.content.Context
@@ -17,6 +17,8 @@ import com.mikepenz.fastadapter.items.AbstractItem
 import kotlinx.android.synthetic.main.item_work.view.*
 import org.greenrobot.eventbus.EventBus
 import tkhshyt.annict.Kind
+import tkhshyt.annicta.MyApplication
+import tkhshyt.annicta.R
 import tkhshyt.annicta.event.UpdateStatusEvent
 import tkhshyt.annicta.page.Page
 import tkhshyt.annicta.page.go
