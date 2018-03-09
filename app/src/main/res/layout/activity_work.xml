@@ -61,8 +61,8 @@
                     android:textColor="@android:color/white"
                     android:visibility="gone"
                     android:textSize="18sp"
-                    android:paddingLeft="8dp"
-                    android:paddingStart="8dp"
+                    android:paddingLeft="@dimen/space_8dp"
+                    android:paddingStart="@dimen/space_8dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     tools:ignore="RtlSymmetry" />

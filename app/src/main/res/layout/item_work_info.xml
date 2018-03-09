@@ -14,10 +14,8 @@
 
         <ImageView
             android:id="@+id/twitterIcon"
-            android:layout_width="72dp"
-            android:layout_height="72dp"
-            android:scaleType="centerCrop"
             android:src="@drawable/ic_account_circle"
+            style="@style/ImageIcon72dpStyle"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
