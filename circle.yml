@@ -13,6 +13,9 @@ jobs:
     steps:
       - checkout
       - run:
+          name: Change Permission
+          command: chmod +x ./gradlew
+      - run:
           name: Download Dependencies
           command: ./gradlew androidDependencies
       - run:
