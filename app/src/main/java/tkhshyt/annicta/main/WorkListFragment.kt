@@ -22,8 +22,6 @@ import tkhshyt.annicta.MyApplication
 import tkhshyt.annicta.R
 import tkhshyt.annicta.SeasonSelectDialogFragment
 import tkhshyt.annicta.SeasonSpinner.*
-import tkhshyt.annicta.WorkListFragment.SortWork.ID
-import tkhshyt.annicta.WorkListFragment.SortWork.WATCHER_COUNT
 import tkhshyt.annicta.event.SeasonSelectedEvent
 import tkhshyt.annicta.event.SeasonSpinnerSelectedEvent
 import tkhshyt.annicta.event.UpdateStatusEvent
@@ -31,6 +29,8 @@ import tkhshyt.annicta.extension.worksWithStatus
 import tkhshyt.annicta.layout.message.MessageCreator
 import tkhshyt.annicta.layout.recycler.EndlessScrollListener
 import tkhshyt.annicta.layout.recycler.Util
+import tkhshyt.annicta.main.WorkListFragment.SortWork.ID
+import tkhshyt.annicta.main.WorkListFragment.SortWork.WATCHER_COUNT
 import tkhshyt.annicta.pool.WorkPool
 import tkhshyt.annicta.pref.UserInfo
 import java.util.*
