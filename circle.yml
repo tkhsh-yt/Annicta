@@ -9,6 +9,7 @@ default: &defaults
 
 jobs:
   build:
+    <<: *defaults
     steps:
       - checkout
       - ./gradlew androidDependencies
