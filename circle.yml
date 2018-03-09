@@ -19,14 +19,14 @@ jobs:
           name: Download Dependencies
           command: ./gradlew androidDependencies
       - run:
-          name: Current Directory
-          command: pwd
+          name: ls
+          command: ls
       - run:
           name: Write google-services.json
-          command: echo $GOOGLE_SERVICES | base64 --decode --ignore-garbage > ~/code/$CIRCLE_PROJECT_REPONAME/app/google-services.json
+          command: echo $GOOGLE_SERVICES | base64 --decode --ignore-garbage > ~/code/app/google-services.json
       - run:
           name: Write google-services.json for Debug
-          command: echo $GOOGLE_SERVICES | base64 --decode --ignore-garbage > ~/code/$CIRCLE_PROJECT_REPONAME/app/src/debug/google-services.json
+          command: echo $GOOGLE_SERVICES | base64 --decode --ignore-garbage > ~/code/app/src/debug/google-services.json
       - run:
           name: Build apk
           command: ./gradlew assembleDebug
