@@ -19,11 +19,11 @@ jobs:
           name: Download Dependencies
           command: ./gradlew androidDependencies
       - run:
-          name: ls
-          command: ls
-      - run:
           name: Write google-services.json
           command: echo $GOOGLE_SERVICES | base64 --decode --ignore-garbage > ~/code/app/google-services.json
+      - run:
+          name: Make directory
+          command: mkdir -p ~/code/app/src/debug
       - run:
           name: Write google-services.json for Debug
           command: echo $GOOGLE_SERVICES | base64 --decode --ignore-garbage > ~/code/app/src/debug/google-services.json
