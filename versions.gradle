@@ -3,6 +3,7 @@ def versions = [:]
 versions.support = "27.0.2"
 versions.constraint_layout = "1.1.0-beta5"
 versions.espresso = "2.2.2"
+versions.arch = "1.1.0"
 versions.junit = "4.12"
 versions.dagger = "2.14.1"
 versions.retrofit = "2.2.0"
@@ -16,6 +17,9 @@ versions.firebase = "11.8.0"
 versions.dagger = "2.14.1"
 versions.kotpref = "2.2.0"
 versions.guava = "24.0"
+versions.databinding = "2.3.0"
+versions.rxlifecycle = "2.2.1"
+versions.rxbinding = "1.+"
 versions.kotlin = "1.2.30"
 versions.android_gradle_plugin = "3.0.1"
 def deps = [:]
@@ -31,6 +35,11 @@ deps.support = support
 def espresso = [:]
 espresso.core = "com.android.support.test.espresso:espresso-core:$versions.espresso"
 deps.espresso = espresso
+
+def arch = [:]
+arch.extensions = "android.arch.lifecycle:extensions:$versions.arch"
+arch.compiler = "android.arch.lifecycle:compiler:$versions.arch"
+deps.arch = arch
 
 def retrofit = [:]
 retrofit.core = "com.squareup.retrofit2:retrofit:$versions.retrofit"
@@ -61,6 +70,12 @@ guava.jre = "com.google.guava:guava:$versions.guava-jre"
 guava.android = "com.google.guava:guava:$versions.guave-android"
 deps.guava = guava
 
+def rxlifecycle = [:]
+rxlifecycle.core = "com.trello.rxlifecycle2:rxlifecycle:$versions.rxlifecycle"
+rxlifecycle.components = "com.trello.rxlifecycle2:rxlifecycle-components:$versions.rxlifecycle"
+rxlifecycle.kotlin = "com.trello.rxlifecycle2:rxlifecycle-kotlin:$versions.rxlifecycle"
+deps.rxlifecycle = rxlifecycle
+
 def kotlin = [:]
 kotlin.stdlib = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$versions.kotlin"
 kotlin.plugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$versions.kotlin"
@@ -77,6 +92,8 @@ deps.kotpref = "com.chibatching.kotpref:kotpref:$versions.kotpref"
 deps.fastadapter = "com.mikepenz:fastadapter:$versions.fastadapter"
 // これへの依存は取り除ける気がするので除く
 deps.material = "com.github.rey5137:material:$versions.material"
+deps.databinding = "com.android.databinding:compiler:$versions.databinding"
+deps.rxbinding = "com.ogaclejapan:rxbinding:$versions.rxbinding"
 
 ext.deps = deps
 

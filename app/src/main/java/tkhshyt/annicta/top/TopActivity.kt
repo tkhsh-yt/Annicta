@@ -6,19 +6,17 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.chibatching.kotpref.Kotpref
 import tkhshyt.annicta.BuildConfig
-import tkhshyt.annicta.MyApplication
 import tkhshyt.annicta.R
 import tkhshyt.annicta.RequestCode
-import tkhshyt.annicta.layout.message.MessageCreator
-import tkhshyt.annicta.page.Page
-import tkhshyt.annicta.page.go
+import tkhshyt.annicta.auth.AuthActivity
 import tkhshyt.annicta.pref.UserInfo
-import javax.inject.Inject
 
 class TopActivity : AppCompatActivity() {
 
-    @Inject
-    lateinit var message: MessageCreator
+    companion object {
+        const val CLIENT_ID = "client_id"
+        const val CLIENT_SECRET = "client_secret"
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,11 +24,8 @@ class TopActivity : AppCompatActivity() {
 
         Kotpref.init(this)
 
-        (this.application as? MyApplication)?.getComponent()?.inject(this)
-
         if (UserInfo.accessToken != null) {
-            go(Page.MAIN)
-            finish()
+            // finish()
         } else {
             launchAuthorizeActivity()
         }
@@ -38,11 +33,10 @@ class TopActivity : AppCompatActivity() {
 
     // 認証用アクティビティを起動する
     private fun launchAuthorizeActivity() {
-        val intent = Intent()
-        intent.putExtra("client_id", BuildConfig.CLIENT_ID)
-        intent.putExtra("client_secret", BuildConfig.CLIENT_SECRET)
-
-        go(Page.AUTH, { it.putExtras(intent) }, RequestCode.Auth)
+        val intent = Intent(this, AuthActivity::class.java)
+        intent.putExtra(CLIENT_ID, BuildConfig.CLIENT_ID)
+        intent.putExtra(CLIENT_SECRET, BuildConfig.CLIENT_SECRET)
+        startActivity(intent)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -51,18 +45,9 @@ class TopActivity : AppCompatActivity() {
         when (requestCode) {
             RequestCode.Auth -> { // 認証
                 if (resultCode == Activity.RESULT_OK) {
-                    UserInfo.accessToken = data?.getStringExtra("access_token")
-                    message.create()
-                        .context(this)
-                        .message(getString(R.string.success_to_authorize))
-                        .build().show()
-                    go(Page.MAIN)
+                    // Success
                     finish()
                 } else {
-                    message.create()
-                        .context(this)
-                        .message(getString(R.string.fail_to_authorize))
-                        .build().show()
                     launchAuthorizeActivity()
                 }
             }

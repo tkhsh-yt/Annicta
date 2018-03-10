@@ -8,10 +8,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_open_annict.*
-import org.greenrobot.eventbus.EventBus
 import tkhshyt.annict.AnnictService
 import tkhshyt.annicta.R
-import tkhshyt.annicta.event.OpenAnnictEvent
 
 class OpenAnnictFragment : Fragment() {
 
@@ -29,7 +27,6 @@ class OpenAnnictFragment : Fragment() {
 
         // 既に認証コードを持っている場合のボタンをクリックしたとき
         haveCodeButton.setOnClickListener {
-            EventBus.getDefault().post(OpenAnnictEvent())
         }
     }
 
@@ -44,8 +41,6 @@ class OpenAnnictFragment : Fragment() {
                 )
                 val intent = Intent(Intent.ACTION_VIEW, uri)
                 startActivity(intent)
-
-                EventBus.getDefault().post(OpenAnnictEvent())
             }
         }
     }

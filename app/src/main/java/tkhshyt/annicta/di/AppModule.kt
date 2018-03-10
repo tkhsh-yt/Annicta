@@ -1,41 +1,32 @@
-package tkhshyt.annicta
+package tkhshyt.annicta.di
 
+import android.app.Application
+import android.content.Context
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import tkhshyt.annict.AnnictService
-import tkhshyt.annicta.layout.message.MessageCreator
-import tkhshyt.annicta.layout.message.ToastMessageCreator
-import tkhshyt.annicta.pool.WorkPool
-import tkhshyt.annicta.pool.WorkPoolMap
 import javax.inject.Singleton
 
 @Module
-class ReleaseModule {
+class AppModule(val application: Application) {
+
+    @Singleton
+    @Provides
+    fun provideApplicationContext(): Context {
+        return application.applicationContext
+    }
 
     @Singleton
     @Provides
     fun provideAnnictService(): AnnictService {
-        val baseUrl = "https://api.annict.com"
         return Retrofit.Builder()
-            .baseUrl(baseUrl)
+            .baseUrl("https://api.annict.com")
             .addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .build()
             .create(AnnictService::class.java)
-    }
-
-    @Singleton
-    @Provides
-    fun provideMessageCreator(): MessageCreator {
-        return ToastMessageCreator()
-    }
-
-    @Singleton
-    @Provides
-    fun provideWorkPool(): WorkPool {
-        return WorkPoolMap()
     }
 }

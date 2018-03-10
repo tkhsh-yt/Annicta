@@ -53,10 +53,6 @@ android {
     }
 }
 
-kapt {
-    generateStubs = true
-}
-
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     androidTestImplementation(deps.espresso.core, {
@@ -70,8 +66,13 @@ dependencies {
 
     implementation deps.constraint_layout
 
+    implementation deps.arch.extensions
+    annotationProcessor deps.arch.compiler
+
     testImplementation deps.junit
     implementation deps.kotlin.stdlib
+
+    kapt deps.databinding
 
     // For Retrofit
     implementation deps.retrofit.core
@@ -81,6 +82,13 @@ dependencies {
     // Rx
     implementation deps.rxjava
     implementation deps.rxandroid
+
+    // Rxlifecycle
+    implementation deps.rxlifecycle.core
+    implementation deps.rxlifecycle.components
+    implementation deps.rxlifecycle.kotlin
+
+    implementation deps.rxbinding
 
     // For SharePreference
     implementation deps.kotpref

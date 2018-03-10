@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/tools">
 
     <data>
+        <import type="android.view.View" />
         <variable
             name="program"
             type="tkhshyt.annict.json.Program" />
@@ -34,6 +36,9 @@
                     android:id="@+id/workIcon"
                     style="@style/ImageIcon64dpStyle"
                     android:src="@drawable/ic_image_black_24dp"
+                    bind:centerCrop="true"
+                    bind:placeholderId="@drawable/ic_image_black_24dp"
+                    bind:imageUrl="@{program.work.images.recommended_url}"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/start_at" />
 
@@ -41,11 +46,11 @@
                     android:id="@+id/start_at"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginLeft="@dimen/space_8dp"
+                    android:layout_marginStart="@dimen/space_8dp"
+                    android:layout_marginTop="@dimen/space_8dp"
                     android:padding="3dp"
-                    android:text="@{AnnictUtil.prettyDate(program.started_at)}"
+                    android:text="@{program.started_at}"
                     android:textColor="#00b8a9"
                     android:textSize="16sp"
                     app:layout_constraintStart_toStartOf="parent"
@@ -60,7 +65,7 @@
                     android:layout_marginTop="8dp"
                     android:background="@drawable/shape_channel"
                     android:padding="3dp"
-                    android:text="@{program.channel}"
+                    android:text="@{program.channel.name}"
                     android:textColor="@android:color/white"
                     android:textSize="16sp"
                     app:layout_constraintStart_toEndOf="@+id/start_at"
@@ -78,7 +83,7 @@
                     android:text="@string/rebroadcast"
                     android:textColor="@android:color/white"
                     android:textSize="16sp"
-                    android:visibility="@{program._rebroadcast ? visible : gone}"
+                    android:visibility="@{program._rebroadcast ? View.VISIBLE : View.GONE}"
                     app:layout_constraintStart_toEndOf="@+id/channel"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -107,7 +112,7 @@
                     android:layout_marginEnd="8dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
-                    android:text="@{program.episode.title}"
+                    android:text="@{program.episode.number_text + ` ` + program.episode.title}"
                     android:textColor="@color/light_blue_800"
                     android:textSize="18sp"
                     app:layout_constraintBottom_toBottomOf="parent"
