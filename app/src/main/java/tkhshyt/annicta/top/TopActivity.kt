@@ -38,19 +38,4 @@ class TopActivity : AppCompatActivity() {
         intent.putExtra(CLIENT_SECRET, BuildConfig.CLIENT_SECRET)
         startActivity(intent)
     }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        when (requestCode) {
-            RequestCode.Auth -> { // 認証
-                if (resultCode == Activity.RESULT_OK) {
-                    // Success
-                    finish()
-                } else {
-                    launchAuthorizeActivity()
-                }
-            }
-        }
-    }
 }

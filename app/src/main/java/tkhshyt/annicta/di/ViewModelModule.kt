@@ -11,7 +11,7 @@ import tkhshyt.annicta.auth.AuthViewModel
 class ViewModelModule {
 
     @Provides
-    fun provideAuthViewModel(context: Context, authRepository: AuthRepository): AuthViewModel {
-        return AuthViewModel(context, authRepository)
+    fun provideAuthViewModel(application: Application, authRepository: AuthRepository): AuthViewModel {
+        return AuthViewModel(application, authRepository)
     }
 }

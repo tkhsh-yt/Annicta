@@ -1,17 +1,25 @@
 package tkhshyt.annicta.auth
 
+import android.app.Activity
+import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.graphics.Typeface
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_auth.*
-import tkhshyt.annicta.AnnictApplication
+import tkhshyt.annict.json.AccessToken
+import tkhshyt.annicta.BaseActivity
 import tkhshyt.annicta.R
 import tkhshyt.annicta.databinding.ActivityAuthBinding
 import tkhshyt.annicta.di.ViewModelModule
 import javax.inject.Inject
 
-class AuthActivity : AppCompatActivity() {
+class AuthActivity : BaseActivity(), AuthNavigator {
+
+    companion object {
+        const val ACCESS_TOKEN = "access_token"
+        const val FONT_PATH = "Offside-Regular.ttf"
+    }
 
     @Inject
     lateinit var viewModel: AuthViewModel
@@ -19,19 +27,49 @@ class AuthActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        (application as AnnictApplication).getInjector()
-            .viewModelComponent(ViewModelModule()).inject(this)
+        getInjector().viewModelComponent(ViewModelModule())
+            .inject(this)
 
-        val binding = DataBindingUtil.setContentView<ActivityAuthBinding>(this, R.layout.activity_auth)
-        binding.openAnnict.viewmodel = viewModel
-        binding.authorize.viewmodel = viewModel
-        binding.viewmodel = viewModel
+        val binding = DataBindingUtil
+            .setContentView<ActivityAuthBinding>(this, R.layout.activity_auth)
+        viewModel.authNavigator = this
+        binding.viewModel = viewModel
         binding.executePendingBindings()
 
         supportActionBar?.hide()
 
-        val typeface = Typeface.createFromAsset(assets, "Offside-Regular.ttf")
+        val typeface = Typeface.createFromAsset(assets, FONT_PATH)
         logoText.typeface = typeface
         appNameText.typeface = typeface
+    }
+
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        setIntent(intent)
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        val action = intent.action
+        if (Intent.ACTION_VIEW == action) {
+            val code = intent.data.getQueryParameter("code")
+            viewModel.authorize(code)
+        }
+    }
+
+    override fun onAuthorize(accessToken: AccessToken) {
+        val data = Intent()
+        data.putExtra(ACCESS_TOKEN, accessToken.access_token)
+        setResult(Activity.RESULT_OK, data)
+        finish()
+    }
+
+    override fun onFailToAuthorize() {
+        Toast.makeText(
+                this,
+                resources.getString(R.string.fail_to_authorize),
+                Toast.LENGTH_SHORT
+        ).show()
     }
 }

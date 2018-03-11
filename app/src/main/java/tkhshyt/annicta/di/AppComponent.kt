@@ -1,6 +1,5 @@
 package tkhshyt.annicta.di
 
-import android.app.Application
 import dagger.Component
 import javax.inject.Singleton
 
