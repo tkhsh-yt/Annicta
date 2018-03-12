@@ -12,6 +12,7 @@ import tkhshyt.annicta.BaseActivity
 import tkhshyt.annicta.R
 import tkhshyt.annicta.databinding.ActivityAuthBinding
 import tkhshyt.annicta.di.ViewModelModule
+import tkhshyt.annicta.util.setupToast
 import javax.inject.Inject
 
 class AuthActivity : BaseActivity(), AuthNavigator {
@@ -41,6 +42,10 @@ class AuthActivity : BaseActivity(), AuthNavigator {
         val typeface = Typeface.createFromAsset(assets, FONT_PATH)
         logoText.typeface = typeface
         appNameText.typeface = typeface
+
+        viewModel.let {
+            setupToast(this, it.toastMessage, Toast.LENGTH_SHORT)
+        }
     }
 
     override fun onNewIntent(intent: Intent?) {
@@ -63,13 +68,5 @@ class AuthActivity : BaseActivity(), AuthNavigator {
         data.putExtra(ACCESS_TOKEN, accessToken.access_token)
         setResult(Activity.RESULT_OK, data)
         finish()
-    }
-
-    override fun onFailToAuthorize() {
-        Toast.makeText(
-                this,
-                resources.getString(R.string.fail_to_authorize),
-                Toast.LENGTH_SHORT
-        ).show()
     }
 }
