@@ -93,8 +93,6 @@ dependencies {
     // For SharePreference
     implementation deps.kotpref
 
-    implementation deps.eventbus
-
     // For ImageView
     implementation deps.glide.core
     annotationProcessor deps.glide.annotation
