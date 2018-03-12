@@ -1,4 +1,4 @@
-package tkhshyt.annicta.auth
+package tkhshyt.annicta.data
 
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers

@@ -8,6 +8,7 @@ import android.net.Uri
 import tkhshyt.annicta.BuildConfig
 import tkhshyt.annicta.R
 import tkhshyt.annicta.SingleLiveEvent
+import tkhshyt.annicta.data.AuthRepository
 
 class AuthViewModel (
         context: Application,

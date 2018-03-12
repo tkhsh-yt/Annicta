@@ -5,6 +5,7 @@ import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.graphics.Typeface
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_auth.*
 import tkhshyt.annict.json.AccessToken
@@ -56,8 +57,8 @@ class AuthActivity : BaseActivity(), AuthNavigator {
     override fun onResume() {
         super.onResume()
 
-        val action = intent.action
-        if (Intent.ACTION_VIEW == action) {
+        val uri = intent.data
+        if (uri != null) {
             val code = intent.data.getQueryParameter("code")
             viewModel.authorize(code)
         }

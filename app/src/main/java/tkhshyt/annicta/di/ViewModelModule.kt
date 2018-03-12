@@ -3,8 +3,9 @@ package tkhshyt.annicta.di
 import android.app.Application
 import dagger.Module
 import dagger.Provides
-import tkhshyt.annicta.auth.AuthRepository
+import tkhshyt.annicta.data.AuthRepository
 import tkhshyt.annicta.auth.AuthViewModel
+import tkhshyt.annicta.data.UserInfoRepository
 import tkhshyt.annicta.top.TopViewModel
 
 @Module
@@ -16,7 +17,7 @@ class ViewModelModule {
     }
 
     @Provides
-    fun provideTopViewModel(application: Application): TopViewModel {
-        return TopViewModel(application)
+    fun provideTopViewModel(application: Application, userInfoRepository: UserInfoRepository): TopViewModel {
+        return TopViewModel(application, userInfoRepository)
     }
 }

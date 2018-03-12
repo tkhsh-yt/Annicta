@@ -2,14 +2,11 @@ package tkhshyt.annicta.top
 
 import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
-import android.content.Intent
-import android.databinding.ObservableBoolean
-import tkhshyt.annicta.BuildConfig
-import tkhshyt.annicta.auth.AuthActivity
-import tkhshyt.annicta.pref.UserInfo
+import tkhshyt.annicta.data.UserInfoRepository
 
 class TopViewModel(
-        context: Application
+        context: Application,
+        private val userInfoRepository: UserInfoRepository
 ) : AndroidViewModel(context) {
 
     companion object {
@@ -17,13 +14,23 @@ class TopViewModel(
         const val CLIENT_SECRET = "client_secret"
     }
 
-    val authorized = ObservableBoolean(UserInfo.accessToken != null)
+    lateinit var topActivityNavigator: TopActivityNavigator
+
+    fun onStart() {
+        if (userInfoRepository.isAuthorize()) {
+            launchMainActivity()
+        } else {
+            launchAuthActivity()
+        }
+    }
+
+    fun onAuthorized(accessToken: String) {
+        userInfoRepository.setAccessToken(accessToken)
+        launchMainActivity()
+    }
 
     fun launchAuthActivity() {
-        val intent = Intent(getApplication(), AuthActivity::class.java)
-        intent.putExtra(CLIENT_ID, BuildConfig.CLIENT_ID)
-        intent.putExtra(CLIENT_SECRET, BuildConfig.CLIENT_SECRET)
-        getApplication<Application>().startActivity(intent)
+        topActivityNavigator.launchAuthActivity()
     }
 
     fun launchMainActivity() {
