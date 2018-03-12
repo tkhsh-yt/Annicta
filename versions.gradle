@@ -10,12 +10,9 @@ versions.retrofit = "2.3.0"
 versions.rxjava = "2.1.6"
 versions.rxandroid = "2.0.2"
 versions.glide = "4.6.1"
-versions.fastadapter = "3.2.4@aar"
-versions.material = "1.2.4"
 versions.firebase = "11.8.0"
 versions.dagger = "2.14.1"
 versions.kotpref = "2.4.0"
-versions.guava = "24.0"
 versions.databinding = "2.3.0"
 versions.rxlifecycle = "2.2.1"
 versions.rxbinding = "1.+"
@@ -64,11 +61,6 @@ firebase.core = "com.google.firebase:firebase-core:$versions.firebase"
 firebase.messaging = "com.google.firebase:firebase-messaging:$versions.firebase"
 deps.firebase = firebase
 
-def guava = [:]
-guava.jre = "com.google.guava:guava:$versions.guava-jre"
-guava.android = "com.google.guava:guava:$versions.guave-android"
-deps.guava = guava
-
 def rxlifecycle = [:]
 rxlifecycle.core = "com.trello.rxlifecycle2:rxlifecycle:$versions.rxlifecycle"
 rxlifecycle.components = "com.trello.rxlifecycle2:rxlifecycle-components:$versions.rxlifecycle"
@@ -87,9 +79,6 @@ deps.junit = "junit:junit:$versions.junit"
 deps.rxjava = "io.reactivex.rxjava2:rxjava:$versions.rxjava"
 deps.rxandroid = "io.reactivex.rxjava2:rxandroid:$versions.rxandroid"
 deps.kotpref = "com.chibatching.kotpref:kotpref:$versions.kotpref"
-deps.fastadapter = "com.mikepenz:fastadapter:$versions.fastadapter"
-// これへの依存は取り除ける気がするので除く
-deps.material = "com.github.rey5137:material:$versions.material"
 deps.databinding = "com.android.databinding:compiler:$versions.databinding"
 deps.rxbinding = "com.ogaclejapan:rxbinding:$versions.rxbinding"
 

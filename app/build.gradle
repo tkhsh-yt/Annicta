@@ -97,11 +97,6 @@ dependencies {
     implementation deps.glide.core
     annotationProcessor deps.glide.annotation
 
-    // For Material UI
-    implementation deps.material
-
-    implementation deps.fastadapter
-
     // Firebase
     implementation deps.firebase.crash
     implementation deps.firebase.core
