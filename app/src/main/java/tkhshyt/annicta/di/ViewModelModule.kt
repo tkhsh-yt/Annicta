@@ -6,7 +6,9 @@ import dagger.Provides
 import tkhshyt.annicta.data.AuthRepository
 import tkhshyt.annicta.auth.AuthViewModel
 import tkhshyt.annicta.data.UserInfoRepository
+import tkhshyt.annicta.main.MainViewModel
 import tkhshyt.annicta.top.TopViewModel
+import javax.inject.Singleton
 
 @Module
 class ViewModelModule {
@@ -19,5 +21,10 @@ class ViewModelModule {
     @Provides
     fun provideTopViewModel(application: Application, userInfoRepository: UserInfoRepository): TopViewModel {
         return TopViewModel(application, userInfoRepository)
+    }
+
+    @Provides
+    fun provideMainViewModel(): MainViewModel {
+        return MainViewModel()
     }
 }

@@ -2,12 +2,15 @@ package tkhshyt.annicta.top
 
 import android.app.Activity
 import android.content.Intent
+import android.databinding.DataBindingUtil
 import android.os.Bundle
+import android.util.Log
 import tkhshyt.annicta.BaseActivity
 import tkhshyt.annicta.BuildConfig
 import tkhshyt.annicta.R
 import tkhshyt.annicta.auth.AuthActivity
 import tkhshyt.annicta.di.ViewModelModule
+import tkhshyt.annicta.main.MainActivity
 import javax.inject.Inject
 
 class TopActivity : BaseActivity(), TopActivityNavigator {
@@ -48,5 +51,11 @@ class TopActivity : BaseActivity(), TopActivityNavigator {
         intent.putExtra(TopViewModel.CLIENT_ID, BuildConfig.CLIENT_ID)
         intent.putExtra(TopViewModel.CLIENT_SECRET, BuildConfig.CLIENT_SECRET)
         startActivityForResult(intent, REQUEST_AUTH)
+    }
+
+    override fun launchMainActivity() {
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 }

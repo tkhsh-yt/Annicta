@@ -14,12 +14,13 @@
         android:theme="@style/AppTheme"
         android:name=".AnnictApplication">
         <activity
-            android:name="tkhshyt.annicta.top.TopActivity" >
+            android:name="tkhshyt.annicta.top.TopActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".main.MainActivity" />
         <activity
             android:name=".auth.AuthActivity"
             android:launchMode="singleTop" >

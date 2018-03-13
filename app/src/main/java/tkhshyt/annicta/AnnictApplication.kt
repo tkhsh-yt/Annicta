@@ -1,6 +1,8 @@
 package tkhshyt.annicta
 
 import android.app.Application
+import dagger.android.AndroidInjector
+import dagger.android.support.DaggerApplication
 import tkhshyt.annicta.di.AppComponent
 import tkhshyt.annicta.di.AppModule
 import tkhshyt.annicta.di.DaggerAppComponent

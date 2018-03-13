@@ -4,10 +4,12 @@ import android.app.Application
 import android.content.Context
 import dagger.Module
 import dagger.Provides
+import dagger.android.ContributesAndroidInjector
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import tkhshyt.annict.AnnictService
+import tkhshyt.annicta.auth.AuthViewModel
 import javax.inject.Singleton
 
 @Module
