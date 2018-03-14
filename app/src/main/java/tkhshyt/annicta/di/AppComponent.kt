@@ -6,16 +6,17 @@ import dagger.Component
 import dagger.android.AndroidInjector
 import dagger.android.support.AndroidSupportInjectionModule
 import tkhshyt.annicta.AnnictApplication
+import tkhshyt.annicta.di.module.ActivityModule
 import tkhshyt.annicta.di.module.AppModule
 import tkhshyt.annicta.di.module.AuthModule
+import tkhshyt.annicta.di.module.TopModule
 import javax.inject.Singleton
 
 @Singleton
 @Component(modules = [
     AppModule::class,
     AndroidSupportInjectionModule::class,
-    UiModule::class,
-    AuthModule::class
+    UiModule::class
 ])
 interface AppComponent : AndroidInjector<AnnictApplication> {
 

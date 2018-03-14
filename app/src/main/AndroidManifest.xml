@@ -30,6 +30,7 @@
                 <data android:scheme="annicta" android:host="callback" />
             </intent-filter>
         </activity>
+        <activity android:name=".main.MainActivity" />
     </application>
 
 </manifest>

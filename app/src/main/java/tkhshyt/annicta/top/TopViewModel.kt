@@ -1,15 +1,17 @@
 package tkhshyt.annicta.top
 
 import android.app.Application
+import android.arch.lifecycle.AndroidViewModel
 import android.content.Intent
+import android.support.annotation.UiThread
 import android.util.Log
 import tkhshyt.annicta.data.UserInfoRepository
 import javax.inject.Inject
 
-class TopViewModel constructor(
-        val context: Application,
+class TopViewModel @Inject constructor(
+        context: Application,
         private val userInfoRepository: UserInfoRepository
-) {
+) : AndroidViewModel(context) {
 
     companion object {
         const val CLIENT_ID = "client_id"
@@ -18,6 +20,7 @@ class TopViewModel constructor(
 
     lateinit var topActivityNavigator: TopActivityNavigator
 
+    @UiThread
     fun onStart() {
         if (userInfoRepository.isAuthorize()) {
             launchMainActivity()

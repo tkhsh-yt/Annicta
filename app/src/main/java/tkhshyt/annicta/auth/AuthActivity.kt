@@ -8,6 +8,7 @@ import android.databinding.DataBindingUtil
 import android.graphics.Typeface
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.widget.Toast
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_auth.*

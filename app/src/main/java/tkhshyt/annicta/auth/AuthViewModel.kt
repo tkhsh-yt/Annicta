@@ -6,6 +6,7 @@ import android.arch.lifecycle.MutableLiveData
 import android.content.Intent
 import android.databinding.ObservableBoolean
 import android.net.Uri
+import android.util.Log
 import tkhshyt.annicta.BuildConfig
 import tkhshyt.annicta.R
 import tkhshyt.annicta.SingleLiveEvent
@@ -23,17 +24,17 @@ class AuthViewModel @Inject constructor(
     val authorizing = MutableLiveData<Boolean>()
 
     init {
-        authorizing.value = false
+        authorizing.postValue(false)
     }
 
     fun authorize(code: String) {
-        authorizing.value = true
+        authorizing.postValue(true)
         authRepository.authorize(
                 clientId = BuildConfig.CLIENT_ID,
                 clientSecret= BuildConfig.CLIENT_SECRET,
                 code = code
         ).doFinally {
-            authorizing.value = false
+            authorizing.postValue(false)
         }.subscribe({
             val accessToken = it.body()
             if (accessToken != null) {
