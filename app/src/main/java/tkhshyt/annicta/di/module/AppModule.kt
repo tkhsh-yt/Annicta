@@ -1,31 +1,17 @@
-package tkhshyt.annicta.di
+package tkhshyt.annicta.di.module
 
 import android.app.Application
 import android.content.Context
 import dagger.Module
 import dagger.Provides
-import dagger.android.ContributesAndroidInjector
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import tkhshyt.annict.AnnictService
-import tkhshyt.annicta.auth.AuthViewModel
 import javax.inject.Singleton
 
 @Module
-class AppModule(val application: Application) {
-
-    @Singleton
-    @Provides
-    fun provideApplication(): Application {
-        return application
-    }
-
-    @Singleton
-    @Provides
-    fun provideApplicationContext(): Context {
-        return application.applicationContext
-    }
+class AppModule {
 
     @Singleton
     @Provides

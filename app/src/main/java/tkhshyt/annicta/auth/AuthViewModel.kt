@@ -2,6 +2,7 @@ package tkhshyt.annicta.auth
 
 import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
+import android.arch.lifecycle.MutableLiveData
 import android.content.Intent
 import android.databinding.ObservableBoolean
 import android.net.Uri
@@ -9,8 +10,9 @@ import tkhshyt.annicta.BuildConfig
 import tkhshyt.annicta.R
 import tkhshyt.annicta.SingleLiveEvent
 import tkhshyt.annicta.data.AuthRepository
+import javax.inject.Inject
 
-class AuthViewModel (
+class AuthViewModel @Inject constructor(
         context: Application,
         private val authRepository: AuthRepository
 ) : AndroidViewModel(context) {
@@ -18,16 +20,20 @@ class AuthViewModel (
     lateinit var authNavigator: AuthNavigator
 
     val toastMessage = SingleLiveEvent<Int>()
-    val authorizing = ObservableBoolean(false)
+    val authorizing = MutableLiveData<Boolean>()
+
+    init {
+        authorizing.value = false
+    }
 
     fun authorize(code: String) {
-        authorizing.set(true)
+        authorizing.value = true
         authRepository.authorize(
                 clientId = BuildConfig.CLIENT_ID,
                 clientSecret= BuildConfig.CLIENT_SECRET,
                 code = code
         ).doFinally {
-            authorizing.set(false)
+            authorizing.value = false
         }.subscribe({
             val accessToken = it.body()
             if (accessToken != null) {

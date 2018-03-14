@@ -6,9 +6,9 @@
     <data>
         <import type="android.view.View" />
 
-        <variable
-            name="viewModel"
-            type="tkhshyt.annicta.main.MainViewModel" />
+        <!--<variable-->
+            <!--name="viewModel"-->
+            <!--type="tkhshyt.annicta.main.MainViewModel" />-->
     </data>
 
     <android.support.design.widget.CoordinatorLayout
@@ -26,21 +26,21 @@
                 android:layout_height="?attr/actionBarSize"
                 app:layout_scrollFlags="scroll|enterAlways">
 
-                <TextView
-                    android:id="@+id/toolbarTitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@={viewModel.title}"
-                    android:textColor="@android:color/white"
-                    android:textSize="21sp"
-                    android:visibility="@{viewModel.seasonTab ? View.GONE : View.VISIBLE}"/>
+                <!--<TextView-->
+                    <!--android:id="@+id/toolbarTitle"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:text="@={viewModel.title}"-->
+                    <!--android:textColor="@android:color/white"-->
+                    <!--android:textSize="21sp"-->
+                    <!--android:visibility="@{viewModel.seasonTab ? View.GONE : View.VISIBLE}"/>-->
 
-                <tkhshyt.annicta.layout.spinner.NoDefaultSpinner
-                    android:id="@+id/toolbarSpinner"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/season_spinner_background"
-                    android:visibility="@{viewModel.seasonTab ? View.VISIBLE : View.GONE}" />
+                <!--<tkhshyt.annicta.layout.spinner.NoDefaultSpinner-->
+                    <!--android:id="@+id/toolbarSpinner"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="match_parent"-->
+                    <!--android:background="@drawable/season_spinner_background"-->
+                    <!--android:visibility="@{viewModel.seasonTab ? View.VISIBLE : View.GONE}" />-->
 
             </android.support.v7.widget.Toolbar>
 

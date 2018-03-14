@@ -1,21 +1,23 @@
 package tkhshyt.annicta.auth
 
 import android.app.Activity
+import android.arch.lifecycle.ViewModelProvider
+import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.graphics.Typeface
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
+import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_auth.*
 import tkhshyt.annict.json.AccessToken
-import tkhshyt.annicta.BaseActivity
 import tkhshyt.annicta.R
 import tkhshyt.annicta.databinding.ActivityAuthBinding
-import tkhshyt.annicta.di.ViewModelModule
 import tkhshyt.annicta.util.setupToast
 import javax.inject.Inject
 
-class AuthActivity : BaseActivity(), AuthNavigator {
+class AuthActivity : AppCompatActivity(), AuthNavigator {
 
     companion object {
         const val ACCESS_TOKEN = "access_token"
@@ -23,19 +25,19 @@ class AuthActivity : BaseActivity(), AuthNavigator {
     }
 
     @Inject
-    lateinit var viewModel: AuthViewModel
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+
+    private val viewModel: AuthViewModel by lazy { ViewModelProviders.of(this, viewModelFactory).get(AuthViewModel::class.java) }
+    private val binding by lazy { DataBindingUtil.setContentView<ActivityAuthBinding>(this, R.layout.activity_auth) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        getInjector().viewModelComponent(ViewModelModule())
-            .inject(this)
+        AndroidInjection.inject(this)
 
-        val binding = DataBindingUtil
-            .setContentView<ActivityAuthBinding>(this, R.layout.activity_auth)
         viewModel.authNavigator = this
         binding.viewModel = viewModel
-        binding.executePendingBindings()
+        binding.setLifecycleOwner(this)
 
         supportActionBar?.hide()
 

@@ -4,7 +4,6 @@ import android.app.Application
 import android.content.Intent
 import android.util.Log
 import tkhshyt.annicta.data.UserInfoRepository
-import tkhshyt.annicta.main.MainActivity
 import javax.inject.Inject
 
 class TopViewModel constructor(

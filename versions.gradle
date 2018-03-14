@@ -13,11 +13,9 @@ versions.glide = "4.6.1"
 versions.firebase = "11.8.0"
 versions.dagger = "2.14.1"
 versions.kotpref = "2.4.0"
-versions.databinding = "2.3.0"
-versions.rxlifecycle = "2.2.1"
 versions.rxbinding = "1.+"
 versions.kotlin = "1.2.30"
-versions.android_gradle_plugin = "3.0.1"
+versions.android_gradle_plugin = "3.2.0-alpha06"
 def deps = [:]
 
 def support = [:]
@@ -33,7 +31,9 @@ espresso.core = "com.android.support.test.espresso:espresso-core:$versions.espre
 deps.espresso = espresso
 
 def arch = [:]
+arch.runtime = "android.arch.lifecycle:runtime:$versions.arch"
 arch.extensions = "android.arch.lifecycle:extensions:$versions.arch"
+arch.reactivestreams = "android.arch.lifecycle:reactivestreams:$versions.arch"
 arch.compiler = "android.arch.lifecycle:compiler:$versions.arch"
 deps.arch = arch
 
@@ -61,12 +61,6 @@ firebase.core = "com.google.firebase:firebase-core:$versions.firebase"
 firebase.messaging = "com.google.firebase:firebase-messaging:$versions.firebase"
 deps.firebase = firebase
 
-def rxlifecycle = [:]
-rxlifecycle.core = "com.trello.rxlifecycle2:rxlifecycle:$versions.rxlifecycle"
-rxlifecycle.components = "com.trello.rxlifecycle2:rxlifecycle-components:$versions.rxlifecycle"
-rxlifecycle.kotlin = "com.trello.rxlifecycle2:rxlifecycle-kotlin:$versions.rxlifecycle"
-deps.rxlifecycle = rxlifecycle
-
 def kotlin = [:]
 kotlin.stdlib = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$versions.kotlin"
 kotlin.plugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$versions.kotlin"
@@ -79,7 +73,6 @@ deps.junit = "junit:junit:$versions.junit"
 deps.rxjava = "io.reactivex.rxjava2:rxjava:$versions.rxjava"
 deps.rxandroid = "io.reactivex.rxjava2:rxandroid:$versions.rxandroid"
 deps.kotpref = "com.chibatching.kotpref:kotpref:$versions.kotpref"
-deps.databinding = "com.android.databinding:compiler:$versions.databinding"
 deps.rxbinding = "com.ogaclejapan:rxbinding:$versions.rxbinding"
 
 ext.deps = deps
