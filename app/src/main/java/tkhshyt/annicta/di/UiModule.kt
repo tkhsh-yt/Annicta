@@ -6,7 +6,9 @@ import dagger.Module
 import dagger.android.ContributesAndroidInjector
 import tkhshyt.annicta.auth.AuthActivity
 import tkhshyt.annicta.di.module.AuthModule
+import tkhshyt.annicta.di.module.MainModule
 import tkhshyt.annicta.di.module.TopModule
+import tkhshyt.annicta.main.MainActivity
 import tkhshyt.annicta.top.TopActivity
 
 @Module
@@ -20,4 +22,7 @@ internal abstract class UiModule {
 
     @ContributesAndroidInjector(modules = [TopModule::class])
     internal abstract fun contributeTopActivity(): TopActivity
+
+    @ContributesAndroidInjector(modules = [MainModule::class])
+    internal abstract fun contributeMainActivity(): MainActivity
 }

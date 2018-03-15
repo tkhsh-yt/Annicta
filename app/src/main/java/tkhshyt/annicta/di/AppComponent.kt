@@ -6,10 +6,7 @@ import dagger.Component
 import dagger.android.AndroidInjector
 import dagger.android.support.AndroidSupportInjectionModule
 import tkhshyt.annicta.AnnictApplication
-import tkhshyt.annicta.di.module.ActivityModule
-import tkhshyt.annicta.di.module.AppModule
-import tkhshyt.annicta.di.module.AuthModule
-import tkhshyt.annicta.di.module.TopModule
+import tkhshyt.annicta.di.module.*
 import javax.inject.Singleton
 
 @Singleton
