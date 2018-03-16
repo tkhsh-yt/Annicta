@@ -4,14 +4,14 @@ import android.arch.lifecycle.ViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
-import tkhshyt.annicta.auth.AuthViewModel
 import tkhshyt.annicta.di.ViewModelKey
+import tkhshyt.annicta.main.programs.ProgramsViewModel
 
 @Module
-interface AuthModule {
+interface ProgramsModule {
 
     @Binds
     @IntoMap
-    @ViewModelKey(AuthViewModel::class)
-    fun bindViewModel(viewModel: AuthViewModel): ViewModel
+    @ViewModelKey(ProgramsViewModel::class)
+    fun bindViewModel(viewModel: ProgramsViewModel): ViewModel
 }

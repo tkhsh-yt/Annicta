@@ -63,6 +63,12 @@
     <string name="activity">アクティビティ</string>
     <string name="status">視聴状況</string>
 
+    <string-array name="tab">
+        <item>放送予定</item>
+        <item>シーズン</item>
+        <item>アクティビティ</item>
+    </string-array>
+
     <string-array name="rating_array">
         <item>未選択</item>
         <item>良くない</item>
