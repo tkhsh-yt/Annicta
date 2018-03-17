@@ -5,11 +5,10 @@ import dagger.Binds
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 import tkhshyt.annicta.auth.AuthActivity
-import tkhshyt.annicta.di.module.AuthModule
-import tkhshyt.annicta.di.module.MainModule
-import tkhshyt.annicta.di.module.ProgramsModule
-import tkhshyt.annicta.di.module.TopModule
+import tkhshyt.annicta.di.module.*
 import tkhshyt.annicta.main.MainActivity
+import tkhshyt.annicta.main.programs.ProgramAdapter
+import tkhshyt.annicta.main.programs.ProgramItemViewModel
 import tkhshyt.annicta.main.programs.ProgramsFragment
 import tkhshyt.annicta.top.TopActivity
 
@@ -30,5 +29,4 @@ internal abstract class UiModule {
 
     @ContributesAndroidInjector(modules = [ProgramsModule::class])
     internal abstract fun contributeProgramsFragment(): ProgramsFragment
-
 }

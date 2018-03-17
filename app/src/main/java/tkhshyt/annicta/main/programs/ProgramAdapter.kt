@@ -28,13 +28,16 @@ class ProgramAdapter : RecyclerView.Adapter<ProgramAdapter.ViewHolder>() {
 
     override fun onBindViewHolder(holder: ViewHolder?, position: Int) {
         val program = programs[position]
-        holder?.bind(program)
+        // 直接 new するのは避けたい
+        val viewModel = ProgramItemViewModel()
+        viewModel.program = program
+        holder?.bind(viewModel)
     }
 
     class ViewHolder(val binding: ItemProgramBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(program: Program) {
-            binding.program = program
+        fun bind(viewModel: ProgramItemViewModel) {
+            binding.viewModel = viewModel
             binding.executePendingBindings()
         }
     }
