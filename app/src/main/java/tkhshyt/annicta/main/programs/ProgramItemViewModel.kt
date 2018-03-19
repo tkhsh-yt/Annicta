@@ -1,16 +1,15 @@
 package tkhshyt.annicta.main.programs
 
-import android.app.Application
 import android.arch.lifecycle.ViewModel
-import android.content.Context
 import tkhshyt.annict.json.Program
-import javax.inject.Inject
 
-class ProgramItemViewModel (
-): ViewModel() {
+class ProgramItemViewModel : ViewModel() {
+
+    lateinit var navigator: ProgramItemNavigator
 
     lateinit var program: Program
 
     fun onClick() {
+        navigator.onItemClick(program)
     }
 }

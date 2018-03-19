@@ -2,6 +2,7 @@ package tkhshyt.annicta.main.programs
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProvider
+import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -15,9 +16,10 @@ import tkhshyt.annicta.R
 import tkhshyt.annicta.databinding.FragmentProgramsBinding
 import tkhshyt.annicta.di.Injectable
 import tkhshyt.annicta.layout.recycler.EndlessScrollListener
+import tkhshyt.annicta.record.RecordActivity
 import javax.inject.Inject
 
-class ProgramsFragment : Fragment(), Injectable {
+class ProgramsFragment : Fragment(), Injectable, ProgramItemNavigator {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -30,6 +32,8 @@ class ProgramsFragment : Fragment(), Injectable {
     private lateinit var adapter: ProgramAdapter
 
     companion object {
+        const val PROGRAM = "program"
+
         fun newInstance() = ProgramsFragment()
     }
 
@@ -67,7 +71,7 @@ class ProgramsFragment : Fragment(), Injectable {
         val llm = LinearLayoutManager(context)
         recyclerView.layoutManager = llm
 
-        adapter = ProgramAdapter()
+        adapter = ProgramAdapter(this)
         recyclerView.adapter = adapter
 
         recyclerView.addOnScrollListener(object : EndlessScrollListener(llm) {
@@ -75,5 +79,11 @@ class ProgramsFragment : Fragment(), Injectable {
                 viewModel.loadMore()
             }
         })
+    }
+
+    override fun onItemClick(program: Program) {
+        val intent = Intent(context, RecordActivity::class.java)
+        intent.putExtra(PROGRAM, program)
+        startActivity(intent)
     }
 }

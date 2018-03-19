@@ -8,7 +8,7 @@ import tkhshyt.annict.json.Program
 import tkhshyt.annicta.R
 import tkhshyt.annicta.databinding.ItemProgramBinding
 
-class ProgramAdapter : RecyclerView.Adapter<ProgramAdapter.ViewHolder>() {
+class ProgramAdapter(val navigator: ProgramItemNavigator) : RecyclerView.Adapter<ProgramAdapter.ViewHolder>() {
 
     var programs = listOf<Program>()
         set(value) {
@@ -31,6 +31,7 @@ class ProgramAdapter : RecyclerView.Adapter<ProgramAdapter.ViewHolder>() {
         // 直接 new するのは避けたい
         val viewModel = ProgramItemViewModel()
         viewModel.program = program
+        viewModel.navigator = navigator
         holder?.bind(viewModel)
     }
 
