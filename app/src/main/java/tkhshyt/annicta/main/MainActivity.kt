@@ -36,7 +36,6 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector, TabLayout.
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
 
         AndroidInjection.inject(this)
 

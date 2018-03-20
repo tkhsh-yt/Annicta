@@ -10,6 +10,7 @@ import tkhshyt.annicta.main.MainActivity
 import tkhshyt.annicta.main.programs.ProgramAdapter
 import tkhshyt.annicta.main.programs.ProgramItemViewModel
 import tkhshyt.annicta.main.programs.ProgramsFragment
+import tkhshyt.annicta.record.RecordActivity
 import tkhshyt.annicta.top.TopActivity
 
 @Module
@@ -29,4 +30,7 @@ internal abstract class UiModule {
 
     @ContributesAndroidInjector(modules = [ProgramsModule::class])
     internal abstract fun contributeProgramsFragment(): ProgramsFragment
+
+    @ContributesAndroidInjector(modules = [RecordModule::class])
+    internal abstract fun contributeRecordActivity(): RecordActivity
 }

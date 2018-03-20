@@ -1,219 +1,157 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    xmlns:bind="http://schemas.android.com/tools">
 
-    <android.support.design.widget.AppBarLayout
-        android:id="@+id/appBar"
+    <data>
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="tkhshyt.annicta.record.RecordViewModel" />
+    </data>
+
+    <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#fafafa"
-        android:fitsSystemWindows="true"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+        android:layout_height="match_parent">
 
-        <android.support.design.widget.CollapsingToolbarLayout
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/appBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/grey_50"
+            android:fitsSystemWindows="true"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+            <android.support.design.widget.CollapsingToolbarLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:contentScrim="?attr/colorPrimary"
+                app:expandedTitleTextAppearance="@android:color/transparent"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed"
+                app:titleEnabled="false">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/grey_50"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/workIcon"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:adjustViewBounds="true"
+                        android:transitionName="work_icon"
+                        bind:placeholderId="@drawable/ic_account_circle"
+                        bind:centerCrop="true"
+                        bind:imageUrl="@{viewModel.program.work.images.recommended_url}"
+                        app:layout_collapseMode="parallax"
+                        tools:ignore="ContentDescription"
+                        tools:targetApi="lollipop" />
+
+                    <android.support.v7.widget.CardView
+                        style="@style/CardViewStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:focusable="true">
+
+                        <android.support.constraint.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/episodeTitle"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/space_8dp"
+                                android:layout_marginTop="@dimen/space_8dp"
+                                android:layout_marginEnd="@dimen/space_8dp"
+                                android:text="@{viewModel.program.episode.number_text + ` ` + (viewModel.program.episode.title ?? ``)}"
+                                android:textColor="@color/grey"
+                                android:textSize="21sp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <android.support.v7.widget.AppCompatButton
+                                android:id="@+id/prevEpisodeButton"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/space_8dp"
+                                android:background="@null"
+                                android:padding="8dp"
+                                android:text="@{viewModel.prevEpisode.number_text}"
+                                android:textColor="@color/blue_800"
+                                android:textSize="16sp"
+                                android:visibility="@{viewModel.prevEpisode == null ? View.GONE : View.VISIBLE}"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/episodeTitle" />
+
+                            <android.support.v7.widget.AppCompatButton
+                                android:id="@+id/nextEpisodeButton"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:background="@null"
+                                android:padding="8dp"
+                                android:text="@{viewModel.nextEpisode.number_text}"
+                                android:textColor="@color/blue_800"
+                                android:textSize="16sp"
+                                android:visibility="@{viewModel.nextEpisode == null ? View.GONE : View.VISIBLE}"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/episodeTitle" />
+
+                        </android.support.constraint.ConstraintLayout>
+                    </android.support.v7.widget.CardView>
+                </LinearLayout>
+
+                <android.support.v7.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    app:layout_collapseMode="pin">
+
+                    <ImageButton
+                        android:id="@+id/toolbarIcon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="3dp"
+                        android:onClick="@{_ -> viewModel.onClickBackArrow()}"
+                        android:src="@drawable/ic_action_arrow_left" />
+
+                    <TextView
+                        android:id="@+id/toolbarTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="@dimen/space_8dp"
+                        android:paddingLeft="@dimen/space_8dp"
+                        android:text="@{viewModel.program.work.title}"
+                        android:textColor="@android:color/white"
+                        android:textSize="18sp"
+                        android:visibility="@{viewModel.titleVisibility ? View.VISIBLE : View.GONE}"
+                        tools:ignore="RtlSymmetry" />
+
+                </android.support.v7.widget.Toolbar>
+
+            </android.support.design.widget.CollapsingToolbarLayout>
+        </android.support.design.widget.AppBarLayout>
+
+        <LinearLayout
+            android:id="@+id/container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:contentScrim="?attr/colorPrimary"
-            app:expandedTitleTextAppearance="@android:color/transparent"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed"
-            app:titleEnabled="false">
+            android:orientation="vertical"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/grey_50"
-                android:orientation="vertical">
+        <include
+            layout="@layout/edit_record"
+            bind:viewModel="@{viewModel}" />
 
-                <ImageView
-                    android:id="@+id/workIcon"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:adjustViewBounds="true"
-                    android:transitionName="work_icon"
-                    app:layout_collapseMode="parallax"
-                    tools:targetApi="lollipop"
-                    tools:ignore="ContentDescription" />
+    </android.support.design.widget.CoordinatorLayout>
 
-                <android.support.v7.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:focusable="true"
-                    style="@style/CardViewStyle">
-
-                    <android.support.constraint.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            android:id="@+id/episodeTitle"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="@dimen/space_8dp"
-                            android:layout_marginStart="@dimen/space_8dp"
-                            android:layout_marginTop="@dimen/space_8dp"
-                            android:text="@string/episode"
-                            android:textColor="@color/grey"
-                            android:textSize="21sp"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <android.support.v7.widget.AppCompatButton
-                            android:id="@+id/prevEpisodeButton"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/space_8dp"
-                            android:background="@null"
-                            android:padding="8dp"
-                            android:text="@string/prev_episode"
-                            android:textColor="@color/blue_800"
-                            android:textSize="16sp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/episodeTitle" />
-
-                        <android.support.v7.widget.AppCompatButton
-                            android:id="@+id/nextEpisodeButton"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:background="@null"
-                            android:padding="8dp"
-                            android:text="@string/next_episode"
-                            android:textColor="@color/blue_800"
-                            android:textSize="16sp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/episodeTitle" />
-
-                    </android.support.constraint.ConstraintLayout>
-                </android.support.v7.widget.CardView>
-            </LinearLayout>
-
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                app:layout_collapseMode="pin">
-
-                <ImageButton
-                    android:id="@+id/toolbarIcon"
-                    android:src="@drawable/ic_action_arrow_left"
-                    android:background="@drawable/circle_grey_ripple"
-                    android:padding="3dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-                <TextView
-                    android:id="@+id/toolbarTitle"
-                    android:text="@string/title"
-                    android:textColor="@android:color/white"
-                    android:visibility="gone"
-                    android:textSize="18sp"
-                    android:paddingLeft="@dimen/space_8dp"
-                    android:paddingStart="@dimen/space_8dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    tools:ignore="RtlSymmetry" />
-
-            </android.support.v7.widget.Toolbar>
-
-        </android.support.design.widget.CollapsingToolbarLayout>
-    </android.support.design.widget.AppBarLayout>
-
-    <LinearLayout
-        android:id="@+id/container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
-
-    <android.support.constraint.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:background="@color/grey_100">
-
-        <View
-            android:id="@+id/separator"
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:background="@android:color/darker_gray"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <android.support.v7.widget.AppCompatEditText
-            android:id="@+id/commentEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/space_8dp"
-            android:layout_marginStart="@dimen/space_8dp"
-            android:hint="@string/suggest_recording"
-            android:maxLines="3"
-            android:textColorHint="#61000000"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/separator"
-            app:theme="@style/EditTextStyle" />
-
-        <android.support.constraint.ConstraintLayout
-            android:id="@+id/recordCommentArea"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginStart="8dp"
-            android:visibility="visible"
-            app:layout_constraintTop_toBottomOf="@id/commentEditText">
-
-            <Spinner
-                android:id="@+id/ratingSpinner"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginBottom="4dp"
-                android:layout_marginEnd="@dimen/space_8dp"
-                android:layout_marginRight="@dimen/space_8dp"
-                android:gravity="center_vertical"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/facebookToggleButton"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <Button
-                android:id="@+id/recordButton"
-                style="?android:attr/borderlessButtonStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/space_4dp"
-                android:layout_marginEnd="@dimen/space_8dp"
-                android:layout_marginRight="@dimen/space_8dp"
-                android:background="@drawable/primary_button"
-                android:text="@string/record"
-                android:textColor="@android:color/white"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <ToggleButton
-                android:id="@+id/twitterToggleButton"
-                android:background="@drawable/toggle_twitter_selector"
-                style="@style/ImageToggleStyle"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/recordButton"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <ToggleButton
-                android:id="@+id/facebookToggleButton"
-                android:background="@drawable/toggle_facebook_selector"
-                style="@style/ImageToggleStyle"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/twitterToggleButton"
-                app:layout_constraintTop_toTopOf="parent" />
-
-        </android.support.constraint.ConstraintLayout>
-    </android.support.constraint.ConstraintLayout>
-</android.support.design.widget.CoordinatorLayout>
-
+</layout>

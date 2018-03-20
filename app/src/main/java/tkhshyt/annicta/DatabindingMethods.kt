@@ -5,6 +5,7 @@ import android.support.v4.content.res.ResourcesCompat
 import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import tkhshyt.annicta.util.AnnictUtil
 import java.util.*
@@ -24,6 +25,7 @@ object DatabindingMethods {
         if(imageUrl.isNotEmpty()) {
             val options = RequestOptions()
                 .placeholder(placeholderId)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
             val request = Glide.with(imageView.context).load(imageUrl)
             if (centerCrop) {
                 request.apply(options.centerCrop()).into(imageView)
