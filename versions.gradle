@@ -15,7 +15,7 @@ versions.dagger = "2.14.1"
 versions.kotpref = "2.4.0"
 versions.rxbinding = "1.+"
 versions.kotlin = "1.2.30"
-versions.android_gradle_plugin = "3.2.0-alpha06"
+versions.android_gradle_plugin = "3.2.0-alpha07"
 def deps = [:]
 
 def support = [:]
