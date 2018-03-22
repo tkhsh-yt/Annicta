@@ -7,6 +7,7 @@ import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
+import com.squareup.picasso.Picasso
 import tkhshyt.annicta.util.AnnictUtil
 import java.util.*
 
@@ -19,19 +20,26 @@ object DatabindingMethods {
     }
 
     @JvmStatic
-    @BindingAdapter(value = ["bind:imageUrl", "bind:placeholderId", "bind:centerCrop"], requireAll = false)
-    fun setImageUrl(imageView: ImageView, imageUrl: String, placeholderId: Int, centerCrop: Boolean) {
-        imageView.setImageDrawable(ResourcesCompat.getDrawable(imageView.context.resources, R.drawable.ic_image_black_24dp, null))
+    @BindingAdapter(value = ["bind:imageUrl", "bind:placeholderId", "bind:centerCrop", "bind:circleCrop"], requireAll = false)
+    fun setImageUrl(imageView: ImageView, imageUrl: String, placeholderId: Int, centerCrop: Boolean?, circleCrop: Boolean?) {
         if(imageUrl.isNotEmpty()) {
-            val options = RequestOptions()
+
+            var options = RequestOptions()
                 .placeholder(placeholderId)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
-            val request = Glide.with(imageView.context).load(imageUrl)
-            if (centerCrop) {
-                request.apply(options.centerCrop()).into(imageView)
-            } else {
-                request.apply(options).into(imageView)
+
+            if(centerCrop == true) {
+                options = options.centerCrop()
             }
+
+            if(circleCrop == true) {
+                options = options.circleCrop()
+            }
+
+            Glide.with(imageView.context)
+                .load(imageUrl)
+                .apply(options)
+                .into(imageView)
         }
     }
 }

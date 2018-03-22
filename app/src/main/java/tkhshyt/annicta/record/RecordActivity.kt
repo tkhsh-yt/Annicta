@@ -5,9 +5,11 @@ import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
 import android.databinding.DataBindingUtil
 import android.os.Bundle
-import android.support.design.widget.AppBarLayout
+import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import dagger.android.AndroidInjection
+import dagger.android.DispatchingAndroidInjector
+import dagger.android.support.HasSupportFragmentInjector
 import kotlinx.android.synthetic.main.activity_record.*
 import tkhshyt.annict.json.Program
 import tkhshyt.annicta.R
@@ -15,7 +17,7 @@ import tkhshyt.annicta.databinding.ActivityRecordBinding
 import tkhshyt.annicta.main.programs.ProgramsFragment
 import javax.inject.Inject
 
-class RecordActivity : AppCompatActivity(), RecordNavigator {
+class RecordActivity : AppCompatActivity(), HasSupportFragmentInjector, RecordNavigator {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -23,6 +25,11 @@ class RecordActivity : AppCompatActivity(), RecordNavigator {
     private val viewModel: RecordViewModel by lazy { ViewModelProviders.of(this, viewModelFactory).get(RecordViewModel::class.java) }
 
     private val binding by lazy { DataBindingUtil.setContentView<ActivityRecordBinding>(this, R.layout.activity_record) }
+
+    @Inject
+    lateinit var androidInjector: DispatchingAndroidInjector<Fragment>
+
+    override fun supportFragmentInjector() = androidInjector
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,6 +45,8 @@ class RecordActivity : AppCompatActivity(), RecordNavigator {
             binding.setLifecycleOwner(this)
 
             setupToolbar()
+
+            setupRecordsFragment()
 
             setupRecordEdit()
 
@@ -66,6 +75,13 @@ class RecordActivity : AppCompatActivity(), RecordNavigator {
         })
     }
 
+    private fun setupRecordsFragment() {
+        val fragment = RecordsFragment.newInstance()
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.container, fragment)
+        transaction.commit()
+    }
+
     private fun setupRecordEdit() {
         viewModel.shareTwitter.observe(this, Observer {
             viewModel.toggleShareTwitter()
@@ -78,5 +94,9 @@ class RecordActivity : AppCompatActivity(), RecordNavigator {
 
     override fun onClickBackArrow() {
         supportFinishAfterTransition()
+    }
+
+    override fun onRecorded() {
+        finish()
     }
 }

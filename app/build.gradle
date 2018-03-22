@@ -91,6 +91,7 @@ dependencies {
     // For ImageView
     implementation deps.glide.core
     annotationProcessor deps.glide.annotation
+    implementation deps.picasso
 
     // Firebase
     implementation deps.firebase.crash

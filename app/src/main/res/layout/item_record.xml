@@ -1,97 +1,109 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/item_record"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:padding="16dp">
+    xmlns:bind="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="tkhshyt.annicta.record.RecordItemViewModel" />
+    </data>
 
     <android.support.constraint.ConstraintLayout
+        android:id="@+id/item_record"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:padding="16dp">
 
-        <ImageView
-            android:id="@+id/userIcon"
-            android:src="@drawable/ic_account_circle"
-            style="@style/ImageIcon64dpStyle"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/activity"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/space_8dp"
-            android:layout_marginStart="@dimen/space_8dp"
-            android:text="@string/user_name"
-            app:layout_constraintEnd_toStartOf="@+id/createdAt"
-            app:layout_constraintStart_toEndOf="@+id/userIcon"
-            app:layout_constraintTop_toTopOf="parent" />
+            <ImageView
+                android:id="@+id/userIcon"
+                style="@style/ImageIcon64dpStyle"
+                bind:imageUrl="@{viewModel.record.user.avatar_url}"
+                bind:placeholderId="@drawable/ic_account_circle"
+                bind:circleCrop="true"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/createdAt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/date"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            <TextView
+                android:id="@+id/username"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/space_8dp"
+                android:layout_marginEnd="@dimen/space_8dp"
+                android:text="@{viewModel.record.user.username}"
+                app:layout_constraintEnd_toStartOf="@+id/createdAt"
+                app:layout_constraintStart_toEndOf="@+id/userIcon"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/rating"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/space_8dp"
-            android:layout_marginLeft="@dimen/space_8dp"
-            android:layout_marginTop="4dp"
-            android:background="@drawable/shape_channel"
-            android:padding="3dp"
-            android:text="@string/rating"
-            android:textColor="@android:color/white"
-            app:layout_constraintStart_toEndOf="@+id/userIcon"
-            app:layout_constraintTop_toBottomOf="@+id/activity" />
+            <TextView
+                android:id="@+id/createdAt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                bind:date="@{viewModel.record.created_at}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/comment"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:text="@string/comment"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/userIcon"
-            app:layout_constraintTop_toBottomOf="@+id/rating"
-            android:layout_marginLeft="8dp" />
+            <TextView
+                android:id="@+id/rating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/space_8dp"
+                android:layout_marginLeft="@dimen/space_8dp"
+                android:layout_marginTop="4dp"
+                android:background="@drawable/shape_channel"
+                android:padding="3dp"
+                android:text="@string/rating"
+                android:textColor="@android:color/white"
+                app:layout_constraintStart_toEndOf="@+id/userIcon"
+                app:layout_constraintTop_toBottomOf="@+id/username" />
 
-        <View
-            android:id="@+id/separator"
-            android:layout_width="0dp"
-            android:layout_height="0.5dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="24dp"
-            android:background="@android:color/darker_gray"
-            app:layout_constraintStart_toEndOf="@+id/userIcon"
-            app:layout_constraintTop_toBottomOf="@+id/likeImageView"
-            android:layout_marginLeft="8dp" />
+            <TextView
+                android:id="@+id/comment"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
+                android:text="@{viewModel.record.comment}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/userIcon"
+                app:layout_constraintTop_toBottomOf="@+id/rating" />
 
-        <ImageView
-            android:id="@+id/likeImageView"
-            android:layout_width="18dp"
-            android:layout_height="18dp"
-            android:tint="@color/pink_400"
-            app:layout_constraintEnd_toStartOf="@+id/likesCount"
-            app:layout_constraintTop_toBottomOf="@+id/comment"
-            android:src="@drawable/ic_favorite" />
+            <View
+                android:id="@+id/separator"
+                android:layout_width="0dp"
+                android:layout_height="0.5dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="24dp"
+                android:background="@android:color/darker_gray"
+                app:layout_constraintStart_toEndOf="@+id/userIcon"
+                app:layout_constraintTop_toBottomOf="@+id/likeImageView" />
 
-        <TextView
-            android:id="@+id/likesCount"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:gravity="center_vertical"
-            android:text="0"
-            app:layout_constraintBottom_toBottomOf="@+id/likeImageView"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/comment" />
+            <ImageView
+                android:id="@+id/likeImageView"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:src="@drawable/ic_favorite"
+                android:tint="@color/pink_400"
+                app:layout_constraintEnd_toStartOf="@+id/likesCount"
+                app:layout_constraintTop_toBottomOf="@+id/comment" />
+
+            <TextView
+                android:id="@+id/likesCount"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:gravity="center_vertical"
+                android:text="@{viewModel.record.likes_count.toString()}"
+                app:layout_constraintBottom_toBottomOf="@+id/likeImageView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/comment" />
+
+        </android.support.constraint.ConstraintLayout>
 
     </android.support.constraint.ConstraintLayout>
-
-</android.support.constraint.ConstraintLayout>
+</layout>

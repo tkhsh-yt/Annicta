@@ -7,10 +7,9 @@ import dagger.android.ContributesAndroidInjector
 import tkhshyt.annicta.auth.AuthActivity
 import tkhshyt.annicta.di.module.*
 import tkhshyt.annicta.main.MainActivity
-import tkhshyt.annicta.main.programs.ProgramAdapter
-import tkhshyt.annicta.main.programs.ProgramItemViewModel
 import tkhshyt.annicta.main.programs.ProgramsFragment
 import tkhshyt.annicta.record.RecordActivity
+import tkhshyt.annicta.record.RecordsFragment
 import tkhshyt.annicta.top.TopActivity
 
 @Module

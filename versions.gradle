@@ -10,6 +10,7 @@ versions.retrofit = "2.3.0"
 versions.rxjava = "2.1.6"
 versions.rxandroid = "2.0.2"
 versions.glide = "4.6.1"
+versions.picasso = "2.71828"
 versions.firebase = "11.8.0"
 versions.dagger = "2.14.1"
 versions.kotpref = "2.4.0"
@@ -54,6 +55,8 @@ def glide = [:]
 glide.core = "com.github.bumptech.glide:glide:$versions.glide"
 glide.annotation = "com.github.bumptech.glide:compiler:$versions.glide"
 deps.glide = glide
+
+deps.picasso = "com.squareup.picasso:picasso:$versions.picasso"
 
 def firebase = [:]
 firebase.crash = "com.google.firebase:firebase-crash:$versions.firebase"

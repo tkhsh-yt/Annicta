@@ -62,6 +62,8 @@
     <string name="dummy_episode_count">26</string>
     <string name="activity">アクティビティ</string>
     <string name="status">視聴状況</string>
+    <string name="fail_to_record">記録に失敗しました</string>
+    <string name="success_to_record">記録しました</string>
 
     <string-array name="tab">
         <item>放送予定</item>

@@ -41,7 +41,7 @@ class AuthViewModel @Inject constructor(
                 authNavigator.onAuthorize(accessToken)
             }
         }, {
-            showToastMessage(R.string.fail_to_authorize)
+                showToastMessage(R.string.fail_to_authorize)
         })
     }
 
