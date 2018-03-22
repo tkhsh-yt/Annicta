@@ -39,7 +39,7 @@
                 <ImageView
                     android:id="@+id/workIcon"
                     style="@style/ImageIcon64dpStyle"
-                    bind:centerCrop="true"
+                    bind:centerCrop="@{true}"
                     bind:placeholderId="@drawable/ic_image_black_24dp"
                     bind:imageUrl="@{viewModel.program.work.images.recommended_url ?? ``}"
                     app:layout_constraintStart_toStartOf="parent"
