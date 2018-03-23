@@ -35,6 +35,10 @@ fun ImageView.setImageUrl(imageUrl: String, placeholder: Drawable? = null, cente
             .load(imageUrl)
             .apply(options)
             .into(this)
+    } else {
+        if(placeholder != null) {
+            this.setImageDrawable(placeholder)
+        }
     }
 }
 
