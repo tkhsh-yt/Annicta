@@ -23,7 +23,7 @@ class UserInfoRepository @Inject constructor(
         return UserInfo.accessToken
     }
 
-    fun setAccessToken(accessToken: String) {
+    fun setAccessToken(accessToken: String?) {
         UserInfo.accessToken = accessToken
     }
 }

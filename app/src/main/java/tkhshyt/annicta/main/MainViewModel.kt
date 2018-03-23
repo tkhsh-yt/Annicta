@@ -8,12 +8,15 @@ import tkhshyt.annicta.AnnictApplication
 import tkhshyt.annicta.R
 import tkhshyt.annicta.data.ProgramsRepository
 import tkhshyt.annicta.data.UserInfoRepository
+import tkhshyt.annicta.main.programs.MainNavigator
 import javax.inject.Inject
 
 class MainViewModel @Inject constructor(
         context: Application,
         private val userInfoRepository: UserInfoRepository
 ) : AndroidViewModel(context) {
+
+    lateinit var navigator: MainNavigator
 
     val selectedTabPosition = MutableLiveData<Int>()
 
@@ -28,5 +31,10 @@ class MainViewModel @Inject constructor(
 
     init {
         selectedTabPosition.postValue(0)
+    }
+
+    fun logout() {
+        userInfoRepository.setAccessToken(null)
+        navigator.restart()
     }
 }
