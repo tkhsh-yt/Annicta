@@ -1,6 +1,7 @@
 package tkhshyt.annicta
 
 import android.databinding.BindingAdapter
+import android.graphics.drawable.Drawable
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -11,15 +12,15 @@ import kotlinx.android.synthetic.main.broadcast_bar.view.*
 import tkhshyt.annicta.util.AnnictUtil
 import java.util.*
 
-@BindingAdapter(value = ["bind:imageUrl", "bind:placeholderId", "bind:centerCrop", "bind:circleCrop"], requireAll = false)
-fun ImageView.setImageUrl(imageUrl: String, placeholderId: Int? = null, centerCrop: Boolean = false, circleCrop: Boolean = false) {
+@BindingAdapter(value = ["bind:imageUrl", "bind:placeholder", "bind:centerCrop", "bind:circleCrop"], requireAll = false)
+fun ImageView.setImageUrl(imageUrl: String, placeholder: Drawable? = null, centerCrop: Boolean = false, circleCrop: Boolean = false) {
     if(imageUrl.isNotEmpty()) {
 
         var options = RequestOptions()
             .diskCacheStrategy(DiskCacheStrategy.ALL)
 
-        if (placeholderId != null) {
-            options = options.placeholder(placeholderId)
+        if (placeholder != null) {
+            options = options.placeholder(placeholder)
         }
 
         if(centerCrop) {

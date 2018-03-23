@@ -23,7 +23,7 @@
                 android:id="@+id/userIcon"
                 style="@style/ImageIcon64dpStyle"
                 bind:imageUrl="@{viewModel.record.user.avatar_url}"
-                bind:placeholderId="@drawable/ic_account_circle"
+                bind:placeholder="@{@drawable/ic_account_circle}"
                 bind:circleCrop="@{true}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

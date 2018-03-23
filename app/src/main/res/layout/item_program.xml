@@ -40,7 +40,7 @@
                     android:id="@+id/workIcon"
                     style="@style/ImageIcon64dpStyle"
                     bind:centerCrop="@{true}"
-                    bind:placeholderId="@drawable/ic_image_black_24dp"
+                    bind:placeholder="@{@drawable/ic_image_black_24dp}"
                     bind:imageUrl="@{viewModel.program.work.images.recommended_url ?? ``}"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/header" />
