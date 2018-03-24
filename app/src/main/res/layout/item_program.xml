@@ -22,7 +22,8 @@
         android:layout_marginLeft="@dimen/space_8dp"
         android:layout_marginStart="@dimen/space_8dp">
 
-        <include layout="@layout/broadcast_bar" />
+        <include layout="@layout/broadcast_bar"
+            app:viewModel="@{viewModel}"/>
 
         <android.support.v7.widget.CardView
             style="@style/CardViewStyle"
