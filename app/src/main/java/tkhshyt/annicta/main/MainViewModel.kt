@@ -6,9 +6,7 @@ import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.Transformations
 import tkhshyt.annicta.AnnictApplication
 import tkhshyt.annicta.R
-import tkhshyt.annicta.data.ProgramsRepository
 import tkhshyt.annicta.data.UserInfoRepository
-import tkhshyt.annicta.main.programs.MainNavigator
 import javax.inject.Inject
 
 class MainViewModel @Inject constructor(

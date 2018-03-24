@@ -1,4 +1,4 @@
-package tkhshyt.annicta.main.programs
+package tkhshyt.annicta.main
 
 interface MainNavigator {
 

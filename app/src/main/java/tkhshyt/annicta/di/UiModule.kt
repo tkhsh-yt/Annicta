@@ -27,9 +27,6 @@ internal abstract class UiModule {
     @ContributesAndroidInjector(modules = [MainModule::class])
     internal abstract fun contributeMainActivity(): MainActivity
 
-    @ContributesAndroidInjector(modules = [ProgramsModule::class])
-    internal abstract fun contributeProgramsFragment(): ProgramsFragment
-
     @ContributesAndroidInjector(modules = [RecordModule::class])
     internal abstract fun contributeRecordActivity(): RecordActivity
 }
