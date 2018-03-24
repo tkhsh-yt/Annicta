@@ -7,6 +7,7 @@ import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
+import android.widget.Toast
 import dagger.android.AndroidInjection
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
@@ -15,6 +16,7 @@ import tkhshyt.annict.json.Program
 import tkhshyt.annicta.R
 import tkhshyt.annicta.databinding.ActivityRecordBinding
 import tkhshyt.annicta.main.programs.ProgramsFragment
+import tkhshyt.annicta.util.setupToast
 import javax.inject.Inject
 
 class RecordActivity : AppCompatActivity(), HasSupportFragmentInjector, RecordNavigator {
@@ -45,10 +47,12 @@ class RecordActivity : AppCompatActivity(), HasSupportFragmentInjector, RecordNa
             binding.setLifecycleOwner(this)
 
             setupToolbar()
-
             setupRecordsFragment()
-
             setupRecordEdit()
+
+            viewModel.let {
+                setupToast(this, it.toastMessage, Toast.LENGTH_SHORT)
+            }
 
             viewModel.onStart()
         }

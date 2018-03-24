@@ -44,6 +44,7 @@ class RecordsViewModel @Inject constructor(
                 recordsRepository.records(
                         access_token = accessToken,
                         filter_has_record_comment = true,
+                        sort_id = "desc",
                         page = page
                 ).doFinally {
                     isLoading.postValue(false)

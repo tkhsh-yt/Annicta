@@ -46,3 +46,20 @@ fun ImageView.setImageUrl(imageUrl: String, placeholder: Drawable? = null, cente
 fun TextView.setDate(date: Date) {
     this.text = AnnictUtil.textDateFormat.format(date)
 }
+
+@BindingAdapter("bind:pretty_date")
+fun TextView.setPrettyDate(date: Date) {
+    this.text = AnnictUtil.prettyDate(date)
+}
+
+@BindingAdapter("bind:rating")
+fun TextView.setRating(rating: String?) {
+    this.text = when(rating) {
+        "bad" -> "良くない"
+        "average" -> "普通"
+        "good" -> "良い"
+        "great" -> "とても良い"
+        "no_select" -> "未選択"
+        else -> ""
+    }
+}

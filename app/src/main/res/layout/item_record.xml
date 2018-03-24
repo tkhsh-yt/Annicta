@@ -4,6 +4,8 @@
     xmlns:bind="http://schemas.android.com/tools">
 
     <data>
+        <import type="android.view.View" />
+
         <variable
             name="viewModel"
             type="tkhshyt.annicta.record.RecordItemViewModel" />
@@ -56,8 +58,9 @@
                 android:layout_marginTop="4dp"
                 android:background="@drawable/shape_channel"
                 android:padding="3dp"
-                android:text="@string/rating"
                 android:textColor="@android:color/white"
+                android:visibility="@{viewModel.record.rating_state == null ? View.GONE : View.VISIBLE}"
+                bind:rating="@{viewModel.record.rating_state}"
                 app:layout_constraintStart_toEndOf="@+id/userIcon"
                 app:layout_constraintTop_toBottomOf="@+id/username" />
 
@@ -88,6 +91,8 @@
                 android:id="@+id/likeImageView"
                 android:layout_width="18dp"
                 android:layout_height="18dp"
+                android:layout_marginEnd="@dimen/space_4dp"
+                android:layout_marginRight="@dimen/space_4dp"
                 android:src="@drawable/ic_favorite"
                 android:tint="@color/pink_400"
                 app:layout_constraintEnd_toStartOf="@+id/likesCount"
