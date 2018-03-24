@@ -12,8 +12,8 @@ import kotlinx.android.synthetic.main.broadcast_bar.view.*
 import tkhshyt.annicta.util.AnnictUtil
 import java.util.*
 
-@BindingAdapter(value = ["bind:imageUrl", "bind:placeholder", "bind:centerCrop", "bind:circleCrop"], requireAll = false)
-fun ImageView.setImageUrl(imageUrl: String, placeholder: Drawable? = null, centerCrop: Boolean = false, circleCrop: Boolean = false) {
+@BindingAdapter(value = ["bind:imageUrl", "bind:placeholder", "bind:noImage", "bind:centerCrop", "bind:circleCrop"], requireAll = false)
+fun ImageView.setImageUrl(imageUrl: String, placeholder: Drawable? = null, noImage: Drawable? = null, centerCrop: Boolean = false, circleCrop: Boolean = false) {
     if(imageUrl.isNotEmpty()) {
 
         var options = RequestOptions()
@@ -38,6 +38,8 @@ fun ImageView.setImageUrl(imageUrl: String, placeholder: Drawable? = null, cente
     } else {
         if(placeholder != null) {
             this.setImageDrawable(placeholder)
+        } else if(noImage != null) {
+            this.setImageDrawable(noImage)
         }
     }
 }

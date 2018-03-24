@@ -101,6 +101,6 @@ class RecordActivity : AppCompatActivity(), HasSupportFragmentInjector, RecordNa
     }
 
     override fun onRecorded() {
-        finish()
+        supportFinishAfterTransition()
     }
 }
