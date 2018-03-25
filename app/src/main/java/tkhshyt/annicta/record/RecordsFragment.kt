@@ -18,6 +18,7 @@ import tkhshyt.annicta.databinding.FragmentRecordsBinding
 import tkhshyt.annicta.di.Injectable
 import tkhshyt.annicta.layout.recycler.EndlessScrollListener
 import tkhshyt.annicta.main.programs.ProgramAdapter
+import tkhshyt.annicta.record.RecordActivity.Companion.EPISODE_ID
 import javax.inject.Inject
 
 class RecordsFragment : Fragment(), Injectable {
@@ -44,6 +45,13 @@ class RecordsFragment : Fragment(), Injectable {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+
+        if(arguments?.containsKey(EPISODE_ID) == true) {
+            arguments?.getLong(EPISODE_ID)?.let {
+                viewModel.episodeId = it
+            }
+        }
+
         binding.viewModel = viewModel
         binding.setLifecycleOwner(this)
 

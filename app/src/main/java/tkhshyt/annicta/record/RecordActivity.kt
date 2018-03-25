@@ -3,6 +3,7 @@ package tkhshyt.annicta.record
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -20,6 +21,10 @@ import tkhshyt.annicta.util.setupToast
 import javax.inject.Inject
 
 class RecordActivity : AppCompatActivity(), HasSupportFragmentInjector, RecordNavigator {
+
+    companion object {
+        const val EPISODE_ID = "episode_id"
+    }
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -81,6 +86,11 @@ class RecordActivity : AppCompatActivity(), HasSupportFragmentInjector, RecordNa
 
     private fun setupRecordsFragment() {
         val fragment = RecordsFragment.newInstance()
+        val arguments = Bundle()
+        viewModel.program.episode.id?.let {
+            arguments.putLong(EPISODE_ID, it)
+        }
+        fragment.arguments = arguments
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.container, fragment)
         transaction.commit()

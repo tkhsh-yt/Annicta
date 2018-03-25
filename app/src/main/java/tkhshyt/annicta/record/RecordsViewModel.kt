@@ -16,6 +16,7 @@ class RecordsViewModel @Inject constructor(
         val recordsRepository: RecordsRepository
 ) : AndroidViewModel(context) {
 
+    var episodeId: Long = 0
     val records = MutableListLiveData<Record>()
     val isLoading = MutableLiveData<Boolean>()
 
@@ -43,6 +44,7 @@ class RecordsViewModel @Inject constructor(
             if (accessToken != null) {
                 recordsRepository.records(
                         access_token = accessToken,
+                        filter_episode_id = episodeId,
                         filter_has_record_comment = true,
                         sort_id = "desc",
                         page = page

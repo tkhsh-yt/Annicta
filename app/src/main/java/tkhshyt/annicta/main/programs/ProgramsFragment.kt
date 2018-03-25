@@ -22,6 +22,7 @@ import tkhshyt.annicta.databinding.FragmentProgramsBinding
 import tkhshyt.annicta.di.Injectable
 import tkhshyt.annicta.layout.recycler.EndlessScrollListener
 import tkhshyt.annicta.record.RecordActivity
+import tkhshyt.annicta.record.RecordActivity.Companion.EPISODE_ID
 import javax.inject.Inject
 
 class ProgramsFragment : Fragment(), Injectable, ProgramItemNavigator {
@@ -50,6 +51,7 @@ class ProgramsFragment : Fragment(), Injectable, ProgramItemNavigator {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+
         binding.viewModel = viewModel
         binding.setLifecycleOwner(this)
 
