@@ -32,6 +32,7 @@
             android:maxLines="3"
             android:textColorHint="#61000000"
             android:text="@={viewModel.comment}"
+            android:enabled="@{viewModel.enabled}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/separator"
@@ -56,6 +57,7 @@
                 android:gravity="center_vertical"
                 android:entries="@array/rating_array"
                 android:selectedItemPosition="@={viewModel.rating}"
+                android:enabled="@{viewModel.enabled}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/facebookToggleButton"
                 app:layout_constraintStart_toStartOf="parent"
@@ -74,6 +76,7 @@
                 android:textColor="@android:color/white"
                 android:textStyle="bold"
                 android:onClick="@{_ -> viewModel.onRecord()}"
+                android:enabled="@{viewModel.enabled}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -83,6 +86,7 @@
                 style="@style/ImageToggleStyle"
                 android:background="@drawable/toggle_twitter_selector"
                 android:checked="@={viewModel.shareTwitter}"
+                android:enabled="@{viewModel.enabled}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/recordButton"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -92,6 +96,7 @@
                 style="@style/ImageToggleStyle"
                 android:checked="@={viewModel.shareFacebook}"
                 android:background="@drawable/toggle_facebook_selector"
+                android:enabled="@{viewModel.enabled}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/twitterToggleButton"
                 app:layout_constraintTop_toTopOf="parent" />

@@ -32,6 +32,7 @@ class RecordViewModel @Inject constructor(
     val rating = MutableLiveData<Int>()
     val shareTwitter = MutableLiveData<Boolean>()
     val shareFacebook = MutableLiveData<Boolean>()
+    val enabled = MutableLiveData<Boolean>()
 
     val toastMessage = SingleLiveEvent<Int>()
 
@@ -40,6 +41,7 @@ class RecordViewModel @Inject constructor(
     fun onStart() {
         shareTwitter.postValue(userConfigRepository.shareTwitter())
         shareFacebook.postValue(userConfigRepository.shareFacebook())
+        enabled.postValue(true)
     }
 
     fun onClickBackArrow() {
@@ -58,6 +60,7 @@ class RecordViewModel @Inject constructor(
         if(userInfoRepository.isAuthorize()) {
             val accessToken = userInfoRepository.getAccessToken()
             if(accessToken != null) {
+                enabled.postValue(false)
                 recordRepository.createRecord(
                         access_token = accessToken,
                         episode_id = program.episode.id ?: 0,
@@ -65,7 +68,9 @@ class RecordViewModel @Inject constructor(
                         rating_state = ratingStates[rating.value ?: 0],
                         share_twitter = shareTwitter.value == true,
                         share_facebook = shareFacebook.value == true
-                ).subscribe({
+                ).doFinally {
+                    enabled.postValue(true)
+                }.subscribe({
                     showToastMessage(R.string.success_to_record)
                     navigator.onRecorded()
                 }, {
