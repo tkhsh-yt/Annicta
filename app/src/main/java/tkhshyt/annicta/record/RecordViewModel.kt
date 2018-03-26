@@ -29,10 +29,13 @@ class RecordViewModel @Inject constructor(
     val nextEpisode = MutableLiveData<Episode?>()
 
     val comment = MutableLiveData<String>()
+    val rating = MutableLiveData<Int>()
     val shareTwitter = MutableLiveData<Boolean>()
     val shareFacebook = MutableLiveData<Boolean>()
 
     val toastMessage = SingleLiveEvent<Int>()
+
+    val ratingStates = arrayOf(null, "bad", "average", "good", "great")
 
     fun onStart() {
         shareTwitter.postValue(userConfigRepository.shareTwitter())
@@ -59,6 +62,7 @@ class RecordViewModel @Inject constructor(
                         access_token = accessToken,
                         episode_id = program.episode.id ?: 0,
                         comment = comment.value,
+                        rating_state = ratingStates[rating.value ?: 0],
                         share_twitter = shareTwitter.value == true,
                         share_facebook = shareFacebook.value == true
                 ).subscribe({
