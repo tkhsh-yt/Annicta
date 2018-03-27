@@ -93,6 +93,8 @@ dependencies {
     annotationProcessor deps.glide.annotation
     implementation deps.picasso
 
+    implementation deps.eventbus
+
     // Firebase
     implementation deps.firebase.crash
     implementation deps.firebase.core

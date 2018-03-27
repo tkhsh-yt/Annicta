@@ -3,8 +3,11 @@ package tkhshyt.annicta.main.programs
 import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.MutableLiveData
+import android.os.Build
 import android.widget.Toast
 import tkhshyt.annict.json.Program
+import tkhshyt.annict.json.Record
+import tkhshyt.annicta.AnnictApplication
 import tkhshyt.annicta.MutableListLiveData
 import tkhshyt.annicta.data.ProgramsRepository
 import tkhshyt.annicta.data.UserInfoRepository
@@ -53,5 +56,10 @@ class ProgramsViewModel @Inject constructor(
                 })
             }
         }
+    }
+
+    fun removeRecord(record: Record) {
+        val index = programs.indexOfFirst { it.episode.id == record.episode?.id }
+        programs.removeAt(index)
     }
 }

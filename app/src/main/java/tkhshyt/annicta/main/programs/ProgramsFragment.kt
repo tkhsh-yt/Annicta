@@ -16,10 +16,14 @@ import android.view.ViewGroup
 import android.widget.Toast
 import kotlinx.android.synthetic.main.fragment_programs.*
 import kotlinx.android.synthetic.main.item_work.*
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 import tkhshyt.annict.json.Program
 import tkhshyt.annicta.R
 import tkhshyt.annicta.databinding.FragmentProgramsBinding
 import tkhshyt.annicta.di.Injectable
+import tkhshyt.annicta.event.CreateRecord
 import tkhshyt.annicta.layout.recycler.EndlessScrollListener
 import tkhshyt.annicta.record.RecordActivity
 import tkhshyt.annicta.record.RecordActivity.Companion.EPISODE_ID
@@ -89,5 +93,20 @@ class ProgramsFragment : Fragment(), Injectable, ProgramItemNavigator {
         val intent = Intent(context, RecordActivity::class.java)
         intent.putExtra(PROGRAM, program)
         startActivity(intent)
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onProgramRemove(event: CreateRecord) {
+        viewModel.removeRecord(event.record)
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        EventBus.getDefault().register(this)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        EventBus.getDefault().unregister(this)
     }
 }
