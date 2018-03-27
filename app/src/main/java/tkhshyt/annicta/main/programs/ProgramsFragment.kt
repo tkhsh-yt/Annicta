@@ -69,9 +69,6 @@ class ProgramsFragment : Fragment(), Injectable, ProgramItemNavigator {
 
     private fun setupSwipeRefreshView() {
         swipeRefreshView.setColorSchemeResources(R.color.green_500, R.color.red_500, R.color.indigo_500, R.color.yellow_500)
-        swipeRefreshView.setOnRefreshListener {
-            viewModel.onRefresh()
-        }
     }
 
     private fun setupRecyclerView() {

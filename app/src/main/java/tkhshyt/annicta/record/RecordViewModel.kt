@@ -14,9 +14,9 @@ import javax.inject.Inject
 
 class RecordViewModel @Inject constructor(
         context: Application,
-        val userInfoRepository: UserInfoRepository,
-        val recordRepository: RecordRepository,
-        val userConfigRepository: UserConfigRepository
+        private val userInfoRepository: UserInfoRepository,
+        private val recordRepository: RecordRepository,
+        private val userConfigRepository: UserConfigRepository
 ) : AndroidViewModel(context) {
 
     lateinit var navigator: RecordNavigator
@@ -36,7 +36,7 @@ class RecordViewModel @Inject constructor(
 
     val toastMessage = SingleLiveEvent<Int>()
 
-    val ratingStates = arrayOf(null, "bad", "average", "good", "great")
+    private val ratingStates = arrayOf(null, "bad", "average", "good", "great")
 
     fun onStart() {
         shareTwitter.postValue(userConfigRepository.shareTwitter())
@@ -80,7 +80,7 @@ class RecordViewModel @Inject constructor(
         }
     }
 
-    fun showToastMessage(message: Int) {
+    private fun showToastMessage(message: Int) {
         toastMessage.value = message
     }
 }

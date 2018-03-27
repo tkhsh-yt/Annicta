@@ -51,7 +51,7 @@ class AuthViewModel @Inject constructor(
         super.getApplication<Application>().startActivity(intent)
     }
 
-    fun showToastMessage(message: Int) {
+    private fun showToastMessage(message: Int) {
         toastMessage.value = message
     }
 }

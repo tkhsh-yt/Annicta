@@ -12,8 +12,8 @@ import javax.inject.Inject
 
 class ProgramsViewModel @Inject constructor(
         context: Application,
-        val userInfoRepository: UserInfoRepository,
-        val programsRepository: ProgramsRepository
+        private val userInfoRepository: UserInfoRepository,
+        private val programsRepository: ProgramsRepository
 ): AndroidViewModel(context) {
 
     val programs = MutableListLiveData<Program>()

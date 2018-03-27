@@ -12,8 +12,8 @@ import javax.inject.Inject
 
 class RecordsViewModel @Inject constructor(
         context: Application,
-        val userInfoRepository: UserInfoRepository,
-        val recordsRepository: RecordsRepository
+        private val userInfoRepository: UserInfoRepository,
+        private val recordsRepository: RecordsRepository
 ) : AndroidViewModel(context) {
 
     var episodeId: Long = 0
