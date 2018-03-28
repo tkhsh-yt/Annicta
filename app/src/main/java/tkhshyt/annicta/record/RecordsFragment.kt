@@ -61,14 +61,9 @@ class RecordsFragment : Fragment(), Injectable {
             }
         })
 
-        setupSwipeRefreshView()
         setupRecyclerView()
 
         viewModel.onStart()
-    }
-
-    private fun setupSwipeRefreshView() {
-        swipeRefreshView.setColorSchemeResources(R.color.green_500, R.color.red_500, R.color.indigo_500, R.color.yellow_500)
     }
 
     private fun setupRecyclerView() {

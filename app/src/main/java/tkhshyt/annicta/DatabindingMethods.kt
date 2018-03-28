@@ -2,6 +2,7 @@ package tkhshyt.annicta
 
 import android.databinding.BindingAdapter
 import android.graphics.drawable.Drawable
+import android.support.v4.widget.SwipeRefreshLayout
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -11,6 +12,11 @@ import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.broadcast_bar.view.*
 import tkhshyt.annicta.util.AnnictUtil
 import java.util.*
+
+@BindingAdapter(value = ["bind:setColorScheme"])
+fun SwipeRefreshLayout.setColorScheme(colors: IntArray) {
+    this.setColorSchemeColors(*colors)
+}
 
 @BindingAdapter(value = ["bind:imageUrl", "bind:placeholder", "bind:noImage", "bind:centerCrop", "bind:circleCrop"], requireAll = false)
 fun ImageView.setImageUrl(imageUrl: String, placeholder: Drawable? = null, noImage: Drawable? = null, centerCrop: Boolean = false, circleCrop: Boolean = false) {
