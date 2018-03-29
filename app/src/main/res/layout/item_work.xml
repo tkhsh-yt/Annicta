@@ -1,54 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/item_work"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    xmlns:bind="http://schemas.android.com/tools"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <android.support.v7.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:foreground="?android:attr/selectableItemBackground"
-        style="@style/CardViewStyle">
+    <data>
 
-        <android.support.constraint.ConstraintLayout
+        <variable
+            name="viewModel"
+            type="tkhshyt.annicta.main.works.WorkItemViewModel" />
+    </data>
+
+    <LinearLayout
+        android:id="@+id/item_work"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.CardView
+            style="@style/CardViewStyle"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:foreground="?android:attr/selectableItemBackground">
 
-            <ImageView
-                android:id="@+id/workIcon"
-                android:src="@drawable/ic_image_black_24dp"
-                android:transitionName="work_icon"
-                style="@style/ImageIcon128dpStyle"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                tools:layout_editor_absoluteY="0dp"
-                tools:targetApi="lollipop"
-                tools:ignore="ContentDescription" />
-
-            <TextView
-                android:id="@+id/workTitle"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:ellipsize="end"
-                android:singleLine="true"
-                android:text="@string/title"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/workIcon" />
-
-            <android.support.v7.widget.AppCompatSpinner
-                android:id="@+id/statusSpinner"
+            <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:background="@drawable/status_spinner_background"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/workTitle" />
+                android:layout_height="wrap_content">
 
-        </android.support.constraint.ConstraintLayout>
-    </android.support.v7.widget.CardView>
-</LinearLayout>
+                <ImageView
+                    android:id="@+id/workIcon"
+                    style="@style/ImageIcon128dpStyle"
+                    android:transitionName="work_icon"
+                    bind:centerCrop="@{true}"
+                    bind:placeholder="@{@drawable/ic_image_black_24dp}"
+                    bind:noImage="@{@drawable/ic_image_black_24dp}"
+                    bind:imageUrl="@{viewModel.work.images.recommended_url ?? ``}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    tools:ignore="ContentDescription"
+                    tools:layout_editor_absoluteY="0dp"
+                    tools:targetApi="lollipop" />
+
+                <TextView
+                    android:id="@+id/workTitle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:text="@{viewModel.work.title}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/workIcon" />
+
+                <android.support.v7.widget.AppCompatSpinner
+                    android:id="@+id/statusSpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:background="@drawable/status_spinner_background"
+                    android:entries="@array/work_status_array"
+                    android:selectedItemPosition="@{viewModel.status}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/workTitle" />
+
+            </android.support.constraint.ConstraintLayout>
+        </android.support.v7.widget.CardView>
+    </LinearLayout>
+</layout>

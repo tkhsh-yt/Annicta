@@ -18,6 +18,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import tkhshyt.annicta.R
 import tkhshyt.annicta.databinding.ActivityMainBinding
 import tkhshyt.annicta.main.programs.ProgramsFragment
+import tkhshyt.annicta.main.works.WorksFragment
 import tkhshyt.annicta.top.TopActivity
 import javax.inject.Inject
 
@@ -73,9 +74,9 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector, MainNaviga
     private fun setupTab() {
         val tabTitle = resources.getStringArray(R.array.tab)
         val tabViews = arrayOf(R.layout.tab_broadcast, R.layout.tab_work, R.layout.tab_home)
-        val fragments = arrayOf(
+        val fragments = arrayOf<Fragment>(
                 ProgramsFragment.newInstance(),
-                ProgramsFragment.newInstance(),
+                WorksFragment.newInstance(),
                 ProgramsFragment.newInstance()
         )
         val adapter = object : FragmentPagerAdapter(supportFragmentManager) {

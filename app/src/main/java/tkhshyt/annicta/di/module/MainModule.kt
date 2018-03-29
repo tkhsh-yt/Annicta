@@ -8,6 +8,7 @@ import dagger.multibindings.IntoMap
 import tkhshyt.annicta.di.ViewModelKey
 import tkhshyt.annicta.main.MainViewModel
 import tkhshyt.annicta.main.programs.ProgramsFragment
+import tkhshyt.annicta.main.works.WorksFragment
 
 @Module
 interface MainModule {
@@ -19,4 +20,7 @@ interface MainModule {
 
     @ContributesAndroidInjector
     fun contributeProgramsFragment(): ProgramsFragment
+
+    @ContributesAndroidInjector
+    fun contributeWorksFragment(): WorksFragment
 }
