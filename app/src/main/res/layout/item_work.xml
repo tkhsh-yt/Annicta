@@ -31,12 +31,12 @@
                     android:id="@+id/workIcon"
                     style="@style/ImageIcon128dpStyle"
                     android:transitionName="work_icon"
-                    bind:centerCrop="@{true}"
-                    bind:placeholder="@{@drawable/ic_image_black_24dp}"
-                    bind:noImage="@{@drawable/ic_image_black_24dp}"
-                    bind:imageUrl="@{viewModel.work.images.recommended_url ?? ``}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
+                    bind:centerCrop="@{true}"
+                    bind:imageUrl="@{viewModel.work.images.recommended_url ?? ``}"
+                    bind:noImage="@{@drawable/ic_image_black_24dp}"
+                    bind:placeholder="@{@drawable/ic_image_black_24dp}"
                     tools:ignore="ContentDescription"
                     tools:layout_editor_absoluteY="0dp"
                     tools:targetApi="lollipop" />
@@ -53,7 +53,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/workIcon" />
 
-                <android.support.v7.widget.AppCompatSpinner
+                <tkhshyt.annicta.layout.spinner.SelectSpinner
                     android:id="@+id/statusSpinner"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

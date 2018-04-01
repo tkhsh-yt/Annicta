@@ -5,13 +5,13 @@ import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
 import tkhshyt.annicta.di.ViewModelKey
-import tkhshyt.annicta.main.programs.ProgramsViewModel
+import tkhshyt.annicta.main.works.WorkItemViewModel
 
 @Module
-interface ProgramsModule {
+interface WorkItemModule {
 
     @Binds
     @IntoMap
-    @ViewModelKey(ProgramsViewModel::class)
-    fun bindViewModel(viewModel: ProgramsViewModel): ViewModel
+    @ViewModelKey(WorkItemViewModel::class)
+    fun bindViewModel(viewModel: WorkItemViewModel): ViewModel
 }

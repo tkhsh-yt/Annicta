@@ -4,18 +4,13 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProvider
 import android.content.Intent
 import android.databinding.DataBindingUtil
-import android.os.Build
 import android.os.Bundle
-import android.support.v4.app.ActivityCompat
-import android.support.v4.app.ActivityOptionsCompat
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import kotlinx.android.synthetic.main.fragment_programs.*
-import kotlinx.android.synthetic.main.item_work.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -23,10 +18,9 @@ import tkhshyt.annict.json.Program
 import tkhshyt.annicta.R
 import tkhshyt.annicta.databinding.FragmentProgramsBinding
 import tkhshyt.annicta.di.Injectable
-import tkhshyt.annicta.event.CreateRecord
+import tkhshyt.annicta.event.CreateRecordEvent
 import tkhshyt.annicta.layout.recycler.EndlessScrollListener
 import tkhshyt.annicta.record.RecordActivity
-import tkhshyt.annicta.record.RecordActivity.Companion.EPISODE_ID
 import javax.inject.Inject
 
 class ProgramsFragment : Fragment(), Injectable, ProgramItemNavigator {
@@ -91,7 +85,7 @@ class ProgramsFragment : Fragment(), Injectable, ProgramItemNavigator {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onProgramRemove(event: CreateRecord) {
+    fun onProgramRemove(event: CreateRecordEvent) {
         viewModel.removeRecord(event.record)
     }
 

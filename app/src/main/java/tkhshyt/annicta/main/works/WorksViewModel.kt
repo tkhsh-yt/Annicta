@@ -3,22 +3,27 @@ package tkhshyt.annicta.main.works
 import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.MutableLiveData
-import android.widget.Toast
+import tkhshyt.annict.json.Status
 import tkhshyt.annict.json.Work
-import tkhshyt.annicta.AnnictApplication
 import tkhshyt.annicta.MutableListLiveData
 import tkhshyt.annicta.data.UserInfoRepository
+import tkhshyt.annicta.data.WorkRepository
 import tkhshyt.annicta.data.WorksRepository
 import javax.inject.Inject
 
 class WorksViewModel @Inject constructor(
     context: Application,
+    workRepository: WorkRepository,
     private val userInfoRepository: UserInfoRepository,
     private val worksRepository: WorksRepository
 ): AndroidViewModel(context) {
 
     val works = MutableListLiveData<Work>()
     val isLoading = MutableLiveData<Boolean>()
+
+    val createWorkItemViewModel = {
+        WorkItemViewModel(context, userInfoRepository, workRepository)
+    }
 
     var page = 1
 
@@ -55,6 +60,14 @@ class WorksViewModel @Inject constructor(
                 }, {
                 })
             }
+        }
+    }
+
+    fun updateWorkStatus(id: Long?, kind: String) {
+        val index = works.indexOfFirst { it.id == id }
+        if (index > -1) {
+            val work = works[index]
+            works[index] = work.copy(status = Status(kind))
         }
     }
 }

@@ -11,7 +11,7 @@ import tkhshyt.annicta.SingleLiveEvent
 import tkhshyt.annicta.data.RecordRepository
 import tkhshyt.annicta.data.UserConfigRepository
 import tkhshyt.annicta.data.UserInfoRepository
-import tkhshyt.annicta.event.CreateRecord
+import tkhshyt.annicta.event.CreateRecordEvent
 import javax.inject.Inject
 
 class RecordViewModel @Inject constructor(
@@ -73,7 +73,7 @@ class RecordViewModel @Inject constructor(
                 ).doFinally {
                     enabled.postValue(true)
                 }.subscribe({
-                    EventBus.getDefault().post(CreateRecord(it))
+                    EventBus.getDefault().post(CreateRecordEvent(it))
                     showToastMessage(R.string.success_to_record)
                     navigator.onRecorded()
                 }, {

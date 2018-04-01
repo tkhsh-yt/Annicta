@@ -11,7 +11,7 @@ import tkhshyt.annicta.R
 
 class RatingAdapter(context: Context?, objects: Array<out String>?) : ArrayAdapter<String>(context, R.layout.item_status, objects) {
 
-    var selectedItem = 0
+    var selectedItem = -1
 
     init {
         setDropDownViewResource(R.layout.item_status_dropdown)

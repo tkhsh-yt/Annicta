@@ -3,13 +3,17 @@ package tkhshyt.annicta.main.works
 import android.databinding.DataBindingUtil
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import tkhshyt.annict.json.Work
 import tkhshyt.annicta.R
 import tkhshyt.annicta.databinding.ItemWorkBinding
 import tkhshyt.annicta.layout.spinner.RatingAdapter
 
-class WorkAdapter() : RecyclerView.Adapter<WorkAdapter.ViewHolder>() {
+class WorkAdapter constructor(
+        private val createViewModel: () -> WorkItemViewModel
+) : RecyclerView.Adapter<WorkAdapter.ViewHolder>() {
 
     var works = listOf<Work>()
         set(value) {
@@ -29,10 +33,8 @@ class WorkAdapter() : RecyclerView.Adapter<WorkAdapter.ViewHolder>() {
 
     override fun onBindViewHolder(holder: ViewHolder?, position: Int) {
         val work = works[position]
-        // 直接 new するのは避けたい
-        val viewModel = WorkItemViewModel()
+        val viewModel = createViewModel()
         viewModel.work.value = work
-        // viewModel.navigator = navigator
         holder?.bind(viewModel)
     }
 
@@ -40,10 +42,14 @@ class WorkAdapter() : RecyclerView.Adapter<WorkAdapter.ViewHolder>() {
 
         init {
             val statuses = binding.root.context.resources.getStringArray(R.array.work_status_array)
-            binding.statusSpinner.adapter = RatingAdapter(binding.root.context, statuses)
+            val adapter = RatingAdapter(binding.root.context, statuses)
+            binding.statusSpinner.adapter = adapter
         }
 
         fun bind(viewModel: WorkItemViewModel) {
+            binding.statusSpinner.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
+                viewModel.onStatusSelected(position)
+            }
             binding.viewModel = viewModel
             binding.executePendingBindings()
         }
