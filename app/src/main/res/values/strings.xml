@@ -65,6 +65,7 @@
     <string name="fail_to_record">記録に失敗しました</string>
     <string name="success_to_record">記録しました</string>
     <string name="logout">ログアウト</string>
+    <string name="fail_to_get_episode">エピソード情報の取得に失敗しました</string>
 
     <string-array name="tab">
         <item>放送予定</item>

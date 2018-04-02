@@ -1,6 +1,7 @@
 package tkhshyt.annicta.record
 
 import android.arch.lifecycle.Observer
+import android.arch.lifecycle.Transformations
 import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
@@ -44,8 +45,16 @@ class RecordActivity : AppCompatActivity(), HasSupportFragmentInjector, RecordNa
         AndroidInjection.inject(this)
 
         if (intent.hasExtra(ProgramsFragment.PROGRAM)) {
+            viewModel.episode.observe(this, Observer {
+                viewModel.setPrevNextEpisode()
+            })
+
+            viewModel.let {
+                setupToast(this, it.toastMessage, Toast.LENGTH_SHORT)
+            }
+
             val program = intent.getSerializableExtra(ProgramsFragment.PROGRAM) as Program
-            viewModel.program = program
+            viewModel.episode.value = program.episode.copy(work = program.work)
             viewModel.navigator = this
 
             binding.viewModel = viewModel
@@ -54,10 +63,6 @@ class RecordActivity : AppCompatActivity(), HasSupportFragmentInjector, RecordNa
             setupToolbar()
             setupRecordsFragment()
             setupRecordEdit()
-
-            viewModel.let {
-                setupToast(this, it.toastMessage, Toast.LENGTH_SHORT)
-            }
 
             viewModel.onStart()
         }
@@ -87,13 +92,19 @@ class RecordActivity : AppCompatActivity(), HasSupportFragmentInjector, RecordNa
     private fun setupRecordsFragment() {
         val fragment = RecordsFragment.newInstance()
         val arguments = Bundle()
-        viewModel.program.episode.id?.let {
+        viewModel.episode.value?.id?.let {
             arguments.putLong(EPISODE_ID, it)
         }
         fragment.arguments = arguments
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.container, fragment)
         transaction.commit()
+
+        // FIXME
+        viewModel.episode.observe(this, Observer {
+            fragment.viewModel.episodeId = it?.id ?: -1
+            fragment.viewModel.onRefresh()
+        })
     }
 
     private fun setupRecordEdit() {

@@ -2,6 +2,7 @@ package tkhshyt.annicta.record
 
 import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
+import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import tkhshyt.annict.json.Record
@@ -16,7 +17,12 @@ class RecordsViewModel @Inject constructor(
         private val recordsRepository: RecordsRepository
 ) : AndroidViewModel(context) {
 
-    var episodeId: Long = 0
+    var episodeId: Long = -1
+    set(value) {
+        field = value
+        records.clear()
+        onRefresh()
+    }
     val records = MutableListLiveData<Record>()
     val isLoading = MutableLiveData<Boolean>()
 
@@ -24,10 +30,6 @@ class RecordsViewModel @Inject constructor(
 
     init {
         isLoading.value = false
-    }
-
-    fun onStart() {
-        onRefresh()
     }
 
     fun onRefresh() {

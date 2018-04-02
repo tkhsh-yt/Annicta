@@ -62,8 +62,6 @@ class RecordsFragment : Fragment(), Injectable {
         })
 
         setupRecyclerView()
-
-        viewModel.onStart()
     }
 
     private fun setupRecyclerView() {
