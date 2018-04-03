@@ -63,10 +63,22 @@ fun TextView.setPrettyDate(date: Date) {
 @BindingAdapter("bind:rating")
 fun TextView.setRating(rating: String?) {
     this.text = when(rating) {
-        "bad" -> "良くない"
-        "average" -> "普通"
-        "good" -> "良い"
-        "great" -> "とても良い"
+        "bad" -> {
+            this.setBackgroundResource(R.drawable.badge_bad)
+            "良くない"
+        }
+        "average" -> {
+            this.setBackgroundResource(R.drawable.badge_average)
+            "普通"
+        }
+        "good" -> {
+            this.setBackgroundResource(R.drawable.badge_good)
+            "良い"
+        }
+        "great" -> {
+            this.setBackgroundResource(R.drawable.badge_great)
+            "とても良い"
+        }
         "no_select" -> "未選択"
         else -> ""
     }
