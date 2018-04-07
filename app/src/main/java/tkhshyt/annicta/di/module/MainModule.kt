@@ -7,6 +7,7 @@ import dagger.android.ContributesAndroidInjector
 import dagger.multibindings.IntoMap
 import tkhshyt.annicta.di.ViewModelKey
 import tkhshyt.annicta.main.MainViewModel
+import tkhshyt.annicta.main.activity.ActivitiesFragment
 import tkhshyt.annicta.main.programs.ProgramsFragment
 import tkhshyt.annicta.main.works.WorksFragment
 
@@ -23,4 +24,7 @@ interface MainModule {
 
     @ContributesAndroidInjector
     fun contributeWorksFragment(): WorksFragment
+
+    @ContributesAndroidInjector
+    fun contributeActivitiesFragment(): ActivitiesFragment
 }

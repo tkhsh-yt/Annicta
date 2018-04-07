@@ -17,6 +17,7 @@ import dagger.android.support.HasSupportFragmentInjector
 import kotlinx.android.synthetic.main.activity_main.*
 import tkhshyt.annicta.R
 import tkhshyt.annicta.databinding.ActivityMainBinding
+import tkhshyt.annicta.main.activity.ActivitiesFragment
 import tkhshyt.annicta.main.programs.ProgramsFragment
 import tkhshyt.annicta.main.works.WorksFragment
 import tkhshyt.annicta.top.TopActivity
@@ -77,7 +78,7 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector, MainNaviga
         val fragments = arrayOf<Fragment>(
                 ProgramsFragment.newInstance(),
                 WorksFragment.newInstance(),
-                ProgramsFragment.newInstance()
+                ActivitiesFragment.newInstance()
         )
         val adapter = object : FragmentPagerAdapter(supportFragmentManager) {
             override fun getItem(position: Int): Fragment {
@@ -93,6 +94,7 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector, MainNaviga
             }
         }
         pager.adapter = adapter
+        pager.offscreenPageLimit = 2
 
         tabs.setupWithViewPager(pager)
         (0 until tabs.tabCount).forEach {

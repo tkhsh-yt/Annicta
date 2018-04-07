@@ -23,6 +23,7 @@ class WorkItemViewModel(
 
     val status = MutableLiveData<Int>()
 
+    // FIXME
     private val statuses = arrayOf("no_select", "wanna_watch", "watching", "watched", "on_hold", "stop_watching")
 
     init {
