@@ -37,7 +37,7 @@
                     android:visibility="@{viewModel.seasonTab ? View.GONE : View.VISIBLE}"/>
 
                 <tkhshyt.annicta.layout.spinner.NoDefaultSpinner
-                    android:id="@+id/toolbarSpinner"
+                    android:id="@+id/seasonSpinner"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:background="@drawable/season_spinner_background"

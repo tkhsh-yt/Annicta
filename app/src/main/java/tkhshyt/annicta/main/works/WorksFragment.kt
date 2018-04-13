@@ -18,9 +18,11 @@ import tkhshyt.annict.json.Work
 import tkhshyt.annicta.R
 import tkhshyt.annicta.databinding.FragmentWorksBinding
 import tkhshyt.annicta.di.Injectable
+import tkhshyt.annicta.event.SeasonSpinnerSelectedEvent
 import tkhshyt.annicta.event.UpdateWorkStatusEvent
 import tkhshyt.annicta.layout.recycler.EndlessScrollListener
 import tkhshyt.annicta.layout.recycler.Util
+import tkhshyt.annicta.main.works.SeasonSelectSpinner.*
 import javax.inject.Inject
 
 class WorksFragment : Fragment(), Injectable {
@@ -79,6 +81,12 @@ class WorksFragment : Fragment(), Injectable {
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onUpdateWorkStatusEvent(event: UpdateWorkStatusEvent) {
         viewModel.updateWorkStatus(event.id, event.kind)
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onSeasonSpinnerSelectedEvent(event: SeasonSpinnerSelectedEvent) {
+        viewModel.seasonSelectSpinner = event.season
+        viewModel.onRefresh()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

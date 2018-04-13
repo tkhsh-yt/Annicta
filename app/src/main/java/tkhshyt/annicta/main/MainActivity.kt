@@ -2,23 +2,30 @@ package tkhshyt.annicta.main
 
 import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Context
 import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.design.widget.TabLayout
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentPagerAdapter
+import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
-import android.view.Menu
-import android.view.MenuItem
+import android.view.*
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.TextView
 import dagger.android.AndroidInjection
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
 import kotlinx.android.synthetic.main.activity_main.*
+import org.greenrobot.eventbus.EventBus
 import tkhshyt.annicta.R
 import tkhshyt.annicta.databinding.ActivityMainBinding
+import tkhshyt.annicta.event.SeasonSpinnerSelectedEvent
 import tkhshyt.annicta.main.activity.ActivitiesFragment
 import tkhshyt.annicta.main.programs.ProgramsFragment
+import tkhshyt.annicta.main.works.SeasonSelectSpinner
 import tkhshyt.annicta.main.works.WorksFragment
 import tkhshyt.annicta.top.TopActivity
 import javax.inject.Inject
@@ -47,12 +54,57 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector, MainNaviga
         binding.setLifecycleOwner(this)
 
         setupToolbar()
+        setupSeasonSpinner()
         setupTab()
     }
 
     private fun setupToolbar() {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
+    }
+
+    private fun setupSeasonSpinner() {
+        var selectedItem = 1
+        val adapter = object : ArrayAdapter<String>(baseContext, R.layout.spinner_item_season, resources.getStringArray(R.array.season_array)) {
+
+            override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
+                val view: View?
+                if (convertView == null) {
+                    view = (context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater).inflate(R.layout.spinner_item_season, null)
+                    view.findViewById<TextView>(R.id.season)?.text = getItem(position)
+                    return view
+                }
+                convertView.findViewById<TextView>(R.id.season)?.text = getItem(position)
+
+                return convertView
+            }
+
+            override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup?): View {
+                val view = super.getDropDownView(position, convertView, parent)
+                if (position == selectedItem) {
+                    view.setBackgroundColor(ContextCompat.getColor(context, R.color.blue_700))
+                } else {
+                    view.setBackgroundColor(ContextCompat.getColor(context, R.color.grey_800))
+                }
+                return view
+            }
+        }
+        adapter.setDropDownViewResource(R.layout.spinner_item_season_dropdown)
+        seasonSpinner.adapter = adapter
+
+        seasonSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                if ((selectedItem != -1 && selectedItem != position) || position == adapter.count - 1) {
+                    EventBus.getDefault().post(SeasonSpinnerSelectedEvent(SeasonSelectSpinner.values()[position]))
+                }
+                selectedItem = position
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+            }
+        }
+        seasonSpinner.setSelection(selectedItem)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
