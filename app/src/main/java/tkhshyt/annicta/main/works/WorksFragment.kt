@@ -9,23 +9,23 @@ import android.support.v7.widget.GridLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import kotlinx.android.synthetic.main.fragment_works.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
-import tkhshyt.annict.json.Status
 import tkhshyt.annict.json.Work
 import tkhshyt.annicta.R
 import tkhshyt.annicta.databinding.FragmentWorksBinding
 import tkhshyt.annicta.di.Injectable
+import tkhshyt.annicta.event.SeasonSelectedEvent
 import tkhshyt.annicta.event.SeasonSpinnerSelectedEvent
 import tkhshyt.annicta.event.UpdateWorkStatusEvent
 import tkhshyt.annicta.layout.recycler.EndlessScrollListener
 import tkhshyt.annicta.layout.recycler.Util
-import tkhshyt.annicta.main.works.SeasonSelectSpinner.*
 import javax.inject.Inject
 
-class WorksFragment : Fragment(), Injectable {
+class WorksFragment : Fragment(), Injectable, WorksNavigator {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -49,6 +49,7 @@ class WorksFragment : Fragment(), Injectable {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+        viewModel.navigator = this
         binding.viewModel = viewModel
         binding.setLifecycleOwner(this)
 
@@ -78,14 +79,30 @@ class WorksFragment : Fragment(), Injectable {
         })
     }
 
+    override fun launchSeasonSelectDialog() {
+        val dialog = SeasonSelectDialogFragment()
+        val bundle = Bundle()
+        dialog.arguments = bundle
+        dialog.show(fragmentManager, "select_season_dialog")
+    }
+
+    /* 視聴状況の更新時 */
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onUpdateWorkStatusEvent(event: UpdateWorkStatusEvent) {
         viewModel.updateWorkStatus(event.id, event.kind)
     }
 
+    /* シーズンが選択されたとき */
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onSeasonSpinnerSelectedEvent(event: SeasonSpinnerSelectedEvent) {
+        viewModel.season = null
         viewModel.seasonSelectSpinner = event.season
+        viewModel.onRefresh()
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onSeasonSelectedEvent(event: SeasonSelectedEvent) {
+        viewModel.season = event.season
         viewModel.onRefresh()
     }
 

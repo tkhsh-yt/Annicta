@@ -3,6 +3,7 @@ package tkhshyt.annicta.main.works
 import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.MutableLiveData
+import android.os.Bundle
 import io.reactivex.Single
 import tkhshyt.annict.Season
 import tkhshyt.annict.json.Status
@@ -23,10 +24,12 @@ class WorksViewModel @Inject constructor(
     private val worksRepository: WorksRepository
 ): AndroidViewModel(context) {
 
+    lateinit var navigator: WorksNavigator
+
     val works = MutableListLiveData<Work>()
     val isLoading = MutableLiveData<Boolean>()
 
-    val season: Season? = Season.Companion.season(Calendar.getInstance())
+    var season: Season? = Season.Companion.season(Calendar.getInstance())
 
     val createWorkItemViewModel = {
         WorkItemViewModel(context, userInfoRepository, workRepository)
@@ -45,7 +48,9 @@ class WorksViewModel @Inject constructor(
     }
 
     fun onRefresh() {
-        if(seasonSelectSpinner != SELECT) {
+        if(seasonSelectSpinner == SELECT && season == null) {
+            navigator.launchSeasonSelectDialog()
+        } else {
             works.clear()
             page = 1
 
@@ -113,8 +118,13 @@ class WorksViewModel @Inject constructor(
                         page = page
                 )
             }
-            else -> {
-                null
+            SELECT -> {
+                worksRepository.worksWithStatus(
+                        access_token = accessToken,
+                        filter_season = season?.param(),
+                        sort_watchers_count = "desc",
+                        page = page
+                )
             }
         }
     }
