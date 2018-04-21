@@ -8,7 +8,7 @@ import android.widget.AdapterView
 import tkhshyt.annict.json.Activity
 import tkhshyt.annicta.R
 import tkhshyt.annicta.databinding.ItemActivityBinding
-import tkhshyt.annicta.layout.spinner.RatingAdapter
+import tkhshyt.annicta.layout.spinner.StatusAdapter
 
 class ActivityAdapter(
         private val createViewModel: () -> ActivityItemViewModel
@@ -41,7 +41,7 @@ class ActivityAdapter(
 
         init {
             val statuses = binding.root.context.resources.getStringArray(R.array.work_status_array)
-            val adapter = RatingAdapter(binding.root.context, statuses)
+            val adapter = StatusAdapter(binding.root.context, statuses)
             binding.statusSpinner.adapter = adapter
         }
 

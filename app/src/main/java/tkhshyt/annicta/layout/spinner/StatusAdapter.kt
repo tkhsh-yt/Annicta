@@ -1,7 +1,6 @@
 package tkhshyt.annicta.layout.spinner
 
 import android.content.Context
-import android.support.v4.content.ContextCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,7 +8,7 @@ import android.widget.ArrayAdapter
 import android.widget.TextView
 import tkhshyt.annicta.R
 
-class RatingAdapter(context: Context?, objects: Array<out String>?) : ArrayAdapter<String>(context, R.layout.item_status, objects) {
+class StatusAdapter(context: Context?, objects: Array<out String>?) : ArrayAdapter<String>(context, R.layout.item_status, objects) {
 
     var selectedItem = -1
 
@@ -25,11 +24,13 @@ class RatingAdapter(context: Context?, objects: Array<out String>?) : ArrayAdapt
     }
 
     override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup?): View {
+//        val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+//        val view = inflater.inflate(R.layout.item_status_dropdown, parent, false)
         val view = super.getDropDownView(position, convertView, parent)
         if(position == selectedItem) {
-            view.setBackgroundColor(ContextCompat.getColor(context, R.color.blue_700))
+            view.setBackgroundResource(R.drawable.status_dropdown_selected)
         } else {
-            view.setBackgroundColor(ContextCompat.getColor(context, R.color.grey_800))
+            view.setBackgroundResource(R.drawable.status_dropdown_non_selected)
         }
         return view
     }

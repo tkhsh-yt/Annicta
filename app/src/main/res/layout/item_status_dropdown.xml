@@ -8,6 +8,5 @@
     android:textSize="16sp"
     android:gravity="left"
     android:textColor="@android:color/white"
-    android:background="@color/grey_800"
     android:padding="5dip"
     tools:ignore="RtlHardcoded" />
