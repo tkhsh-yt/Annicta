@@ -9,7 +9,6 @@ import android.support.v7.widget.GridLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import kotlinx.android.synthetic.main.fragment_works.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -95,11 +94,12 @@ class WorksFragment : Fragment(), Injectable, WorksNavigator {
     /* シーズンが選択されたとき */
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onSeasonSpinnerSelectedEvent(event: SeasonSpinnerSelectedEvent) {
-        viewModel.season = null
-        viewModel.seasonSelectSpinner = event.season
+        viewModel.season = event.selected.season()
+        viewModel.seasonSelectSpinner = event.selected
         viewModel.onRefresh()
     }
 
+    /* シーズンがダイアログにより選択されたとき */
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onSeasonSelectedEvent(event: SeasonSelectedEvent) {
         viewModel.season = event.season

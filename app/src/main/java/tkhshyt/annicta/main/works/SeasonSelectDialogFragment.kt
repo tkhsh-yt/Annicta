@@ -13,7 +13,7 @@ import java.util.*
 class SeasonSelectDialogFragment : DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val year = Calendar.getInstance().get(Calendar.YEAR)
+        val year = Season.current().year
         val items = ((year+1) downTo 1960).flatMap { y ->
             val seasons = Season.Type.values().map {
                 Season(y, it)

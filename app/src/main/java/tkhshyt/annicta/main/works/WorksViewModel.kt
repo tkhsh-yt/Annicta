@@ -5,10 +5,13 @@ import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.MutableLiveData
 import android.os.Bundle
 import io.reactivex.Single
+import tkhshyt.annict.AnnictService
 import tkhshyt.annict.Season
+import tkhshyt.annict.Sort
 import tkhshyt.annict.json.Status
 import tkhshyt.annict.json.Work
 import tkhshyt.annict.json.Works
+import tkhshyt.annict.param.WorksParam
 import tkhshyt.annicta.MutableListLiveData
 import tkhshyt.annicta.data.UserInfoRepository
 import tkhshyt.annicta.data.WorkRepository
@@ -79,54 +82,11 @@ class WorksViewModel @Inject constructor(
     }
 
     private fun request(accessToken: String): Single<Works>? {
-        return when(seasonSelectSpinner) {
-            NEXT_SEASON -> {
-                worksRepository.worksWithStatus(
-                        access_token = accessToken,
-                        filter_season = "2018-summer", // FIXME
-                        sort_watchers_count = "desc",
-                        page = page
-                )
-            }
-            CURRENT_SEASON -> {
-                worksRepository.worksWithStatus(
-                        access_token = accessToken,
-                        filter_season = "2018-spring", // FIXME
-                        sort_watchers_count = "desc",
-                        page = page
-                )
-            }
-            PREV_SEASON -> {
-                worksRepository.worksWithStatus(
-                        access_token = accessToken,
-                        filter_season = "2018-winter", // FIXME
-                        sort_watchers_count = "desc",
-                        page = page
-                )
-            }
-            FAVORITE -> {
-                worksRepository.worksWithStatus(
-                        access_token = accessToken,
-                        sort_watchers_count = "desc",
-                        page = page
-                )
-            }
-            NEW -> {
-                worksRepository.worksWithStatus(
-                        access_token = accessToken,
-                        sort_id = "desc",
-                        page = page
-                )
-            }
-            SELECT -> {
-                worksRepository.worksWithStatus(
-                        access_token = accessToken,
-                        filter_season = season?.param(),
-                        sort_watchers_count = "desc",
-                        page = page
-                )
-            }
-        }
+        val params = seasonSelectSpinner.genParam()
+        params.filter_season = season
+        params.access_token = accessToken
+        params.page = page
+        return worksRepository.worksWithStatus(params)
     }
 
     fun updateWorkStatus(id: Long?, kind: String) {
