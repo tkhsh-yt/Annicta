@@ -41,7 +41,7 @@ class WorkAdapter constructor(
 
         init {
             val statuses = binding.root.context.resources.getStringArray(R.array.work_status_array)
-            val adapter = StatusAdapter(binding.root.context, statuses)
+            val adapter = StatusAdapter(binding.root.context, R.layout.item_status, statuses)
             binding.statusSpinner.adapter = adapter
         }
 

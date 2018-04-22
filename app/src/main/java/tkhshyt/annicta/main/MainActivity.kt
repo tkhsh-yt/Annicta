@@ -23,6 +23,7 @@ import org.greenrobot.eventbus.EventBus
 import tkhshyt.annicta.R
 import tkhshyt.annicta.databinding.ActivityMainBinding
 import tkhshyt.annicta.event.SeasonSpinnerSelectedEvent
+import tkhshyt.annicta.layout.spinner.StatusAdapter
 import tkhshyt.annicta.main.activity.ActivitiesFragment
 import tkhshyt.annicta.main.programs.ProgramsFragment
 import tkhshyt.annicta.main.works.SeasonSelectSpinner
@@ -64,47 +65,25 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector, MainNaviga
     }
 
     private fun setupSeasonSpinner() {
-        var selectedItem = 1
-        val adapter = object : ArrayAdapter<String>(baseContext, R.layout.spinner_item_season, resources.getStringArray(R.array.season_array)) {
-
-            override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
-                val view: View?
-                if (convertView == null) {
-                    view = (context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater).inflate(R.layout.spinner_item_season, null)
-                    view.findViewById<TextView>(R.id.season)?.text = getItem(position)
-                    return view
-                }
-                convertView.findViewById<TextView>(R.id.season)?.text = getItem(position)
-
-                return convertView
-            }
-
-            override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup?): View {
-                val view = super.getDropDownView(position, convertView, parent)
-                if (position == selectedItem) {
-                    view.setBackgroundColor(ContextCompat.getColor(context, R.color.blue_700))
-                } else {
-                    view.setBackgroundColor(ContextCompat.getColor(context, R.color.grey_800))
-                }
-                return view
-            }
-        }
+        val seasons = resources.getStringArray(R.array.season_array)
+        val adapter = StatusAdapter(this, R.layout.spinner_item_season, seasons)
         adapter.setDropDownViewResource(R.layout.spinner_item_season_dropdown)
         seasonSpinner.adapter = adapter
+        seasonSpinner.setSelection(1)
 
         seasonSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                if ((selectedItem != -1 && selectedItem != position) || position == adapter.count - 1) {
+                if ((adapter.selectedItem != -1 && adapter.selectedItem != position) || position == adapter.count - 1) {
                     EventBus.getDefault().post(SeasonSpinnerSelectedEvent(SeasonSelectSpinner.values()[position]))
                 }
-                selectedItem = position
+                adapter.selectedItem = position
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
             }
         }
-        seasonSpinner.setSelection(selectedItem)
+//        seasonSpinner.setSelection(1)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
