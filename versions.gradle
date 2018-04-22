@@ -17,7 +17,7 @@ versions.eventbus = "3.1.1"
 versions.okhttp = "3.10.0"
 versions.kotpref = "2.4.0"
 versions.rxbinding = "1.+"
-versions.kotlin = "1.2.31"
+versions.kotlin = "1.2.40"
 versions.android_gradle_plugin = "3.2.0-alpha11"
 def deps = [:]
 
