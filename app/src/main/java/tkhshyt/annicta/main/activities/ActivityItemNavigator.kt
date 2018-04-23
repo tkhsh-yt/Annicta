@@ -1,4 +1,4 @@
-package tkhshyt.annicta.main.activity
+package tkhshyt.annicta.main.activities
 
 import tkhshyt.annict.json.Work
 

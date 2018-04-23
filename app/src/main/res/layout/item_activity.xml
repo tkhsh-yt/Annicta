@@ -8,7 +8,7 @@
     <data>
         <variable
             name="viewModel"
-            type="tkhshyt.annicta.main.activity.ActivityItemViewModel" />
+            type="tkhshyt.annicta.main.activities.ActivityItemViewModel" />
     </data>
 
     <LinearLayout

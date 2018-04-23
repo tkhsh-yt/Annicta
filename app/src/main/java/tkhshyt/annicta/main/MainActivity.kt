@@ -2,19 +2,15 @@ package tkhshyt.annicta.main
 
 import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
-import android.content.Context
 import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.design.widget.TabLayout
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentPagerAdapter
-import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.view.*
 import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.TextView
 import dagger.android.AndroidInjection
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
@@ -24,7 +20,7 @@ import tkhshyt.annicta.R
 import tkhshyt.annicta.databinding.ActivityMainBinding
 import tkhshyt.annicta.event.SeasonSpinnerSelectedEvent
 import tkhshyt.annicta.layout.spinner.StatusAdapter
-import tkhshyt.annicta.main.activity.ActivitiesFragment
+import tkhshyt.annicta.main.activities.ActivitiesFragment
 import tkhshyt.annicta.main.programs.ProgramsFragment
 import tkhshyt.annicta.main.works.SeasonSelectSpinner
 import tkhshyt.annicta.main.works.WorksFragment
@@ -83,7 +79,6 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector, MainNaviga
             override fun onNothingSelected(parent: AdapterView<*>?) {
             }
         }
-//        seasonSpinner.setSelection(1)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

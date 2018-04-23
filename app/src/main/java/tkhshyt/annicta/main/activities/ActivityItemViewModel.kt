@@ -1,4 +1,4 @@
-package tkhshyt.annicta.main.activity
+package tkhshyt.annicta.main.activities
 
 import android.app.Application
 import android.arch.lifecycle.AndroidViewModel

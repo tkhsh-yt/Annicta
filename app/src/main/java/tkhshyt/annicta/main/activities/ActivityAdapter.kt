@@ -1,4 +1,4 @@
-package tkhshyt.annicta.main.activity
+package tkhshyt.annicta.main.activities
 
 import android.databinding.DataBindingUtil
 import android.support.v7.widget.RecyclerView
