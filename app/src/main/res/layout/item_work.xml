@@ -12,60 +12,55 @@
             type="tkhshyt.annicta.main.works.WorkItemViewModel" />
     </data>
 
-    <LinearLayout
-        android:id="@+id/item_work"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+    <android.support.v7.widget.CardView
+        style="@style/CardViewStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:onClick="@{_ -> viewModel.onClick()}" >
 
-        <android.support.v7.widget.CardView
-            style="@style/CardViewStyle"
+        <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:foreground="?android:attr/selectableItemBackground">
+            android:layout_height="wrap_content">
 
-            <android.support.constraint.ConstraintLayout
+            <ImageView
+                android:id="@+id/workIcon"
+                style="@style/ImageIcon128dpStyle"
+                android:transitionName="work_icon"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                bind:centerCrop="@{true}"
+                bind:imageUrl="@{viewModel.work.images.recommended_url ?? ``}"
+                bind:noImage="@{@drawable/ic_image_black_24dp}"
+                bind:placeholder="@{@drawable/ic_image_black_24dp}"
+                tools:ignore="ContentDescription"
+                tools:layout_editor_absoluteY="0dp"
+                tools:targetApi="lollipop" />
+
+            <TextView
+                android:id="@+id/workTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:text="@{viewModel.work.title}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/workIcon" />
+
+            <tkhshyt.annicta.layout.spinner.SelectSpinner
+                android:id="@+id/statusSpinner"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:background="@drawable/status_spinner_background"
+                android:entries="@array/work_status_array"
+                android:selectedItemPosition="@{viewModel.status}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/workTitle" />
 
-                <ImageView
-                    android:id="@+id/workIcon"
-                    style="@style/ImageIcon128dpStyle"
-                    android:transitionName="work_icon"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    bind:centerCrop="@{true}"
-                    bind:imageUrl="@{viewModel.work.images.recommended_url ?? ``}"
-                    bind:noImage="@{@drawable/ic_image_black_24dp}"
-                    bind:placeholder="@{@drawable/ic_image_black_24dp}"
-                    tools:ignore="ContentDescription"
-                    tools:layout_editor_absoluteY="0dp"
-                    tools:targetApi="lollipop" />
-
-                <TextView
-                    android:id="@+id/workTitle"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:ellipsize="end"
-                    android:singleLine="true"
-                    android:text="@{viewModel.work.title}"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/workIcon" />
-
-                <tkhshyt.annicta.layout.spinner.SelectSpinner
-                    android:id="@+id/statusSpinner"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:background="@drawable/status_spinner_background"
-                    android:entries="@array/work_status_array"
-                    android:selectedItemPosition="@{viewModel.status}"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/workTitle" />
-
-            </android.support.constraint.ConstraintLayout>
-        </android.support.v7.widget.CardView>
-    </LinearLayout>
+        </android.support.constraint.ConstraintLayout>
+    </android.support.v7.widget.CardView>
 </layout>

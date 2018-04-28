@@ -32,7 +32,7 @@ class WorksViewModel @Inject constructor(
     val works = MutableListLiveData<Work>()
     val isLoading = MutableLiveData<Boolean>()
 
-    var season: Season? = Season.Companion.season(Calendar.getInstance())
+    var season: Season? = Season.season(Calendar.getInstance())
 
     val createWorkItemViewModel = {
         WorkItemViewModel(context, userInfoRepository, workRepository)

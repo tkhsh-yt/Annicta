@@ -11,6 +11,7 @@ import tkhshyt.annicta.main.programs.ProgramsFragment
 import tkhshyt.annicta.record.RecordActivity
 import tkhshyt.annicta.record.RecordsFragment
 import tkhshyt.annicta.top.TopActivity
+import tkhshyt.annicta.work_info.WorkInfoActivity
 
 @Module
 internal abstract class UiModule {
@@ -29,4 +30,7 @@ internal abstract class UiModule {
 
     @ContributesAndroidInjector(modules = [RecordModule::class])
     internal abstract fun contributeRecordActivity(): RecordActivity
+
+    @ContributesAndroidInjector(modules = [WorkInfoModule::class])
+    internal abstract fun contributeWorkInfoActivity(): WorkInfoActivity
 }

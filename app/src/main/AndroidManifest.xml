@@ -32,6 +32,7 @@
         </activity>
         <activity android:name=".main.MainActivity" />
         <activity android:name=".record.RecordActivity" />
+        <activity android:name=".work_info.WorkInfoActivity" />
     </application>
 
 </manifest>
