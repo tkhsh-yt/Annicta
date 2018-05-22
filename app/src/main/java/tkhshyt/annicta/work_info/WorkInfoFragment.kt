@@ -1,8 +1,7 @@
-package tkhshyt.annicta.record
+package tkhshyt.annicta.work_info
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProvider
-import android.arch.lifecycle.ViewModelProviders
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -10,65 +9,65 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import kotlinx.android.synthetic.main.fragment_programs.*
-import tkhshyt.annict.json.Record
+import kotlinx.android.synthetic.main.fragment_work_info.*
+import tkhshyt.annict.json.Work
 import tkhshyt.annicta.R
-import tkhshyt.annicta.databinding.FragmentRecordsBinding
+import tkhshyt.annicta.databinding.FragmentWorkInfoBinding
 import tkhshyt.annicta.di.Injectable
 import tkhshyt.annicta.layout.recycler.EndlessScrollListener
-import tkhshyt.annicta.main.programs.ProgramAdapter
-import tkhshyt.annicta.record.RecordActivity.Companion.EPISODE_ID
+import tkhshyt.annicta.work_info.WorkInfoActivity.Companion.WORK
 import javax.inject.Inject
 
-class RecordsFragment : Fragment(), Injectable {
+class WorkInfoFragment: Fragment(), Injectable {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
     @Inject
-    lateinit var viewModel: RecordsViewModel
+    lateinit var viewModel: WorkInfoesViewModel
 
-    private lateinit var binding: FragmentRecordsBinding
+    private lateinit var binding: FragmentWorkInfoBinding
 
-    lateinit var adapter: RecordAdapter
+    private lateinit var adapter: WorkInfoAdapter
 
     companion object {
 
-        fun newInstance() = RecordsFragment()
+        fun newInstance() = WorkInfoFragment()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
-            DataBindingUtil.inflate<FragmentRecordsBinding>(inflater, R.layout.fragment_records, container, false).also {
+            DataBindingUtil.inflate<FragmentWorkInfoBinding>(inflater, R.layout.fragment_work_info, container, false).also {
                 binding = it
             }.root
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        if(arguments?.containsKey(EPISODE_ID) == true) {
-            arguments?.getLong(EPISODE_ID)?.let {
-                viewModel.episodeId = it
+        if(arguments?.containsKey(WORK) == true) {
+            arguments?.getSerializable(WORK)?.let {
+                viewModel.work = it as Work
             }
         }
 
         binding.viewModel = viewModel
         binding.setLifecycleOwner(this)
 
-        viewModel.records.observe(this, Observer {
+        viewModel.infoes.observe(this, Observer {
             if(it != null) {
-                adapter.records = it
+                adapter.infoes = it
             }
         })
 
         setupRecyclerView()
+
+        viewModel.onRefresh()
     }
 
     private fun setupRecyclerView() {
         val llm = LinearLayoutManager(context)
         recyclerView.layoutManager = llm
 
-        adapter = RecordAdapter()
+        adapter = WorkInfoAdapter()
         recyclerView.adapter = adapter
 
         recyclerView.addOnScrollListener(object : EndlessScrollListener(llm) {
@@ -78,3 +77,4 @@ class RecordsFragment : Fragment(), Injectable {
         })
     }
 }
+

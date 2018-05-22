@@ -48,6 +48,8 @@ class WorkInfoActivity : AppCompatActivity(), HasSupportFragmentInjector, WorkIn
             binding.setLifecycleOwner(this)
 
             setupToolbar()
+
+            setupWorkInfoList()
         }
     }
 
@@ -69,6 +71,16 @@ class WorkInfoActivity : AppCompatActivity(), HasSupportFragmentInjector, WorkIn
                 toolbarIcon.setBackgroundResource(R.drawable.circle_grey_ripple)
             }
         })
+    }
+
+    private fun setupWorkInfoList() {
+        val fragment = WorkInfoFragment.newInstance()
+        val arguments = Bundle()
+        arguments.putSerializable(WORK, viewModel.work.value)
+        fragment.arguments = arguments
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.container, fragment)
+        transaction.commit()
     }
 
     override fun onClickBackArrow() {
