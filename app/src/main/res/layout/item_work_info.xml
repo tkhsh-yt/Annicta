@@ -188,6 +188,7 @@
             android:background="@drawable/twitter_color_button"
             android:text="@string/official_twitter"
             android:textAllCaps="false"
+            android:onClick="@{viewModel.openTwitter}"
             android:textColor="@android:color/white" />
 
         <Button
@@ -199,6 +200,7 @@
             android:text="@{viewModel.work.twitter_hashtag}"
             android:visibility="@{viewModel.work.twitter_hashtag == null ? View.GONE : View.VISIBLE}"
             android:textAllCaps="false"
+            android:onClick="@{viewModel.openTwitterHashtag}"
             android:textColor="@android:color/white" />
 
         <Button
@@ -208,6 +210,7 @@
             android:layout_margin="8dp"
             android:background="@drawable/wikipedia_button"
             android:text="@string/wikipedia"
+            android:onClick="@{viewModel.openWikipedia}"
             android:textAllCaps="false" />
 
         <Button
@@ -218,6 +221,7 @@
             android:background="@drawable/mal_color_button"
             android:text="@string/my_anime_list"
             android:textAllCaps="false"
+            android:onClick="@{viewModel.openMyAnimeList}"
             android:textColor="@android:color/white" />
 
         <LinearLayout

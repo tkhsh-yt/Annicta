@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_work_info.*
+import tkhshyt.annict.json.Application
 import tkhshyt.annict.json.Work
 import tkhshyt.annicta.R
 import tkhshyt.annicta.databinding.FragmentWorkInfoBinding
@@ -67,7 +68,9 @@ class WorkInfoFragment: Fragment(), Injectable {
         val llm = LinearLayoutManager(context)
         recyclerView.layoutManager = llm
 
-        adapter = WorkInfoAdapter()
+        activity?.let {
+            adapter = WorkInfoAdapter(it.application)
+        }
         recyclerView.adapter = adapter
 
         recyclerView.addOnScrollListener(object : EndlessScrollListener(llm) {
