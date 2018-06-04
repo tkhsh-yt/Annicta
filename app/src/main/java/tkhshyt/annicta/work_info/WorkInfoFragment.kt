@@ -2,6 +2,7 @@ package tkhshyt.annicta.work_info
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProvider
+import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -16,6 +17,8 @@ import tkhshyt.annicta.R
 import tkhshyt.annicta.databinding.FragmentWorkInfoBinding
 import tkhshyt.annicta.di.Injectable
 import tkhshyt.annicta.layout.recycler.EndlessScrollListener
+import tkhshyt.annicta.record.RecordActivity
+import tkhshyt.annicta.record.RecordActivity.Companion.EPISODE_ID
 import tkhshyt.annicta.work_info.WorkInfoActivity.Companion.WORK
 import javax.inject.Inject
 

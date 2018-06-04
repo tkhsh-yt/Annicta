@@ -2,6 +2,7 @@ package tkhshyt.annicta.main.activities
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProvider
+import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -19,6 +20,8 @@ import tkhshyt.annicta.databinding.FragmentActivitiesBinding
 import tkhshyt.annicta.di.Injectable
 import tkhshyt.annicta.event.UpdateWorkStatusEvent
 import tkhshyt.annicta.layout.recycler.EndlessScrollListener
+import tkhshyt.annicta.work_info.WorkInfoActivity
+import tkhshyt.annicta.work_info.WorkInfoActivity.Companion.WORK
 import javax.inject.Inject
 
 class ActivitiesFragment : Fragment(), Injectable, ActivityItemNavigator {
@@ -64,7 +67,7 @@ class ActivitiesFragment : Fragment(), Injectable, ActivityItemNavigator {
         val llm = LinearLayoutManager(context)
         recyclerView.layoutManager = llm
 
-        adapter = ActivityAdapter(viewModel.createActivityItemViewModel)
+        adapter = ActivityAdapter(viewModel.createActivityItemViewModel(this))
         recyclerView.adapter = adapter
 
         recyclerView.addOnScrollListener(object : EndlessScrollListener(llm) {
@@ -75,6 +78,9 @@ class ActivitiesFragment : Fragment(), Injectable, ActivityItemNavigator {
     }
 
     override fun onItemClick(work: Work) {
+        val intent = Intent(activity, WorkInfoActivity::class.java)
+        intent.putExtra(WORK, work)
+        startActivity(intent)
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

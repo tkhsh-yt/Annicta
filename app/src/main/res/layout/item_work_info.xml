@@ -189,6 +189,7 @@
             android:text="@string/official_twitter"
             android:textAllCaps="false"
             android:onClick="@{viewModel.openTwitter}"
+            android:visibility="@{viewModel.work.twitter_username.isEmpty ? View.GONE : View.VISIBLE}"
             android:textColor="@android:color/white" />
 
         <Button
@@ -198,7 +199,7 @@
             android:layout_margin="8dp"
             android:background="@drawable/twitter_color_button"
             android:text="@{viewModel.work.twitter_hashtag}"
-            android:visibility="@{viewModel.work.twitter_hashtag == null ? View.GONE : View.VISIBLE}"
+            android:visibility="@{viewModel.work.twitter_hashtag.isEmpty ? View.GONE : View.VISIBLE}"
             android:textAllCaps="false"
             android:onClick="@{viewModel.openTwitterHashtag}"
             android:textColor="@android:color/white" />
@@ -211,6 +212,7 @@
             android:background="@drawable/wikipedia_button"
             android:text="@string/wikipedia"
             android:onClick="@{viewModel.openWikipedia}"
+            android:visibility="@{viewModel.work.wikipedia_url.isEmpty ? View.GONE : View.VISIBLE}"
             android:textAllCaps="false" />
 
         <Button
@@ -222,6 +224,7 @@
             android:text="@string/my_anime_list"
             android:textAllCaps="false"
             android:onClick="@{viewModel.openMyAnimeList}"
+            android:visibility="@{viewModel.work.mal_anime_id.isEmpty ? View.GONE : View.VISIBLE}"
             android:textColor="@android:color/white" />
 
         <LinearLayout

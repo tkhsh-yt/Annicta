@@ -3,18 +3,22 @@ package tkhshyt.annicta.main.activities
 import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.MutableLiveData
+import android.content.Intent
 import android.support.v4.content.ContextCompat
 import android.text.Spanned
 import android.widget.Toast
 import org.greenrobot.eventbus.EventBus
 import tkhshyt.annict.Action
 import tkhshyt.annict.json.Activity
+import tkhshyt.annicta.AnnictApplication
 import tkhshyt.annicta.R
 import tkhshyt.annicta.data.UserInfoRepository
 import tkhshyt.annicta.data.WorkRepository
 import tkhshyt.annicta.event.UpdateWorkStatusEvent
 import tkhshyt.annicta.util.AndroidUtil
 import tkhshyt.annicta.util.AnnictUtil
+import tkhshyt.annicta.work_info.WorkInfoActivity
+import tkhshyt.annicta.work_info.WorkInfoActivity.Companion.WORK
 
 class ActivityItemViewModel(
         context: Application,
@@ -22,7 +26,7 @@ class ActivityItemViewModel(
         private val userInfoRepository: UserInfoRepository
 ) : AndroidViewModel(context) {
 
-//    lateinit var navigator: ActivityItemNavigator
+    lateinit var navigator: ActivityItemNavigator
 
     val activity = MutableLiveData<Activity>()
 
@@ -100,9 +104,9 @@ class ActivityItemViewModel(
     }
 
     fun onClick() {
-//        activity.work?.let {
-//            navigator.onItemClick(it)
-//        }
+        activity.value?.work?.let {
+            navigator.onItemClick(it)
+        }
     }
 
     private fun showToastMessage(message: Int) {

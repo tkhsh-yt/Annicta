@@ -41,7 +41,7 @@ class WorkInfoAdapter(val context: Application): RecyclerView.Adapter<RecyclerVi
 
             override fun bindViewHolder(context: Application, holder: RecyclerView.ViewHolder, item: WorkInfoItem) {
                 val episode = (item as EpisodeItem).episode
-                val viewModel = EpisodeItemViewModel()
+                val viewModel = EpisodeItemViewModel(context)
                 viewModel.episode.value = episode
                 (holder as EpisodeViewHolder).bind(viewModel)
             }

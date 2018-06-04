@@ -21,6 +21,7 @@ import tkhshyt.annicta.di.Injectable
 import tkhshyt.annicta.event.CreateRecordEvent
 import tkhshyt.annicta.layout.recycler.EndlessScrollListener
 import tkhshyt.annicta.record.RecordActivity
+import tkhshyt.annicta.record.RecordActivity.Companion.EPISODE
 import javax.inject.Inject
 
 class ProgramsFragment : Fragment(), Injectable, ProgramItemNavigator {
@@ -80,7 +81,8 @@ class ProgramsFragment : Fragment(), Injectable, ProgramItemNavigator {
 
     override fun onItemClick(program: Program) {
         val intent = Intent(context, RecordActivity::class.java)
-        intent.putExtra(PROGRAM, program)
+        val episode = program.episode.copy(work = program.work)
+        intent.putExtra(EPISODE, episode)
         startActivity(intent)
     }
 

@@ -18,7 +18,7 @@ versions.okhttp = "3.10.0"
 versions.kotpref = "2.4.0"
 versions.rxbinding = "1.+"
 versions.kotlin = "1.2.41"
-versions.android_gradle_plugin = "3.2.0-alpha15"
+versions.android_gradle_plugin = "3.2.0-alpha16"
 def deps = [:]
 
 def support = [:]

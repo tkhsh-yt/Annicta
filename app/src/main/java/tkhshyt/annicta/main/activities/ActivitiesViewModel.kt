@@ -12,8 +12,8 @@ import tkhshyt.annicta.data.WorkRepository
 import javax.inject.Inject
 
 class ActivitiesViewModel @Inject constructor(
-        context: Application,
-        workRepository: WorkRepository,
+        val context: Application,
+        val workRepository: WorkRepository,
         private val userInfoRepository: UserInfoRepository,
         private val activitiesRepository: ActivitiesRepository
 ) : AndroidViewModel(context) {
@@ -21,8 +21,10 @@ class ActivitiesViewModel @Inject constructor(
     val activities = MutableListLiveData<Activity>()
     val isLoading = MutableLiveData<Boolean>()
 
-    val createActivityItemViewModel = {
-        ActivityItemViewModel(context, workRepository, userInfoRepository)
+    fun createActivityItemViewModel(navigator: ActivityItemNavigator) = {
+        ActivityItemViewModel(context, workRepository, userInfoRepository).also {
+            it.navigator = navigator
+        }
     }
 
     var page = 1

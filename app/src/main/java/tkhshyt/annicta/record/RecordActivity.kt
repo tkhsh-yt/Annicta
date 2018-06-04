@@ -15,6 +15,7 @@ import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
 import kotlinx.android.synthetic.main.activity_record.*
+import tkhshyt.annict.json.Episode
 import tkhshyt.annict.json.Program
 import tkhshyt.annicta.R
 import tkhshyt.annicta.databinding.ActivityRecordBinding
@@ -26,6 +27,7 @@ class RecordActivity : AppCompatActivity(), HasSupportFragmentInjector, RecordNa
 
     companion object {
         const val EPISODE_ID = "episode_id"
+        const val EPISODE = "episode"
     }
 
     @Inject
@@ -45,7 +47,7 @@ class RecordActivity : AppCompatActivity(), HasSupportFragmentInjector, RecordNa
 
         AndroidInjection.inject(this)
 
-        if (intent.hasExtra(ProgramsFragment.PROGRAM)) {
+        if (intent.hasExtra(EPISODE)) {
             viewModel.episode.observe(this, Observer {
                 viewModel.setPrevNextEpisode()
             })
@@ -54,8 +56,8 @@ class RecordActivity : AppCompatActivity(), HasSupportFragmentInjector, RecordNa
                 setupToast(this, it.toastMessage, Toast.LENGTH_SHORT)
             }
 
-            val program = intent.getSerializableExtra(ProgramsFragment.PROGRAM) as Program
-            viewModel.episode.value = program.episode.copy(work = program.work)
+            val episode = intent.getSerializableExtra(EPISODE) as Episode
+            viewModel.episode.value = episode
             viewModel.navigator = this
 
             binding.viewModel = viewModel
