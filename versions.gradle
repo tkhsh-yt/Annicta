@@ -18,7 +18,7 @@ versions.okhttp = "3.10.0"
 versions.kotpref = "2.4.0"
 versions.rxbinding = "1.+"
 versions.kotlin = "1.2.41"
-versions.android_gradle_plugin = "3.2.0-alpha16"
+versions.android_gradle_plugin = "3.2.0-alpha17"
 def deps = [:]
 
 def support = [:]
@@ -85,7 +85,7 @@ deps.okhttp = "com.squareup.okhttp3:okhttp:$versions.okhttp"
 ext.deps = deps
 
 def build_versions = [:]
-build_versions.min_sdk = 15
+build_versions.min_sdk = 21
 build_versions.target_sdk = 27
 build_versions.build_tools = "27.0.3"
 ext.build_versions = build_versions
