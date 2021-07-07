@@ -61,6 +61,17 @@
     <string name="dummy_twitter_hashtag">#musani</string>
     <string name="dummy_episode_count">26</string>
     <string name="activity">アクティビティ</string>
+    <string name="status">視聴状況</string>
+    <string name="fail_to_record">記録に失敗しました</string>
+    <string name="success_to_record">記録しました</string>
+    <string name="logout">ログアウト</string>
+    <string name="fail_to_get_episode">エピソード情報の取得に失敗しました</string>
+
+    <string-array name="tab">
+        <item>放送予定</item>
+        <item>シーズン</item>
+        <item>アクティビティ</item>
+    </string-array>
 
     <string-array name="rating_array">
         <item>未選択</item>

@@ -1,0 +1,32 @@
+version: 2
+
+default: &defaults
+  working_directory: ~/code
+  docker:
+    - image: circleci/android:api-26-alpha
+  environment:
+    JVM_OPTS: -Xmx3200m
+
+jobs:
+  build:
+    <<: *defaults
+    steps:
+      - checkout
+      - run:
+          name: Change Permission
+          command: chmod +x ./gradlew
+      - run:
+          name: Download Dependencies
+          command: ./gradlew androidDependencies
+      - run:
+          name: Write google-services.json
+          command: echo $GOOGLE_SERVICES | base64 --decode --ignore-garbage > ~/code/app/google-services.json
+      - run:
+          name: Make directory
+          command: mkdir -p ~/code/app/src/debug
+      - run:
+          name: Write google-services.json for Debug
+          command: echo $GOOGLE_SERVICES_DEBUG | base64 --decode --ignore-garbage > ~/code/app/src/debug/google-services.json
+      - run:
+          name: Build apk
+          command: ./gradlew assembleDebug

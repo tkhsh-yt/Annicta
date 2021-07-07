@@ -15,7 +15,7 @@ interface AnnictService {
                 client_id: String,
                 response_type: String = "code",
                 redirect_uri: String = "urn:ietf:wg:oauth:2.0:oob",
-                scope: String = "read write"
+                scope: String = "read+write"
         ): String = "$baseUrl/oauth/authorize?client_id=$client_id&response_type=$response_type&redirect_uri=$redirect_uri&scope=$scope"
     }
 
@@ -434,12 +434,12 @@ interface AnnictService {
             @Query("filter_work_ids") filter_work_ids: String? = null,
             @Query("filter_started_at_gt") filter_started_at_gt: String? = null,
             @Query("filter_started_at_lt") filter_started_at_lt: String? = null,
-            @Query("filter_unwatched") filter_unwatched: Boolean = true,
+            @Query("filter_unwatched") filter_unwatched: Boolean? = true,
             @Query("filter_rebroadcast") filter_rebroadcast: Boolean? = null,
             @Query("page") page: Int = 1,
             @Query("per_page") per_page: Int = 25,
             @Query("sort_id") sort_id: String? = null,
-            @Query("sort_started_at") sort_started_at: String = "desc"
+            @Query("sort_started_at") sort_started_at: String? = "desc"
     ): Single<Response<Programs>>
 
     /**

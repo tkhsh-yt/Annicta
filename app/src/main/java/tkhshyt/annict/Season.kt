@@ -68,5 +68,9 @@ class Season(val year: Int, val season: Type) : Serializable {
             val season = season(cal.get(Calendar.MONTH))
             return Season(cal.get(Calendar.YEAR), season)
         }
+
+        fun current(): Season {
+            return season(Calendar.getInstance())
+        }
     }
 }

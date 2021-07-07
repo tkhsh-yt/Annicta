@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="tkhshyt.annicta.record.RecordViewModel" />
+    </data>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="@color/grey_100">
+
+        <View
+            android:id="@+id/separator"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@android:color/darker_gray"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/commentEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/space_8dp"
+            android:layout_marginEnd="@dimen/space_8dp"
+            android:hint="@string/suggest_recording"
+            android:maxLines="3"
+            android:textColorHint="#61000000"
+            android:text="@={viewModel.comment}"
+            android:enabled="@{viewModel.enabled}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/separator"
+            app:theme="@style/EditTextStyle" />
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/recordCommentArea"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:visibility="visible"
+            app:layout_constraintTop_toBottomOf="@id/commentEditText">
+
+            <Spinner
+                android:id="@+id/ratingSpinner"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginEnd="@dimen/space_8dp"
+                android:layout_marginRight="@dimen/space_8dp"
+                android:layout_marginBottom="4dp"
+                android:gravity="center_vertical"
+                android:entries="@array/rating_array"
+                android:selectedItemPosition="@={viewModel.rating}"
+                android:enabled="@{viewModel.enabled}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/facebookToggleButton"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/recordButton"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/space_8dp"
+                android:layout_marginRight="@dimen/space_8dp"
+                android:layout_marginBottom="@dimen/space_4dp"
+                android:background="@drawable/primary_button"
+                android:text="@string/record"
+                android:textColor="@android:color/white"
+                android:textStyle="bold"
+                android:onClick="@{_ -> viewModel.onRecord()}"
+                android:enabled="@{viewModel.enabled}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ToggleButton
+                android:id="@+id/twitterToggleButton"
+                style="@style/ImageToggleStyle"
+                android:background="@drawable/toggle_twitter_selector"
+                android:checked="@={viewModel.shareTwitter}"
+                android:enabled="@{viewModel.enabled}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/recordButton"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ToggleButton
+                android:id="@+id/facebookToggleButton"
+                style="@style/ImageToggleStyle"
+                android:checked="@={viewModel.shareFacebook}"
+                android:background="@drawable/toggle_facebook_selector"
+                android:enabled="@{viewModel.enabled}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/twitterToggleButton"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </android.support.constraint.ConstraintLayout>
+    </android.support.constraint.ConstraintLayout>
+</layout>

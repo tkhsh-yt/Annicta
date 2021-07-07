@@ -6,12 +6,12 @@
     android:orientation="horizontal">
 
     <TextView
-        android:id="@+id/season"
+        android:id="@+id/text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:textSize="21sp"
         android:gravity="left"
-        android:textColor="#ffffff"
+        android:textColor="@android:color/white"
         android:layout_weight="1"
         android:ellipsize="end"
         android:singleLine="true"

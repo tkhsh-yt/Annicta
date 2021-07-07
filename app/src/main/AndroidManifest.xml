@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="tkhshyt.annicta">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -11,27 +12,27 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:name=".MyApplication">
-        <activity android:name="tkhshyt.annicta.TopActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop">
+        android:name=".AnnictApplication">
+        <activity
+            android:name="tkhshyt.annicta.top.TopActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".AuthActivity"
-            android:screenOrientation="portrait"/>
         <activity
-            android:name=".MainActivity"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait" />
-        <activity android:name=".RecordActivity" />
-        <activity android:name=".WorkActivity"
-            android:screenOrientation="portrait" />
-        <activity android:name=".LicenseActivity"
-            android:screenOrientation="portrait" />
+            android:name=".auth.AuthActivity"
+            android:launchMode="singleTop" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="annicta" android:host="callback" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".main.MainActivity" />
+        <activity android:name=".record.RecordActivity" />
+        <activity android:name=".work_info.WorkInfoActivity" />
     </application>
 
 </manifest>

@@ -33,4 +33,11 @@
 
     <color name="teal_400">#26A69A</color>
 
+    <integer-array name="refresh_schemes">
+        <item>@color/teal_400</item>
+        <item>@color/red_500</item>
+        <item>@color/indigo_500</item>
+        <item>@color/yellow_500</item>
+    </integer-array>
+
 </resources>
